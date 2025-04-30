@@ -7,12 +7,12 @@ extern int seed;
 extern long long best_known;
 extern long long total_step;
 extern long long consecutive_better_soft;
-extern char * file_name;
+extern char *file_name;
 
 void USW::update_goodvarstack1(int flipvar)
 {
 	int v;
-	//remove the vars no longer goodvar in goodvar stack
+	// remove the vars no longer goodvar in goodvar stack
 	for (int index = goodvar_stack_fill_pointer - 1; index >= 0; index--)
 	{
 		v = goodvar_stack[index];
@@ -23,7 +23,7 @@ void USW::update_goodvarstack1(int flipvar)
 		}
 	}
 
-	//add goodvar
+	// add goodvar
 	for (int i = 0; i < var_neighbor_count[flipvar]; ++i)
 	{
 		v = var_neighbor[flipvar][i];
@@ -37,6 +37,7 @@ void USW::update_goodvarstack1(int flipvar)
 		}
 	}
 }
+
 void USW::update_goodvarstack2(int flipvar)
 {
 	if (score[flipvar] > 0 && already_in_goodvar_stack[flipvar] == -1)
@@ -82,7 +83,7 @@ void USW::flip(int flipvar)
 	lit *clause_c;
 
 	double org_flipvar_score = score[flipvar];
-	//cout << "c org_flipvar_score: " <<org_flipvar_score << endl;
+	// cout << "c org_flipvar_score: " <<org_flipvar_score << endl;
 	cur_soln[flipvar] = 1 - cur_soln[flipvar];
 
 	for (i = 0; i < var_lit_count[flipvar]; ++i)
@@ -93,7 +94,7 @@ void USW::flip(int flipvar)
 		if (cur_soln[flipvar] == var_lit[flipvar][i].sense)
 		{
 			++sat_count[c];
-			if (sat_count[c] == 2) //sat_count from 1 to 2
+			if (sat_count[c] == 2) // sat_count from 1 to 2
 			{
 				score[sat_var[c]] += clause_weight[c];
 				if (score[sat_var[c]] > 0 && -1 == already_in_goodvar_stack[sat_var[c]])
@@ -104,7 +105,7 @@ void USW::flip(int flipvar)
 			}
 			else if (sat_count[c] == 1) // sat_count from 0 to 1
 			{
-				sat_var[c] = flipvar; //record the only true lit's var
+				sat_var[c] = flipvar; // record the only true lit's var
 				for (lit *p = clause_c; (v = p->var_num) != 0; p++)
 				{
 					score[v] -= clause_weight[c];
@@ -123,7 +124,7 @@ void USW::flip(int flipvar)
 		else // cur_soln[flipvar] != cur_lit.sense
 		{
 			--sat_count[c];
-			if (sat_count[c] == 1) //sat_count from 2 to 1
+			if (sat_count[c] == 1) // sat_count from 2 to 1
 			{
 				for (lit *p = clause_c; (v = p->var_num) != 0; p++)
 				{
@@ -143,7 +144,7 @@ void USW::flip(int flipvar)
 					}
 				}
 			}
-			else if (sat_count[c] == 0) //sat_count from 1 to 0
+			else if (sat_count[c] == 0) // sat_count from 1 to 0
 			{
 				for (lit *p = clause_c; (v = p->var_num) != 0; p++)
 				{
@@ -155,11 +156,11 @@ void USW::flip(int flipvar)
 					}
 				}
 				unsat(c);
-			} //end else if
-		}	 //end else
+			} // end else if
+		} // end else
 	}
 
-	//update information of flipvar
+	// update information of flipvar
 	score[flipvar] = -org_flipvar_score;
 	if (score[flipvar] > 0 && already_in_goodvar_stack[flipvar] == -1)
 	{
@@ -174,9 +175,8 @@ void USW::flip(int flipvar)
 		already_in_goodvar_stack[last_v] = index;
 		already_in_goodvar_stack[flipvar] = -1;
 	}
-	//update_goodvarstack1(flipvar);
+	// update_goodvarstack1(flipvar);
 }
-
 
 /*void USW::flip(int flipvar)
 {
@@ -249,12 +249,12 @@ void USW::print_best_solution()
 	printf("v ");
 	for (int i = 1; i <= num_vars; i++)
 	{
-		//printf(" ");
+		// printf(" ");
 		if (best_soln[i] == 0)
 			printf("0");
 		else
 			printf("1");
-		//printf("%d", i);
+		// printf("%d", i);
 	}
 	printf("\n");
 }
@@ -276,9 +276,9 @@ bool USW::verify_sol()
 
 		if (flag == 0)
 		{
-			if (org_clause_weight[c] == top_clause_weight) //verify hard clauses
+			if (org_clause_weight[c] == top_clause_weight) // verify hard clauses
 			{
-				//output the clause unsatisfied by the solution
+				// output the clause unsatisfied by the solution
 				cout << "c Error: hard clause " << c << " is not satisfied" << endl;
 
 				cout << "c ";

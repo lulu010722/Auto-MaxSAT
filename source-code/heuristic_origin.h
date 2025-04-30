@@ -147,58 +147,90 @@ void USW::init(vector<int> &init_solution)
     }
 }
 
-int USW::pick_var() {
-  if (goodvar_stack_fill_pointer > 0) {
-    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob) {
-      return goodvar_stack[rand() % goodvar_stack_fill_pointer];
+int USW::pick_var()
+{
+    int i, v;
+    int best_var;
+    int sel_c;
+    lit *p;
+
+    if (goodvar_stack_fill_pointer > 0)
+    {
+        int best_array_count = 0;
+        if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
+            return goodvar_stack[rand() % goodvar_stack_fill_pointer];
+
+        if (goodvar_stack_fill_pointer < hd_count_threshold)
+        {
+            best_var = goodvar_stack[0];
+
+            for (i = 1; i < goodvar_stack_fill_pointer; ++i)
+            {
+                v = goodvar_stack[i];
+                if (score[v] > score[best_var])
+                {
+                    best_var = v;
+                }
+                else if (score[v] == score[best_var])
+                {
+                    if (time_stamp[v] < time_stamp[best_var])
+                    {
+                        best_var = v;
+                    }
+                }
+            }
+            return best_var; // best_array[rand() % best_array_count];
+        }
+        else
+        {
+            best_var = goodvar_stack[rand() % goodvar_stack_fill_pointer];
+
+            for (i = 1; i < hd_count_threshold; ++i)
+            {
+                v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
+                if (score[v] > score[best_var])
+                {
+                    best_var = v;
+                }
+                else if (score[v] == score[best_var])
+                {
+                    if (time_stamp[v] < time_stamp[best_var])
+                    {
+                        best_var = v;
+                    }
+                }
+            }
+            return best_var; // best_array[rand() % best_array_count];
+        }
     }
 
-    int sample_start = rand() % goodvar_stack_fill_pointer;
-    int best_var = goodvar_stack[sample_start];
-    int best_score = score[best_var];
-    long best_time = time_stamp[best_var];
+    update_clause_weights();
 
-    for (int i = 1; i < hd_count_threshold; ++i) {
-      int idx = (sample_start + i) % goodvar_stack_fill_pointer;
-      int v = goodvar_stack[idx];
-      if (score[v] > best_score ||
-          (score[v] == best_score && time_stamp[v] < best_time)) {
-        best_var = v;
-        best_score = score[v];
-        best_time = time_stamp[v];
-      }
+    if (hardunsat_stack_fill_pointer > 0)
+    {
+        sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
     }
+    else
+    {
+        sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
+    }
+    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
+        return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
+
+    best_var = clause_lit[sel_c][0].var_num;
+    p = clause_lit[sel_c];
+    for (p++; (v = p->var_num) != 0; p++)
+    {
+        if (score[v] > score[best_var])
+            best_var = v;
+        else if (score[v] == score[best_var])
+        {
+            if (time_stamp[v] < time_stamp[best_var])
+                best_var = v;
+        }
+    }
+
     return best_var;
-  }
-
-  update_clause_weights();
-
-  int sel_c;
-  if (hardunsat_stack_fill_pointer > 0) {
-    sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
-  } else {
-    sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
-  }
-
-  if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob) {
-    return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
-  }
-
-  int best_var = clause_lit[sel_c][0].var_num;
-  int best_score = score[best_var];
-  long best_time = time_stamp[best_var];
-
-  for (lit *p = clause_lit[sel_c] + 1; (p->var_num) != 0; p++) {
-    int v = p->var_num;
-    if (score[v] > best_score ||
-        (score[v] == best_score && time_stamp[v] < best_time)) {
-      best_var = v;
-      best_score = score[v];
-      best_time = time_stamp[v];
-    }
-  }
-
-  return best_var;
 }
 
 int USW::nearestPowerOfTen(double num)
