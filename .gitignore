@@ -1,2 +1,7 @@
 log/
 iterations/
+benchmark/
+solvers/
+
+.venv/
+.vscode/
