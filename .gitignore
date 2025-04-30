@@ -2,6 +2,7 @@ log/
 iterations/
 benchmark/
 solvers/
+maxsat_benchmarks_code_base/
 
 .venv/
 .vscode/
