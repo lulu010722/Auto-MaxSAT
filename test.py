@@ -1,14 +1,26 @@
 import subprocess
 import os
 import random
+import pandas as pd
 
 
 SHELL_SCRIPT = "starexec_usw-ls-runsolver.sh"
-CUTOFF_TIME = 60  # 超过时间限制则结束当前实例的运算
+CUTOFF_TIME = 5  # 超过时间限制则结束当前实例的运算
 INSTANCES_TO_RUN_NUM = 20  # 运行实例数量上限，运行到这个数量就停机
 
 
 all_costs = []
+best_costs = []
+
+
+def read_best_costs():
+    df = pd.read_csv("2024_best_costs.csv")
+    for index, row in df.iterrows():
+        best_costs.append({
+            "instance": row["instance"],
+            "cost": row["best_cost"]
+        })
+    print(best_costs)
 
 
 def parse_starexec_output(output: str):
@@ -30,8 +42,8 @@ def parse_starexec_output(output: str):
             pass
         elif "s UNKNOWN" in line:
             pass
-    
-    return current_best 
+
+    return current_best
 
 
 def run_starexec():
@@ -40,7 +52,7 @@ def run_starexec():
         for filename in filenames:
             if filename.endswith(".wcnf"):
                 filepath = os.path.join(dirpath, filename)
-                print(f"Running Starexec on {filepath}")
+                print(f"Running USW-LS on {filepath}")
                 seed = random.randint(1, 1000000)
                 output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True)
                 lines = output.stdout
@@ -53,8 +65,9 @@ def run_starexec():
                 if runned_instances_cnt > INSTANCES_TO_RUN_NUM:
                     print("达到运行实例数量上限，停机")
                     return
-                
+
 
 if __name__ == "__main__":
-    run_starexec()
-    print(all_costs)
+    # run_starexec()
+    # print(all_costs)
+    read_best_costs()
