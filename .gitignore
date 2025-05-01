@@ -4,5 +4,7 @@ benchmark/
 solvers/
 maxsat_benchmarks_code_base/
 
+*.csv
+
 .venv/
 .vscode/
