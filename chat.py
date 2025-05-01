@@ -6,6 +6,7 @@ import time
 import datetime
 import shutil
 import subprocess
+import sys
 
 
 # 模型交互信息
@@ -14,22 +15,28 @@ BASE_URL = "https://api.deepseek.com"
 MODEL = "deepseek-chat"
 client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
+try:
+    # 需要接受外部传入的程序参数的全局变量
+    SRC_DIR = sys.argv[1]
+    # 优化单个文件中的单个函数
+    ORIGIN_FILE_PATH = sys.argv[2]
+    OPTIMIZED_FILE_PATH = sys.argv[3]
+    TARGET_FUNC = sys.argv[4]
+    # 主程序迭代运行信息
+    ITER_NUM = int(sys.argv[5])
+except Exception as e:
+    print(f"Error: {e}")
+    print("Usage: python chat.py <SRC_DIR> <ORIGIN_FILE_PATH> <OPTIMIZED_FILE_PATH> <TARGET_FUNC> <ITER_NUM>")
+    sys.exit(1)
 
-# 目录信息
-SRC_DIR = "source-code"
 ITER_DIR_PATH = f"{SRC_DIR}/iterations"
 LOG_DIR_PATH = f"{SRC_DIR}/log"
-ORIGIN_FILE_PATH = f"{SRC_DIR}/heuristic_origin.h.txt"
-OPTIMIZED_FILE_PATH = f"{SRC_DIR}/heuristic.h"
-TARGET_FUNC = "int USW::pick_var()"
-# # 轮询优化多个模块的多个函数
-ORIGIN_FILES_PATH = []
-OPTIMIZED_FILES_PATH = []
-TARGET_FUNCS = []
 
 
-# 主程序迭代运行信息
-ITER_NUM = 2
+# TODO 轮询优化多个模块的多个函数
+# ORIGIN_FILES_PATH = []
+# OPTIMIZED_FILES_PATH = []
+# TARGET_FUNCS = []
 
 
 # prompt信息
@@ -105,14 +112,18 @@ def convert_last_version_to_cpp(file_name: str):
     shutil.copyfile(file_name, OPTIMIZED_FILE_PATH)
 
 
-# 运行主程序
-if __name__ == "__main__":
-
+def clear_iterations_dir():
     # 清除iterations目录
     iter_dir = Path(ITER_DIR_PATH)
     for iter_file in iter_dir.iterdir():
         if iter_file.suffix == ".txt":
             iter_file.unlink()
+
+
+
+# 集中优化一个函数
+def optimize_one_at_a_time():
+    clear_iterations_dir()
 
     # 初始化算法骨架
     with open(ORIGIN_FILE_PATH, "r", encoding="utf-8") as baseline_file:
@@ -124,8 +135,6 @@ if __name__ == "__main__":
     chat_history = []
     set_system_prompt(chat_history, system_prompt)
     log_file_name = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
-    max_score = 0.0
-
 
     for i in range(ITER_NUM):
         baseline_file_name = f"{ITER_DIR_PATH}/iteration_{i}.txt"
@@ -143,3 +152,12 @@ if __name__ == "__main__":
     with open(log_file_name, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "优化完成")
+
+
+# TODO 支持优化来自多个文件的多个函数
+def optimize_multiple():
+    pass
+
+
+if __name__ == "__main__":
+    optimize_one_at_a_time()

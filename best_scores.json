@@ -1,0 +1,10 @@
+[
+  {
+    "benchmark_set_path": "benchmark/mse24-anytime-weighted-old-format/abstraction-refinement_wt",
+    "best_score": 0.0
+  },
+  {
+    "benchmark_set_path": "benchmark/mse24-anytime-weighted-old-format/af-synthesis_wt-af-synthesis_stb",
+    "best_score": 0.0
+  }
+]

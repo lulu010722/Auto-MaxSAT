@@ -149,22 +149,25 @@ void USW::init(vector<int> &init_solution)
 
 int USW::pick_var() {
   int i, v;
-  int best_var = -1;
-  double best_score = -1;
-  long long min_time_stamp = __LONG_LONG_MAX__;
+  int best_var;
+  int sel_c;
+  lit *p;
 
   if (goodvar_stack_fill_pointer > 0) {
     if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
       return goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-    int sample_size = min(hd_count_threshold, goodvar_stack_fill_pointer);
-    for (i = 0; i < sample_size; ++i) {
-      v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
-      if (score[v] > best_score ||
-          (score[v] == best_score && time_stamp[v] < min_time_stamp)) {
+    best_var = goodvar_stack[0];
+    int max_score = score[best_var];
+    int min_time = time_stamp[best_var];
+
+    for (i = 1; i < goodvar_stack_fill_pointer; ++i) {
+      v = goodvar_stack[i];
+      if (score[v] > max_score ||
+          (score[v] == max_score && time_stamp[v] < min_time)) {
         best_var = v;
-        best_score = score[v];
-        min_time_stamp = time_stamp[v];
+        max_score = score[v];
+        min_time = time_stamp[v];
       }
     }
     return best_var;
@@ -172,27 +175,21 @@ int USW::pick_var() {
 
   update_clause_weights();
 
-  int sel_c;
-  if (hardunsat_stack_fill_pointer > 0)
+  if (hardunsat_stack_fill_pointer > 0) {
     sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
-  else
+  } else {
     sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
+  }
 
   if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
     return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
 
-  lit *p = clause_lit[sel_c];
-  best_var = p->var_num;
-  best_score = score[best_var];
-  min_time_stamp = time_stamp[best_var];
-
+  best_var = clause_lit[sel_c][0].var_num;
+  p = clause_lit[sel_c];
   for (p++; (v = p->var_num) != 0; p++) {
-    if (score[v] > best_score ||
-        (score[v] == best_score && time_stamp[v] < min_time_stamp)) {
+    if (score[v] > score[best_var] ||
+        (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
       best_var = v;
-      best_score = score[v];
-      min_time_stamp = time_stamp[v];
-    }
   }
 
   return best_var;
