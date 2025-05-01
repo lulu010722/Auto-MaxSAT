@@ -17,15 +17,44 @@ client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 # 目录信息
 SRC_DIR = "source-code"
-ITER_DIR = "iterations"
-LOG_DIR = "log"
-TARGET_FILE = "heuristic_origin.h"
+ITER_DIR_PATH = f"{SRC_DIR}/iterations"
+LOG_DIR_PATH = f"{SRC_DIR}/log"
+ORIGIN_FILE_PATH = f"{SRC_DIR}/heuristic_origin.h.txt"
+OPTIMIZED_FILE_PATH = f"{SRC_DIR}/heuristic.h"
 TARGET_FUNC = "int USW::pick_var()"
-LAST_OPTIMIZED_FILE = f"{SRC_DIR}/heuristic.h"
+# # 轮询优化多个模块的多个函数
+ORIGIN_FILES_PATH = []
+OPTIMIZED_FILES_PATH = []
+TARGET_FUNCS = []
 
 
 # 主程序迭代运行信息
 ITER_NUM = 2
+
+
+# prompt信息
+system_prompt = """
+    You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
+    You will be given a code snippet and you need to generate a complete code that meets the requirements.
+    Note that the MaxSAT problem solver that we are going to optimize is targeted to solve unweighted MaxSAT problem without hard clauses.
+"""
+rewrite_prompt_template = f"""
+    Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
+    
+    Steps:
+    1. Read the <key code> and understand the functionality of the code.
+    2. Rewrite the selected function code in the <key code> according to the requirements below.
+
+    Requirements:
+    1. Your rewritten function code must be different from original code, not just rewrite code synonymously
+    2. Please make sure that the response text is a pure code response, without any explanation or comments
+    3. You should not respond the code in markdown format, i.e. no leading and trailing ```.
+    4. You should only output the rewritten function.
+    
+    This time, your goal is to optimize {TARGET_FUNC}.
+    <key code> of MaxSAT solver is:
+"""
+
 
 
 def set_system_prompt(chat_history: list, prompt):
@@ -73,67 +102,44 @@ def insert_function(optimized_file_name: str, code: str, func_name_to_replace: s
 
 
 def convert_last_version_to_cpp(file_name: str):
-    shutil.copyfile(file_name, LAST_OPTIMIZED_FILE)
+    shutil.copyfile(file_name, OPTIMIZED_FILE_PATH)
 
 
 # 运行主程序
 if __name__ == "__main__":
 
     # 清除iterations目录
-    iter_dir = Path(f"{SRC_DIR}/{ITER_DIR}")
+    iter_dir = Path(ITER_DIR_PATH)
     for iter_file in iter_dir.iterdir():
         if iter_file.suffix == ".txt":
             iter_file.unlink()
 
     # 初始化算法骨架
-    with open(f"{SRC_DIR}/{TARGET_FILE}", "r", encoding="utf-8") as baseline_file:
+    with open(ORIGIN_FILE_PATH, "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
-        with open(f"{SRC_DIR}/{ITER_DIR}/iteration_0.txt", "w", encoding="utf-8") as output_file:
+        with open(f"{ITER_DIR_PATH}/iteration_0.txt", "w", encoding="utf-8") as output_file:
             output_file.write(code)
 
     # 开始问答
     chat_history = []
-    system_prompt = """
-        You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
-        You will be given a code snippet and you need to generate a complete code that meets the requirements.
-        Note that the MaxSAT problem solver that we are going to optimize is targeted to solve unweighted MaxSAT problem without hard clauses.
-    """
-    rewrite_prompt_template = f"""
-        Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
-        
-        Steps:
-        1. Read the <key code> and understand the functionality of the code.
-        2. Rewrite the selected function code in the <key code> according to the requirements below.
-
-        Requirements:
-        1. Your rewritten function code must be different from original code, not just rewrite code synonymously
-        2. Please make sure that the response text is a pure code response, without any explanation or comments
-        3. You should not respond the code in markdown format, i.e. no leading and trailing ```.
-        4. You should only output the rewritten function.
-        
-        This time, your goal is to optimize {TARGET_FUNC}.
-        <key code> of MaxSAT solver is:
-    """
-
     set_system_prompt(chat_history, system_prompt)
-
-    log_file_name = f"{SRC_DIR}/{LOG_DIR}/history_{int(time.time() * 1000)}.json"
+    log_file_name = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
     max_score = 0.0
 
+
+    for i in range(ITER_NUM):
+        baseline_file_name = f"{ITER_DIR_PATH}/iteration_{i}.txt"
+        optimized_file_name = f"{ITER_DIR_PATH}/iteration_{i + 1}.txt"
+        with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
+            code = baseline_file.read()
+            rewrite_prompt = rewrite_prompt_template + code
+            res = chat(rewrite_prompt, chat_history)
+
+            shutil.copyfile(baseline_file_name, optimized_file_name)
+            insert_function(optimized_file_name, res, TARGET_FUNC)
+        convert_last_version_to_cpp(optimized_file_name)
+
+
     with open(log_file_name, "w", encoding="utf-8") as log_file:
-
-        for i in range(ITER_NUM):
-            baseline_file_name = f"{SRC_DIR}/{ITER_DIR}/iteration_{i}.txt"
-            optimized_file_name = f"{SRC_DIR}/{ITER_DIR}/iteration_{i + 1}.txt"
-            with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
-                code = baseline_file.read()
-                rewrite_prompt = rewrite_prompt_template + code
-                res = chat(rewrite_prompt, chat_history)
-
-                shutil.copyfile(baseline_file_name, optimized_file_name)
-                insert_function(optimized_file_name, res, TARGET_FUNC)
-            
-            convert_last_version_to_cpp(optimized_file_name)
-
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "优化完成")

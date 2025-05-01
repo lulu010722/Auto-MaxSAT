@@ -148,24 +148,23 @@ void USW::init(vector<int> &init_solution)
 }
 
 int USW::pick_var() {
+  int i, v;
+  int best_var = -1;
+  double best_score = -1;
+  long long min_time_stamp = __LONG_LONG_MAX__;
+
   if (goodvar_stack_fill_pointer > 0) {
-    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob) {
+    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
       return goodvar_stack[rand() % goodvar_stack_fill_pointer];
-    }
 
-    int sample_start = rand() % goodvar_stack_fill_pointer;
-    int best_var = goodvar_stack[sample_start];
-    int best_score = score[best_var];
-    long best_time = time_stamp[best_var];
-
-    for (int i = 1; i < hd_count_threshold; ++i) {
-      int idx = (sample_start + i) % goodvar_stack_fill_pointer;
-      int v = goodvar_stack[idx];
+    int sample_size = min(hd_count_threshold, goodvar_stack_fill_pointer);
+    for (i = 0; i < sample_size; ++i) {
+      v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
       if (score[v] > best_score ||
-          (score[v] == best_score && time_stamp[v] < best_time)) {
+          (score[v] == best_score && time_stamp[v] < min_time_stamp)) {
         best_var = v;
         best_score = score[v];
-        best_time = time_stamp[v];
+        min_time_stamp = time_stamp[v];
       }
     }
     return best_var;
@@ -174,27 +173,25 @@ int USW::pick_var() {
   update_clause_weights();
 
   int sel_c;
-  if (hardunsat_stack_fill_pointer > 0) {
+  if (hardunsat_stack_fill_pointer > 0)
     sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
-  } else {
+  else
     sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
-  }
 
-  if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob) {
+  if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
     return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
-  }
 
-  int best_var = clause_lit[sel_c][0].var_num;
-  int best_score = score[best_var];
-  long best_time = time_stamp[best_var];
+  lit *p = clause_lit[sel_c];
+  best_var = p->var_num;
+  best_score = score[best_var];
+  min_time_stamp = time_stamp[best_var];
 
-  for (lit *p = clause_lit[sel_c] + 1; (p->var_num) != 0; p++) {
-    int v = p->var_num;
+  for (p++; (v = p->var_num) != 0; p++) {
     if (score[v] > best_score ||
-        (score[v] == best_score && time_stamp[v] < best_time)) {
+        (score[v] == best_score && time_stamp[v] < min_time_stamp)) {
       best_var = v;
       best_score = score[v];
-      best_time = time_stamp[v];
+      min_time_stamp = time_stamp[v];
     }
   }
 
