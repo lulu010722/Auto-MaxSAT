@@ -147,50 +147,58 @@ void USW::init(vector<int> &init_solution)
     }
 }
 
-int USW::pick_var() {
-  int i, v;
-  int best_var;
-  int sel_c;
-  lit *p;
+int USW::pick_var()
+{
+    int i, v;
+    int best_var;
+    int sel_c;
+    lit *p;
 
-  if (goodvar_stack_fill_pointer > 0) {
-    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
-      return goodvar_stack[rand() % goodvar_stack_fill_pointer];
+    if (goodvar_stack_fill_pointer > 0)
+    {
+        if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
+            return goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-    int start = rand() % goodvar_stack_fill_pointer;
-    best_var = goodvar_stack[start];
+        int sample_size = std::min(hd_count_threshold, goodvar_stack_fill_pointer);
+        best_var = goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-    for (i = 1; i < hd_count_threshold; ++i) {
-      int idx = (start + i) % goodvar_stack_fill_pointer;
-      v = goodvar_stack[idx];
-      if (score[v] > score[best_var] ||
-          (score[v] == score[best_var] &&
-           time_stamp[v] < time_stamp[best_var])) {
-        best_var = v;
-      }
+        for (i = 1; i < sample_size; ++i)
+        {
+            v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
+            if (score[v] > score[best_var] || 
+                (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
+            {
+                best_var = v;
+            }
+        }
+        return best_var;
     }
+
+    update_clause_weights();
+
+    if (hardunsat_stack_fill_pointer > 0)
+    {
+        sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
+    }
+    else
+    {
+        sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
+    }
+
+    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
+        return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
+
+    best_var = clause_lit[sel_c][0].var_num;
+    for (p = clause_lit[sel_c] + 1; (v = p->var_num) != 0; p++)
+    {
+        if (score[v] > score[best_var] || 
+            (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
+        {
+            best_var = v;
+        }
+    }
+
     return best_var;
-  }
-
-  update_clause_weights();
-
-  if (hardunsat_stack_fill_pointer > 0) {
-    sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
-  } else {
-    sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
-  }
-  if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
-    return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
-
-  best_var = clause_lit[sel_c][0].var_num;
-  for (p = clause_lit[sel_c] + 1; (v = p->var_num) != 0; p++) {
-    if (score[v] > score[best_var] ||
-        (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var])) {
-      best_var = v;
-    }
-  }
-
-  return best_var;
 }
 
 int USW::nearestPowerOfTen(double num)

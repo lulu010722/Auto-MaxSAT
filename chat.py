@@ -71,7 +71,7 @@ def chat(message, chat_history):
 
 
 def insert_function(optimized_file_name: str, code: str, func_name_to_replace: str):
-    formatted_code = subprocess.run(["clang-format"], input=code, capture_output=True, text=True).stdout
+    # formatted_code = subprocess.run(["clang-format"], input=code, capture_output=True, text=True).stdout
 
     with open(optimized_file_name, "r", encoding="utf-8") as file:
         lines = file.readlines()
@@ -87,7 +87,7 @@ def insert_function(optimized_file_name: str, code: str, func_name_to_replace: s
 
     del lines[insert_index]
 
-    for line in formatted_code.splitlines():
+    for line in code.splitlines():
         lines.insert(insert_index, line + "\n")
         insert_index += 1
 
