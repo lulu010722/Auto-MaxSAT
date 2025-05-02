@@ -2,6 +2,7 @@ import subprocess
 import pandas as pd
 import os
 import shutil
+import sys
 from pathlib import Path
 
 import chat
@@ -25,12 +26,15 @@ ITER_NUM = 1
 
 
 # 与test相关的配置
-CUTOFF_TIME = 60  # 超过时间限制则结束当前实例的运算，单位是秒
+CUTOFF_TIME = 20  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
-INSTANCES_SIZE_LIMIT = 1024 * 1024 * 500  # 超过这个大小的就不计算了，因为WSL会爆炸！单位是字节，目前是500M
-BENCHMARK_SET_PATH = "benchmark/mse24-anytime-weighted-old-format/judgment-aggregation-ja-kemeny-preflib"  # 细分测试集
+INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024  # 超过这个大小的就不计算了，因为WSL会爆炸！单位是字节
+BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format" # 细分测试集
+BENCHMARK_SET_PATH = ""
 
 
+# 总共进化轮数
+EPOCH = 1
 PROGRESS_HISTORY_DIR = "progress"
 
 
@@ -60,10 +64,15 @@ def read_best_scores():
         new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
 
 
-# 总共进化轮数
-EPOCH = 1
+def main():
+    try:
+        benchmark_set = sys.argv[1]
+    except Exception as e:
+        print(f"usage: python automation.py <benchmark_set>")
+        exit(1)
 
-if __name__ == "__main__":
+    global BENCHMARK_SET_PATH
+    BENCHMARK_SET_PATH = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
     progress_cnt = 0
 
@@ -87,9 +96,8 @@ if __name__ == "__main__":
 
         Path(PROGRESS_HISTORY_DIR).mkdir(parents=True, exist_ok=True)
         for item in best_scores:
-            benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
             if item["benchmark_set"] == benchmark_set:
-                if best_score_after_llm > item["best_score"]:
+                if best_score_after_llm > item["best_score"] * 1.05: # 加5%门槛以排除评分波动
                     print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
                     origin_filename = os.path.basename(ORIGIN_FILE_PATH)
                     shutil.copyfile(OPTIMIZED_FILE_PATH, f"{PROGRESS_HISTORY_DIR}/{origin_filename}.progress_{progress_cnt}")
@@ -101,3 +109,7 @@ if __name__ == "__main__":
 
                 else:
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
+
+
+if __name__ == "__main__":
+    main()

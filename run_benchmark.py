@@ -157,7 +157,7 @@ def rate():
 
 
 # 通过import执行子模块
-def main(cutoff_time, instance_num_limit, instance_size_limit, benchmark_set_path):
+def main(cutoff_time: int, instance_num_limit: int, instance_size_limit: int, benchmark_set_path: str):
     global CUTOFF_TIME
     global INSTANCE_NUM_LIMIT
     global INSTANCE_SIZE_LIMIT
@@ -170,7 +170,7 @@ def main(cutoff_time, instance_num_limit, instance_size_limit, benchmark_set_pat
     print("开始运行Starexec")
     print(f"运行实例时间上限：{CUTOFF_TIME} 秒")
     print(f"运行实例数量上限：{INSTANCE_NUM_LIMIT} 个")
-    print(f"运行实例大小上限：{INSTANCE_SIZE_LIMIT} B")
+    print(f"运行实例大小上限：{INSTANCE_SIZE_LIMIT // (1024 * 1024)} MB")
     print(f"运行实例集合目录：{BENCHMARK_SET_PATH}")
 
     # run_starexec_with_all_benchmark_set()
