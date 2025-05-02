@@ -12,6 +12,12 @@ def print_blue(message):
 
 
 def main():
+
+    with open("best_scores.csv", "w") as f:
+        f.write("benchmark_set,best_score\n")
+    with open("2024_my_costs.csv", "w") as f:
+        pass
+
     benchmark_sets = os.listdir("benchmark/mse24-anytime-weighted-old-format")
     benchmark_sets.sort()
     for benchmark_set in benchmark_sets:
@@ -20,5 +26,6 @@ def main():
         print_blue(f"进化完成{benchmark_set}")
         print()
         time.sleep(0.5)
+
 
 main()

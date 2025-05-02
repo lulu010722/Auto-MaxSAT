@@ -25,8 +25,8 @@ ITER_NUM = 0  # 和LLM对话的次数
 
 
 # 与test相关的配置
-CUTOFF_TIME = 10  # 超过时间限制则结束当前实例的运算，单位是秒
-INSTANCE_NUM_LIMIT = 5  # 运行实例数量上限，运行到这个数量就停机
+CUTOFF_TIME = 2  # 超过时间限制则结束当前实例的运算，单位是秒
+INSTANCE_NUM_LIMIT = 2  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format"  # 细分测试集
 BENCHMARK_SET_PATH = ""
@@ -54,13 +54,15 @@ def read_best_scores():
     best_scores_benchmark_set = [item["benchmark_set"] for item in best_scores]
     benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
     if benchmark_set not in best_scores_benchmark_set:
-        new_row = pd.DataFrame([{"benchmark": benchmark_set, "best_score": 0.0}])
+        best_scores.append({"benchmark_set": benchmark_set, "best_score": 0.0})
+        new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
         new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
 
 
 def main(benchmark_set):
 
     global BENCHMARK_SET_PATH
+    global best_scores
     BENCHMARK_SET_PATH = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
     progress_cnt = 0
@@ -90,7 +92,6 @@ def main(benchmark_set):
         for item in best_scores:
             if item["benchmark_set"] == benchmark_set:
                 if best_score_after_llm > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
-                    print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
                     origin_filename = os.path.basename(ORIGIN_FILE_PATH)
                     shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_history_wrt_benchmark_set_dir}/{origin_filename}.progress_{progress_cnt}")
                     progress_cnt += 1
@@ -98,6 +99,7 @@ def main(benchmark_set):
                     df = pd.read_csv("best_scores.csv")
                     df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
                     df.to_csv("best_scores.csv", index=False)
+                    print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")

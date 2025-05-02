@@ -25,7 +25,7 @@ all_costs = []
 # [
 #     {
 #         "instance": "example1.wcnf",
-#         "cost": 123
+#         "best_cost": 123
 #     } ...
 # ]
 best_costs = []
@@ -123,13 +123,13 @@ def run_starexec_with_benchmark_set():
 
 def compare_with_best_costs():
     global best_costs
-    for cost in all_costs:
-        for best_cost in best_costs:
-            if cost["instance"] == best_cost["instance"]:
-                cost["best_cost"] = best_cost["cost"]
+    for cost_item in all_costs:
+        for best_cost_item in best_costs:
+            if cost_item["instance"] == best_cost_item["instance"]:
+                cost_item["best_cost"] = best_cost_item["best_cost"]
                 break
         else:
-            print(f"实例{cost['instance']}的最佳cost没找到")
+            print(f"实例{cost_item['instance']}的最佳cost没找到")
 
 
 def write_costs_to_csv():
