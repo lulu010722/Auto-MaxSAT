@@ -7,13 +7,18 @@ import json
 
 
 SHELL_SCRIPT = "starexec_usw-ls-runsolver.sh"
-try:
+
+if len(sys.argv) == 5:
     CUTOFF_TIME = int(sys.argv[1])  # 超过时间限制则结束当前实例的运算，单位是秒
     INSTANCE_NUM_LIMIT = int(sys.argv[2])  # 运行实例数量上限，运行到这个数量就停机
     INSTANCE_SIZE_LIMIT = int(sys.argv[3])  # 超过这个大小的就不计算了，因为WSL会爆炸！单位是字节
     BENCHMARK_SET_PATH = sys.argv[4]  # 细分测试集
-except Exception as e:
-    print(f"Error: {e}")
+elif len(sys.argv) == 1:
+    CUTOFF_TIME = 0
+    INSTANCE_NUM_LIMIT = 0
+    INSTANCE_SIZE_LIMIT = 0
+    BENCHMARK_SET_PATH = ""
+else:
     print("Usage: python test.py <CUTOFF_TIME> <INSTANCE_NUM_LIMIT> <INSTANCE_SIZE_LIMIT> <BENCHMARK_SET_PATH>")
     sys.exit(1)
 
@@ -65,7 +70,6 @@ def parse_starexec_output(output: str) -> int:
     return current_best
 
 
-
 # 有实例数量和文件大小的限制
 def run_starexec_with_all_benchmark_set():
     runned_instances_cnt = 0
@@ -107,13 +111,12 @@ def run_starexec_with_all_benchmark_set():
             return
 
 
-
 # 仍有文件大小上限限制，但无数量限制
-def run_starexec_with_benchmark_set(benchmark_set_path = BENCHMARK_SET_PATH):
+def run_starexec_with_benchmark_set():
 
-    all_wcnf_files_path = [os.path.join(benchmark_set_path, filename) for filename in os.listdir(benchmark_set_path)]
+    all_wcnf_files_path = [os.path.join(BENCHMARK_SET_PATH, filename) for filename in os.listdir(BENCHMARK_SET_PATH)]
     all_wcnf_files_path = [filepath for filepath in all_wcnf_files_path if os.path.getsize(filepath) <= INSTANCE_SIZE_LIMIT]
-    
+
     for filepath in all_wcnf_files_path:
         filename = os.path.basename(filepath)
         seed = random.randint(1, 1000000)
@@ -130,7 +133,6 @@ def run_starexec_with_benchmark_set(benchmark_set_path = BENCHMARK_SET_PATH):
             })
         except Exception as e:
             print(f"Error running {filename}: {e}")
-
 
 
 def compare_with_best_costs():
@@ -168,6 +170,37 @@ def rate():
     return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
 
 
+# 通过import执行子模块
+def main(cutoff_time, instance_num_limit, instance_size_limit, benchmark_set_path):
+    global CUTOFF_TIME
+    global INSTANCE_NUM_LIMIT
+    global INSTANCE_SIZE_LIMIT
+    global BENCHMARK_SET_PATH
+    CUTOFF_TIME = cutoff_time
+    INSTANCE_NUM_LIMIT = instance_num_limit
+    INSTANCE_SIZE_LIMIT = instance_size_limit
+    BENCHMARK_SET_PATH = benchmark_set_path
+
+    print("开始运行Starexec")
+    print(f"运行实例时间上限：{CUTOFF_TIME} 秒")
+    print(f"运行实例数量上限：{INSTANCE_NUM_LIMIT} 个")
+    print(f"运行实例大小上限：{INSTANCE_SIZE_LIMIT} B")
+    print(f"运行实例集合目录：{BENCHMARK_SET_PATH}")
+    
+    # run_starexec_with_all_benchmark_set()
+    run_starexec_with_benchmark_set()
+
+    read_best_costs()
+    compare_with_best_costs()
+    write_costs_to_csv()
+
+    score = rate()
+    print(f"该算法最终得分：{score}")
+    with open("temp", "w") as temp_file:
+        temp_file.write(str(score))
+
+
+# 通过subprocess执行子模块
 if __name__ == "__main__":
     print("开始运行Starexec")
     print(f"运行实例时间上限：{CUTOFF_TIME} 秒")

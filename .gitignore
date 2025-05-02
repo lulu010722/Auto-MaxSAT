@@ -6,5 +6,7 @@ maxsat_benchmarks_code_base/
 
 *.csv
 
+__pycache__/
+
 .venv/
 .vscode/

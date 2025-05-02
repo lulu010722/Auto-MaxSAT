@@ -15,17 +15,19 @@ BASE_URL = "https://api.deepseek.com"
 MODEL = "deepseek-chat"
 client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
-try:
-    # 需要接受外部传入的程序参数的全局变量
-    SRC_DIR = sys.argv[1]
-    # 优化单个文件中的单个函数
-    ORIGIN_FILE_PATH = sys.argv[2]
-    OPTIMIZED_FILE_PATH = sys.argv[3]
-    TARGET_FUNC = sys.argv[4]
-    # 主程序迭代运行信息
-    ITER_NUM = int(sys.argv[5])
-except Exception as e:
-    print(f"Error: {e}")
+if len(sys.argv) == 6:
+    SRC_DIR = sys.argv[1] # 需要接受外部传入的程序参数的全局变量
+    ORIGIN_FILE_PATH = sys.argv[2]  # 优化单个文件中的单个函数
+    OPTIMIZED_FILE_PATH = sys.argv[3]  # 优化后的代码存放处
+    TARGET_FUNC = sys.argv[4]  # 目标函数
+    ITER_NUM = int(sys.argv[5])  # 主程序迭代运行信息
+elif len(sys.argv) == 1:
+    SRC_DIR = ""
+    ORIGIN_FILE_PATH = ""
+    OPTIMIZED_FILE_PATH = ""
+    TARGET_FUNC = ""
+    ITER_NUM = 0
+else:
     print("Usage: python chat.py <SRC_DIR> <ORIGIN_FILE_PATH> <OPTIMIZED_FILE_PATH> <TARGET_FUNC> <ITER_NUM>")
     sys.exit(1)
 
@@ -159,5 +161,23 @@ def optimize_multiple():
     pass
 
 
+# 通过import的方式执行子模块
+def main(src_dir, origin_file_path, optimized_file_path, target_func, iter_num):
+    global SRC_DIR
+    global ORIGIN_FILE_PATH
+    global OPTIMIZED_FILE_PATH
+    global TARGET_FUNC
+    global ITER_NUM
+
+    SRC_DIR = src_dir
+    ORIGIN_FILE_PATH = origin_file_path
+    OPTIMIZED_FILE_PATH = optimized_file_path
+    TARGET_FUNC = target_func
+    ITER_NUM = iter_num
+
+    optimize_one_at_a_time()
+
+
+# 通过subprocess的方式执行子模块
 if __name__ == "__main__":
     optimize_one_at_a_time()
