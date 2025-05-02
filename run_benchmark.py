@@ -33,7 +33,7 @@ best_costs = []
 
 # 将2024_best_costs.csv中的数据读取到best_costs中
 def read_best_costs():
-    df = pd.read_csv("2024_best_costs.csv")
+    df = pd.read_csv("2024_best_costs.csv", skipinitialspace=True)
     for _, row in df.iterrows():
         best_costs.append({
             "instance": row["instance"],
