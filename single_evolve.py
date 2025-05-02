@@ -28,11 +28,11 @@ ITER_NUM = 0  # 和LLM对话的次数
 CUTOFF_TIME = 10  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 5  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
-BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format" # 细分测试集
+BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format"  # 细分测试集
 BENCHMARK_SET_PATH = ""
 
 
-EPOCH = 1 # 总共进化轮数
+EPOCH = 1  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -49,7 +49,7 @@ def print_green(message):
 
 def read_best_scores():
     global best_scores
-    best_scores = pd.read_csv("best_scores.csv", skipinitialspace=True).to_dict(orient="records")
+    best_scores = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in best_scores]
     benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
@@ -84,18 +84,18 @@ def main(benchmark_set):
         with open(temp_file_name, "r") as temp_file:
             best_score_after_llm = float(temp_file.read())
         os.remove(temp_file_name)
-        
+
         progress_history_wrt_benchmark_set_dir = f"{PROGRESS_HISTORY_ROOT_DIR}/{benchmark_set}"
         Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
         for item in best_scores:
             if item["benchmark_set"] == benchmark_set:
-                if best_score_after_llm > item["best_score"] * 1.05: # 加5%门槛以排除评分波动
+                if best_score_after_llm > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
                     print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
                     origin_filename = os.path.basename(ORIGIN_FILE_PATH)
                     shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_history_wrt_benchmark_set_dir}/{origin_filename}.progress_{progress_cnt}")
                     progress_cnt += 1
 
-                    df = pd.read_csv("best_scores.csv", skipinitialspace=True)
+                    df = pd.read_csv("best_scores.csv")
                     df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
                     df.to_csv("best_scores.csv", index=False)
 

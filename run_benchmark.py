@@ -33,13 +33,8 @@ best_costs = []
 
 # 将2024_best_costs.csv中的数据读取到best_costs中
 def read_best_costs():
-    df = pd.read_csv("2024_best_costs.csv", skipinitialspace=True)
-    for _, row in df.iterrows():
-        best_costs.append({
-            "instance": row["instance"],
-            "cost": row["best_cost"]
-        })
-
+    global best_costs
+    best_costs = pd.read_csv("2024_best_costs.csv").to_dict(orient="records")
 
 def parse_starexec_output(output: str) -> int:
     lines = output.splitlines()
@@ -127,6 +122,7 @@ def run_starexec_with_benchmark_set():
 
 
 def compare_with_best_costs():
+    global best_costs
     for cost in all_costs:
         for best_cost in best_costs:
             if cost["instance"] == best_cost["instance"]:
