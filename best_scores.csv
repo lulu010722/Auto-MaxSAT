@@ -1,3 +1,3 @@
 benchmark_set,best_score
-abstraction-refinement_wt,0.0
-judgment-aggregation-ja-kemeny-preflib,1.0
+BTBNSL_wt-Rounded_BTWBNSL,0.9661475825806347
+MinimumWeightDominatingSetProblem_wt,0.0

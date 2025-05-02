@@ -94,11 +94,16 @@ def parse_starexec_output(output: str) -> int:
 
 
 def run_starexec_with_benchmark_set():
+    global all_costs
+
     runned_instaces_cnt = 0
 
     all_wcnf_files_path = [os.path.join(BENCHMARK_SET_PATH, filename) for filename in os.listdir(BENCHMARK_SET_PATH)]
     all_wcnf_files_path = [filepath for filepath in all_wcnf_files_path if os.path.getsize(filepath) <= INSTANCE_SIZE_LIMIT]
 
+    # 这一步是因为在父级脚本中，改脚本在未销毁的情况下会多次运行，所以all_costs会有上次残留的信息
+    # 后面因为有将这个变量写入csv文件的操作，所以需要清空
+    all_costs = []
     for filepath in all_wcnf_files_path:
         filename = os.path.basename(filepath)
         seed = random.randint(1, 1000000)
@@ -132,10 +137,9 @@ def compare_with_best_costs():
 
 
 def write_costs_to_csv():
-    with open("2024_my_costs.csv", "w") as output_file:
-        writer = pd.DataFrame(all_costs)
-        writer.to_csv(output_file, index=False)
-        print("输出结果已保存到2024_my_costs.csv")
+    df = pd.DataFrame(all_costs)
+    df.to_csv("2024_my_costs.csv", index=False)
+    print("输出结果已保存到2024_my_costs.csv")
 
 
 def rate():

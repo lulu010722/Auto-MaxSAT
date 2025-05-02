@@ -9,7 +9,6 @@ import chat
 import run_benchmark
 
 
-RED = "\033[1;31m"
 GREEN = "\033[1;32m"
 YELLOW = "\033[1;33m"
 RESET = "\033[0m"
@@ -22,19 +21,18 @@ src_dir = "source-code"
 ORIGIN_FILE_PATH = f"{src_dir}/backup/heuristic.h.origin"
 OPTIMIZED_FILE_PATH = f"{src_dir}/heuristic.h"
 TARGET_FUNC = "int USW::pick_var()"
-ITER_NUM = 1
+ITER_NUM = 0  # 和LLM对话的次数
 
 
 # 与test相关的配置
-CUTOFF_TIME = 20  # 超过时间限制则结束当前实例的运算，单位是秒
-INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
-INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024  # 超过这个大小的就不计算了，因为WSL会爆炸！单位是字节
+CUTOFF_TIME = 3  # 超过时间限制则结束当前实例的运算，单位是秒
+INSTANCE_NUM_LIMIT = 5  # 运行实例数量上限，运行到这个数量就停机
+INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format" # 细分测试集
 BENCHMARK_SET_PATH = ""
 
 
-# 总共进化轮数
-EPOCH = 1
+EPOCH = 1 # 总共进化轮数
 PROGRESS_HISTORY_DIR = "progress"
 
 
@@ -64,12 +62,7 @@ def read_best_scores():
         new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
 
 
-def main():
-    try:
-        benchmark_set = sys.argv[1]
-    except Exception as e:
-        print(f"usage: python automation.py <benchmark_set>")
-        exit(1)
+def main(benchmark_set):
 
     global BENCHMARK_SET_PATH
     BENCHMARK_SET_PATH = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
@@ -77,22 +70,25 @@ def main():
     progress_cnt = 0
 
     for epoch in range(EPOCH):
-        print_yellow("starting chatting with LLM to optimize the algorithm")
+        print_yellow("开始LLM对话")
         chat.main(src_dir, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
-        print_green("LLM interation done")
+        print_green("LLM对话迭代完成")
 
-        print_yellow("making newly generated code into executable USW-LS")
+        print_yellow("构建算法可执行文件")
         subprocess.run(["make", "-C", "source-code"])
-        print_green("make USW-LS done")
+        print_green("构建完成")
 
-        print_yellow("running benchmark test")
+        print_yellow("开始基准测试")
         run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, BENCHMARK_SET_PATH)
-        print_green("benchmark test done")
+        print_green("基准测试完成")
 
         read_best_scores()
 
-        with open("temp", "r") as temp_file:
+        temp_file_name = "temp"
+        with open(temp_file_name, "r") as temp_file:
             best_score_after_llm = float(temp_file.read())
+        os.remove(temp_file_name)
+        
 
         Path(PROGRESS_HISTORY_DIR).mkdir(parents=True, exist_ok=True)
         for item in best_scores:
@@ -109,7 +105,3 @@ def main():
 
                 else:
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
-
-
-if __name__ == "__main__":
-    main()

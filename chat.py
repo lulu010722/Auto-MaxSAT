@@ -5,7 +5,6 @@ import json
 import time
 import datetime
 import shutil
-import subprocess
 
 
 # 模型交互信息
