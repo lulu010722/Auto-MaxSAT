@@ -2,6 +2,7 @@ import subprocess
 import pandas as pd
 import os
 import shutil
+from pathlib import Path
 
 import chat
 import run_benchmark
@@ -60,7 +61,7 @@ def read_best_scores():
 
 
 # 总共进化轮数
-EPOCH = 0
+EPOCH = 1
 
 if __name__ == "__main__":
 
@@ -84,6 +85,7 @@ if __name__ == "__main__":
         with open("temp", "r") as temp_file:
             best_score_after_llm = float(temp_file.read())
 
+        Path(PROGRESS_HISTORY_DIR).mkdir(parents=True, exist_ok=True)
         for item in best_scores:
             benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
             if item["benchmark_set"] == benchmark_set:

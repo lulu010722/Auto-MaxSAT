@@ -165,5 +165,7 @@ def main(src_dir, origin_file_path, optimized_file_path, target_func, iter_num):
     ITER_DIR_PATH = f"{SRC_DIR}/iterations"
     LOG_DIR_PATH = f"{SRC_DIR}/log"
 
+    Path(ITER_DIR_PATH).mkdir(parents=True, exist_ok=True)
+    Path(LOG_DIR_PATH).mkdir(parents=True, exist_ok=True)
 
     optimize_one_at_a_time()
