@@ -13,21 +13,21 @@ YELLOW = "\033[1;33m"
 RESET = "\033[0m"
 
 
-SRC_DIR = "source-code"
+src_dir = "source-code"
 
 
 # 与chat相关的配置
-ORIGIN_FILE_PATH = f"{SRC_DIR}/backup/heuristic.h.origin"
-OPTIMIZED_FILE_PATH = f"{SRC_DIR}/heuristic.h"
+ORIGIN_FILE_PATH = f"{src_dir}/backup/heuristic.h.origin"
+OPTIMIZED_FILE_PATH = f"{src_dir}/heuristic.h"
 TARGET_FUNC = "int USW::pick_var()"
-ITER_NUM = 0
+ITER_NUM = 1
 
 
 # 与test相关的配置
-CUTOFF_TIME = 20  # 超过时间限制则结束当前实例的运算，单位是秒
-INSTANCE_NUM_LIMIT = 2  # 运行实例数量上限，运行到这个数量就停机
+CUTOFF_TIME = 3  # 超过时间限制则结束当前实例的运算，单位是秒
+INSTANCE_NUM_LIMIT = 3  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 500  # 超过这个大小的就不计算了，因为WSL会爆炸！单位是字节，目前是500M
-BENCHMARK_SET_PATH = "benchmark/mse24-anytime-weighted-old-format/abstraction-refinement_wt"  # 细分测试集
+BENCHMARK_SET_PATH = "benchmark/mse24-anytime-weighted-old-format/judgment-aggregation-ja-kemeny-preflib"  # 细分测试集
 
 
 PROGRESS_HISTORY_DIR = "progress"
@@ -36,11 +36,11 @@ PROGRESS_HISTORY_DIR = "progress"
 best_scores = []
 
 
-def print_start_info(message):
+def print_yellow(message):
     print(f"{YELLOW}{message}{RESET}")
 
 
-def print_done_info(message):
+def print_green(message):
     print(f"{GREEN}{message}{RESET}")
 
 
@@ -60,39 +60,45 @@ def read_best_scores():
 
 
 # 总共进化轮数
-EPOCH = 2
+EPOCH = 1
 
 if __name__ == "__main__":
 
     progress_cnt = 0
 
     for epoch in range(EPOCH):
-        print_start_info("starting chatting with LLM to optimize the algorithm")
+        print_yellow("starting chatting with LLM to optimize the algorithm")
         # subprocess.run(["python", "chat.py", SRC_DIR, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM])
-        # chat.main(SRC_DIR, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
-        print_done_info("LLM interation done")
+        # chat.main(src_dir, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
+        print_green("LLM interation done")
 
-        print_start_info("making newly generated code into executable USW-LS")
+        print_yellow("making newly generated code into executable USW-LS")
         # subprocess.run(["make", "-C", "source-code"])
-        print_done_info("make USW-LS done")
+        print_green("make USW-LS done")
 
-        print_start_info("running benchmark test")
+        print_yellow("running benchmark test")
         # subprocess.run(["python", "run_benchmark.py", CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, BENCHMARK_SET_PATH])
-        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, BENCHMARK_SET_PATH)
-        print_done_info("benchmark test done")
+        # run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, BENCHMARK_SET_PATH)
+        print_green("benchmark test done")
 
         read_best_scores()
 
-        current_score = 0.0
+        best_score_after_llm = 0.0
         with open("temp", "r") as temp_file:
-            current_score = float(temp_file.read())
+            best_score_after_llm = float(temp_file.read())
 
         for item in best_scores:
-            if item["benchmark_set"] == os.path.basename(BENCHMARK_SET_PATH):
-                if current_score > item["best_score"]:
-                    # 应该保留当前程序文件副本并更新状态
+            benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
+            if item["benchmark_set"] == benchmark_set:
+                if best_score_after_llm > item["best_score"]:
+                    print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
                     origin_filename = os.path.basename(ORIGIN_FILE_PATH)
-                    shutil.copyfile(OPTIMIZED_FILE_PATH, f"{PROGRESS_HISTORY_DIR}/{origin_filename}._progress_{progress_cnt}")
+                    shutil.copyfile(OPTIMIZED_FILE_PATH, f"{PROGRESS_HISTORY_DIR}/{origin_filename}.progress_{progress_cnt}")
                     progress_cnt += 1
+
+                    df = pd.read_csv("best_scores.csv")
+                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
+                    df.to_csv("best_scores.csv", index=False)
+
                 else:
-                    print(f"the optimized version found in epoch {epoch} is not better")
+                    print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")

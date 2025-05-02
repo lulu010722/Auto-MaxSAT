@@ -1,13 +1,4 @@
 instance,cost,best_cost
-abstraction-refinement_wt-downcast-antlr.wcnf,-2,76250
-abstraction-refinement_wt-downcast-avrora.wcnf,-2,46642
-abstraction-refinement_wt-downcast-xalan.wcnf,-2,65491
-abstraction-refinement_wt-polysite-avrora.wcnf,-2,51801
-abstraction-refinement_wt-polysite-lusearch.wcnf,421704,421456
-abstraction-refinement_wt-polysite-xalan.wcnf,-2,114620
-abstraction-refinement_wt-downcast-antlr.wcnf,-2,76250
-abstraction-refinement_wt-downcast-avrora.wcnf,-2,46642
-abstraction-refinement_wt-downcast-xalan.wcnf,-2,65491
-abstraction-refinement_wt-polysite-avrora.wcnf,-2,51801
-abstraction-refinement_wt-polysite-lusearch.wcnf,421714,421456
-abstraction-refinement_wt-polysite-xalan.wcnf,-2,114620
+judgment-aggregation-ja-kemeny-preflib-00043-00000180.wcnf,433,433
+judgment-aggregation-ja-kemeny-preflib-00049-00000287.wcnf,782,782
+judgment-aggregation-ja-kemeny-preflib-00049-00000300.wcnf,776,776

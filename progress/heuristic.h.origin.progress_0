@@ -148,21 +148,24 @@ void USW::init(vector<int> &init_solution)
 }
 
 int USW::pick_var() {
-  int best_var = -1;
-  double max_score = -1;
-  int min_timestamp = INT_MAX;
+  int i, v;
+  int best_var;
+  int sel_c;
+  lit *p;
 
   if (goodvar_stack_fill_pointer > 0) {
     if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
       return goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-    int sample_size = min(hd_count_threshold, goodvar_stack_fill_pointer);
-    for (int i = 0; i < sample_size; ++i) {
-      int v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
-      if (score[v] > max_score ||
-          (score[v] == max_score && time_stamp[v] < min_timestamp)) {
-        max_score = score[v];
-        min_timestamp = time_stamp[v];
+    int start = rand() % goodvar_stack_fill_pointer;
+    best_var = goodvar_stack[start];
+
+    for (i = 1; i < hd_count_threshold; ++i) {
+      int idx = (start + i) % goodvar_stack_fill_pointer;
+      v = goodvar_stack[idx];
+      if (score[v] > score[best_var] ||
+          (score[v] == score[best_var] &&
+           time_stamp[v] < time_stamp[best_var])) {
         best_var = v;
       }
     }
@@ -171,23 +174,18 @@ int USW::pick_var() {
 
   update_clause_weights();
 
-  int sel_c;
-  if (hardunsat_stack_fill_pointer > 0)
+  if (hardunsat_stack_fill_pointer > 0) {
     sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
-  else
+  } else {
     sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
-
+  }
   if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
     return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
 
-  max_score = -1;
-  min_timestamp = INT_MAX;
-  for (lit *p = clause_lit[sel_c]; p->var_num != 0; p++) {
-    int v = p->var_num;
-    if (score[v] > max_score ||
-        (score[v] == max_score && time_stamp[v] < min_timestamp)) {
-      max_score = score[v];
-      min_timestamp = time_stamp[v];
+  best_var = clause_lit[sel_c][0].var_num;
+  for (p = clause_lit[sel_c] + 1; (v = p->var_num) != 0; p++) {
+    if (score[v] > score[best_var] ||
+        (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var])) {
       best_var = v;
     }
   }
