@@ -3,8 +3,9 @@ iterations/
 benchmark/
 solvers/
 maxsat_benchmarks_code_base/
-
 __pycache__/
-
 .venv/
 .vscode/
+
+
+test.py
