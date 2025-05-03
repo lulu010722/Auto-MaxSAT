@@ -159,35 +159,21 @@ int USW::pick_var()
         if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
             return goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-        if (goodvar_stack_fill_pointer < hd_count_threshold)
+        best_var = goodvar_stack[0];
+        int max_score = score[best_var];
+        int min_time = time_stamp[best_var];
+
+        for (i = 1; i < goodvar_stack_fill_pointer; ++i)
         {
-            best_var = goodvar_stack[0];
-            for (i = 1; i < goodvar_stack_fill_pointer; ++i)
+            v = goodvar_stack[i];
+            if (score[v] > max_score || (score[v] == max_score && time_stamp[v] < min_time))
             {
-                v = goodvar_stack[i];
-                if (score[v] > score[best_var] || 
-                   (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
-                {
-                    best_var = v;
-                }
+                best_var = v;
+                max_score = score[v];
+                min_time = time_stamp[v];
             }
-            return best_var;
         }
-        else
-        {
-            int sample_size = min(hd_count_threshold, goodvar_stack_fill_pointer);
-            best_var = goodvar_stack[rand() % goodvar_stack_fill_pointer];
-            for (i = 1; i < sample_size; ++i)
-            {
-                v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
-                if (score[v] > score[best_var] || 
-                   (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
-                {
-                    best_var = v;
-                }
-            }
-            return best_var;
-        }
+        return best_var;
     }
 
     update_clause_weights();
@@ -200,18 +186,16 @@ int USW::pick_var()
     {
         sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
     }
-    
+
     if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
         return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
 
     best_var = clause_lit[sel_c][0].var_num;
-    for (p = clause_lit[sel_c] + 1; (v = p->var_num) != 0; p++)
+    p = clause_lit[sel_c];
+    for (p++; (v = p->var_num) != 0; p++)
     {
-        if (score[v] > score[best_var] || 
-           (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
-        {
+        if (score[v] > score[best_var] || (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
             best_var = v;
-        }
     }
 
     return best_var;

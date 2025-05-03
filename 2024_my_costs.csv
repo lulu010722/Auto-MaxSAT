@@ -1,3 +1,9 @@
 instance,cost,best_cost
-BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf,1469741805,1388734978
-BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf,279768191,274907339
+timetabling_wt-comp10.wcnf,140,4
+timetabling_wt-comp07.wcnf,528,6
+timetabling_wt-comp06.wcnf,226,27
+timetabling_wt-comp09.wcnf,117,96
+timetabling_wt-comp02.wcnf,130,24
+timetabling_wt-comp21.wcnf,157,74
+timetabling_wt-test4.wcnf,554,134
+timetabling_wt-comp07.lp.sm-extracted.wcnf,249,3

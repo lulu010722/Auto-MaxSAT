@@ -39,12 +39,13 @@ def main():
     for benchmark_set in benchmark_sets:
         if benchmark_set == "other":
             continue
+
+        reset_origin_file()
         print_blue(f"开始进化测试集{benchmark_set}")
         single.main(benchmark_set)
         print_blue(f"进化完成{benchmark_set}")
         print()
         
-        reset_origin_file()
         time.sleep(0.5)
 
 
