@@ -18,9 +18,9 @@ def init():
     with open("2024_my_costs.csv", "w") as f:
         pass
 
-    shutil.rmtree("source-code/iterations")
-    shutil.rmtree("source-code/log")
-    shutil.rmtree("progress")
+    shutil.rmtree("source-code/iterations", ignore_errors=True)
+    shutil.rmtree("source-code/log", ignore_errors=True)
+    shutil.rmtree("progress", ignore_errors=True)
 
     os.mkdir("source-code/iterations")
     os.mkdir("source-code/log")
