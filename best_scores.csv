@@ -1,2 +1,9 @@
 benchmark_set,best_score
-BTBNSL_wt-Rounded_BTWBNSL,0.9802167368554332
+BTBNSL_wt-Rounded_BTWBNSL,0.9838218983769292
+MinimumWeightDominatingSetProblem_wt,0.9470044622179142
+ParametricRBACMaintenance_mse20_wt-role,0.9944535200102308
+abstraction-refinement_wt,0.9558110897614592
+af-synthesis_wt-af-synthesis_stb,0.992525996919034
+causal-discovery_wt-causal,0.7264325961105739
+correlation-clustering_wt-Rounded_CorrelationClustering,0.9936855190428234
+decision-tree,0.5951387382934705

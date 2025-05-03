@@ -32,7 +32,7 @@ BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format"  # 细分测�
 BENCHMARK_SET_PATH = ""
 
 
-EPOCH = 1  # 总共进化轮数
+EPOCH = 5  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -89,6 +89,7 @@ def main(benchmark_set):
 
         progress_history_wrt_benchmark_set_dir = f"{PROGRESS_HISTORY_ROOT_DIR}/{benchmark_set}"
         Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
+
         for item in best_scores:
             if item["benchmark_set"] == benchmark_set:
                 if best_score_after_llm > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
