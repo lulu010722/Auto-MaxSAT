@@ -2,7 +2,6 @@ import subprocess
 import pandas as pd
 import os
 import shutil
-import sys
 from pathlib import Path
 
 import chat
@@ -21,7 +20,7 @@ src_dir = "source-code"
 ORIGIN_FILE_PATH = f"{src_dir}/backup/heuristic.h.origin"
 OPTIMIZED_FILE_PATH = f"{src_dir}/heuristic.h"
 TARGET_FUNC = "int USW::pick_var()"
-ITER_NUM = 0  # 和LLM对话的次数
+ITER_NUM = 1  # 每轮和LLM对话的次数
 
 
 # 与test相关的配置
@@ -31,7 +30,7 @@ INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 1  # 总共进化轮数
+EPOCH = 3  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 

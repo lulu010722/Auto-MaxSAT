@@ -48,46 +48,6 @@ def parse_starexec_output(output: str) -> int:
     return current_best
 
 
-# 有实例数量和文件大小的限制
-# def run_starexec_with_all_benchmark_set():
-#     runned_instances_cnt = 0
-
-#     all_wcnf_files_path = []
-#     for dirpath, _, filenames in os.walk("benchmark/mse24-anytime-weighted-old-format"):
-#         for filename in filenames:
-#             if filename.endswith(".wcnf"):
-#                 filepath = os.path.join(dirpath, filename)
-
-#                 # 这里可以添加一些条件来过滤文件，例如文件大小、文件名等
-#                 if os.path.getsize(filepath) > INSTANCE_SIZE_LIMIT:
-#                     continue
-#                 all_wcnf_files_path.append(filepath)
-
-#     # 打乱文件顺序
-#     random.shuffle(all_wcnf_files_path)
-
-#     for filepath in all_wcnf_files_path:
-#         filename = os.path.basename(filepath)
-#         seed = random.randint(1, 1000000)
-#         print(f"Running USW-LS on {filepath}")
-#         # 较高概率出错的部分，使用try-except捕获异常
-#         try:
-#             output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
-#             cost = parse_starexec_output(output)
-#             all_costs.append({
-#                 "instance": filename,
-#                 "cost": cost,
-#                 "best_cost": -1
-#             })
-#         except Exception as e:
-#             print(f"Error running {filename}: {e}")
-
-#         runned_instances_cnt += 1
-#         if runned_instances_cnt >= INSTANCE_NUM_LIMIT:
-#             print("达到运行实例数量上限，停机")
-#             return
-
-
 def run_starexec_with_benchmark_set():
     global all_costs
 
