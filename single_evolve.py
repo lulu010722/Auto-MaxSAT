@@ -1,6 +1,7 @@
 import subprocess
 import pandas as pd
 import os
+import sys
 import shutil
 from pathlib import Path
 
@@ -60,6 +61,10 @@ def read_best_scores(benchmark_set_path):
 def main(benchmark_set):
 
     global best_scores
+
+    if len(sys.argv) == 2:
+        benchmark_set = sys.argv[1]
+
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
     
