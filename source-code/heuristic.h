@@ -156,29 +156,64 @@ int USW::pick_var()
 
     if (goodvar_stack_fill_pointer > 0)
     {
+        int best_array_count = 0;
         if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
             return goodvar_stack[rand() % goodvar_stack_fill_pointer];
 
-        best_var = goodvar_stack[0];
-        for (i = 1; i < goodvar_stack_fill_pointer; ++i)
+        if (goodvar_stack_fill_pointer < hd_count_threshold)
         {
-            v = goodvar_stack[i];
-            if (score[v] > score[best_var] || 
-               (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
+            best_var = goodvar_stack[0];
+
+            for (i = 1; i < goodvar_stack_fill_pointer; ++i)
             {
-                best_var = v;
+                v = goodvar_stack[i];
+                if (score[v] > score[best_var])
+                {
+                    best_var = v;
+                }
+                else if (score[v] == score[best_var])
+                {
+                    if (time_stamp[v] < time_stamp[best_var])
+                    {
+                        best_var = v;
+                    }
+                }
             }
+            return best_var; // best_array[rand() % best_array_count];
         }
-        return best_var;
+        else
+        {
+            best_var = goodvar_stack[rand() % goodvar_stack_fill_pointer];
+
+            for (i = 1; i < hd_count_threshold; ++i)
+            {
+                v = goodvar_stack[rand() % goodvar_stack_fill_pointer];
+                if (score[v] > score[best_var])
+                {
+                    best_var = v;
+                }
+                else if (score[v] == score[best_var])
+                {
+                    if (time_stamp[v] < time_stamp[best_var])
+                    {
+                        best_var = v;
+                    }
+                }
+            }
+            return best_var; // best_array[rand() % best_array_count];
+        }
     }
 
     update_clause_weights();
 
     if (hardunsat_stack_fill_pointer > 0)
+    {
         sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
+    }
     else
+    {
         sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
-
+    }
     if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
         return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
 
@@ -186,10 +221,12 @@ int USW::pick_var()
     p = clause_lit[sel_c];
     for (p++; (v = p->var_num) != 0; p++)
     {
-        if (score[v] > score[best_var] || 
-           (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
-        {
+        if (score[v] > score[best_var])
             best_var = v;
+        else if (score[v] == score[best_var])
+        {
+            if (time_stamp[v] < time_stamp[best_var])
+                best_var = v;
         }
     }
 

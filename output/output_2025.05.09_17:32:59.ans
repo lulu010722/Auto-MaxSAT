@@ -1,0 +1,328 @@
+[1;34m开始进化测试集BTBNSL_wt-[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:32:59 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/BTBNSL_wt-
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf
+Running USW-LS on benchmark/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf
+输出结果已保存到2024_my_costs.csv
+实例BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到
+实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于BTBNSL_wt-，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成BTBNSL_wt-[0m
+
+[1;34m开始进化测试集MinimumWei[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:33:09 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/MinimumWei
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-hugebubbles-00020.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-rgg_n_2_24_s0.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-channel-500x100x100-b050.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-inf-road-usa.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-delaunay_n24.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-soc-livejournal-user-groups.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-web-wikipedia2009.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-sc-rel9.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-socfb-uci-uni.wcnf
+Running USW-LS on benchmark/MinimumWei/MinimumWeightDominatingSetProblem_wt-bn-human-BNU_1_0025865_session_1-bg.wcnf
+输出结果已保存到2024_my_costs.csv
+实例MinimumWeightDominatingSetProblem_wt-hugebubbles-00020.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-rgg_n_2_24_s0.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-channel-500x100x100-b050.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-inf-road-usa.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-delaunay_n24.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-soc-livejournal-user-groups.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-web-wikipedia2009.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-sc-rel9.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-socfb-uci-uni.wcnf的my_cost没找到
+实例MinimumWeightDominatingSetProblem_wt-bn-human-BNU_1_0025865_session_1-bg.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于MinimumWei，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成MinimumWei[0m
+
+[1;34m开始进化测试集Parametric[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:33:24 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/Parametric
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.4_1.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.1_9.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.4_2.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_2.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.4_0.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.1_1.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.3_1.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.7_0.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_0.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_6.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.5_2.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.5_6.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.5_7.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.3_9.wcnf
+Running USW-LS on benchmark/Parametric/ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.7_7.wcnf
+输出结果已保存到2024_my_costs.csv
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.4_1.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.1_9.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.4_2.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_2.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.4_0.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.1_1.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.3_1.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.7_0.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_0.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.8_6.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_smallcomp_multiple_0.5_2.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.5_6.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.5_7.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.3_9.wcnf的my_cost没找到
+实例ParametricRBACMaintenance_mse20_wt-role_domino_multiple_0.7_7.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于Parametric，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成Parametric[0m
+
+[1;34m开始进化测试集abstractio[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:33:34 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/abstractio
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
+Running USW-LS on benchmark/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
+输出结果已保存到2024_my_costs.csv
+实例abstraction-refinement_wt-downcast-hsqldb.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-avrora.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-lusearch.wcnf的my_cost没找到
+实例abstraction-refinement_wt-downcast-pmd.wcnf的my_cost没找到
+实例abstraction-refinement_wt-downcast-antlr.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-hsqldb.wcnf的my_cost没找到
+实例abstraction-refinement_wt-downcast-xalan.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-pmd.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-xalan.wcnf的my_cost没找到
+实例abstraction-refinement_wt-downcast-avrora.wcnf的my_cost没找到
+实例abstraction-refinement_wt-polysite-bloat.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于abstractio，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成abstractio[0m
+
+[1;34m开始进化测试集af-synthes[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:33:46 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/af-synthes
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_8.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_200_5.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_1.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_5.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_120_5.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_1.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_20_4.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_6.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_0.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_9.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_20_8.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_7.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_100_4.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_0.wcnf
+Running USW-LS on benchmark/af-synthes/af-synthesis_wt-af-synthesis_stb_50_200_0.wcnf
+输出结果已保存到2024_my_costs.csv
+实例af-synthesis_wt-af-synthesis_stb_50_40_8.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_200_5.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_140_1.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_160_5.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_120_5.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_160_1.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_20_4.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_40_6.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_140_0.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_160_9.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_20_8.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_140_7.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_100_4.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_40_0.wcnf的my_cost没找到
+实例af-synthesis_wt-af-synthesis_stb_50_200_0.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于af-synthes，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成af-synthes[0m
+
+[1;34m开始进化测试集causal-dis[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:33:56 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/causal-dis
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_Mildew_8_1000.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_hailfinder_7_100.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_n7_i4_N500_uai14_log_int.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_n6_i2_N500_uai13_log_int.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_insurance_8_10000.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_Water_10_100.wcnf
+Running USW-LS on benchmark/causal-dis/causal-discovery_wt-causal_Bands_6_277.wcnf
+输出结果已保存到2024_my_costs.csv
+实例causal-discovery_wt-causal_Mildew_8_1000.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_hailfinder_7_100.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_n7_i4_N500_uai14_log_int.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_n6_i2_N500_uai13_log_int.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_insurance_8_10000.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_Water_10_100.wcnf的my_cost没找到
+实例causal-discovery_wt-causal_Bands_6_277.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于causal-dis，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成causal-dis[0m
+
+[1;34m开始进化测试集correlatio[0m
+[1;33m开始LLM对话[0m
+2025-05-09 17:34:01 优化完成
+[1;32mLLM对话迭代完成[0m
+[1;33m构建算法可执行文件[0m
+make: 进入目录“/home/users/tylu/USW-LS-LLM/source-code”
+g++ pms.cpp -O3 -o USW-LS -static
+rm -f *~
+make: 离开目录“/home/users/tylu/USW-LS-LLM/source-code”
+[1;32m构建完成[0m
+[1;33m开始基准测试[0m
+开始运行Starexec
+运行实例时间上限：10 秒
+运行实例数量上限：100 个
+运行实例大小上限：10240 MB
+运行实例集合目录：benchmark/correlatio
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_TRANSITIVE_N190.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein3_TRANSITIVE_N220.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_BINARY_N360.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Vowel_BINARY_N700_D0.200.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein3_TRANSITIVE_N200.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_BINARY_N320.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_TRANSITIVE_N270.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Ionosphere_BINARY_N300_D0.200.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Ionosphere_BINARY_N280_D0.200.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_UNARY_N250.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_BINARY_N400.wcnf
+Running USW-LS on benchmark/correlatio/correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_BINARY_N400.wcnf
+输出结果已保存到2024_my_costs.csv
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_TRANSITIVE_N190.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein3_TRANSITIVE_N220.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_BINARY_N360.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Vowel_BINARY_N700_D0.200.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein3_TRANSITIVE_N200.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_BINARY_N320.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_TRANSITIVE_N270.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Ionosphere_BINARY_N300_D0.200.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Ionosphere_BINARY_N280_D0.200.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_UNARY_N250.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein1_BINARY_N400.wcnf的my_cost没找到
+实例correlation-clustering_wt-Rounded_CorrelationClustering_Protein4_BINARY_N400.wcnf的my_cost没找到
+该算法最终得分：0
+[1;32m基准测试完成[0m
+[1;33m对于correlatio，第0轮问询没有找到更好的算法[0m
+[1;34m进化完成correlatio[0m
+
+Traceback (most recent call last):
+  File "batch_evolve.py", line 52, in <module>
+    main()
+  File "batch_evolve.py", line 49, in main
+    time.sleep(0.5)
+KeyboardInterrupt

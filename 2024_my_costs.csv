@@ -1,9 +1,0 @@
-instance,cost,best_cost
-timetabling_wt-comp10.wcnf,140,4
-timetabling_wt-comp07.wcnf,528,6
-timetabling_wt-comp06.wcnf,226,27
-timetabling_wt-comp09.wcnf,117,96
-timetabling_wt-comp02.wcnf,130,24
-timetabling_wt-comp21.wcnf,157,74
-timetabling_wt-test4.wcnf,554,134
-timetabling_wt-comp07.lp.sm-extracted.wcnf,249,3

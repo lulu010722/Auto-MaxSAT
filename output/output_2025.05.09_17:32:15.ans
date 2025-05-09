@@ -1,0 +1,33 @@
+[1;34m开始进化测试集BTBNSL_wt-[0m
+[1;34m进化完成BTBNSL_wt-[0m
+
+[1;34m开始进化测试集MinimumWei[0m
+[1;34m进化完成MinimumWei[0m
+
+[1;34m开始进化测试集Parametric[0m
+[1;34m进化完成Parametric[0m
+
+[1;34m开始进化测试集abstractio[0m
+[1;34m进化完成abstractio[0m
+
+[1;34m开始进化测试集af-synthes[0m
+[1;34m进化完成af-synthes[0m
+
+[1;34m开始进化测试集causal-dis[0m
+[1;34m进化完成causal-dis[0m
+
+[1;34m开始进化测试集correlatio[0m
+[1;34m进化完成correlatio[0m
+
+[1;34m开始进化测试集decision-t[0m
+[1;34m进化完成decision-t[0m
+
+[1;34m开始进化测试集drmx-crypt[0m
+[1;34m进化完成drmx-crypt[0m
+
+Traceback (most recent call last):
+  File "batch_evolve.py", line 52, in <module>
+    main()
+  File "batch_evolve.py", line 49, in main
+    time.sleep(0.5)
+KeyboardInterrupt

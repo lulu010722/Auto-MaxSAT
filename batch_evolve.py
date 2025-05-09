@@ -34,7 +34,7 @@ def reset_origin_file():
 def main():
 
     init()
-    benchmark_sets = os.listdir("benchmark/mse24-anytime-weighted-old-format")
+    benchmark_sets = os.listdir("benchmark")
     benchmark_sets.sort()
     for benchmark_set in benchmark_sets:
         if benchmark_set == "other":

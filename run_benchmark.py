@@ -102,7 +102,7 @@ def run_starexec_with_benchmark_set():
     for filepath in all_wcnf_files_path:
         filename = os.path.basename(filepath)
         seed = random.randint(1, 1000000)
-        print(f"Running USW-LS on {filepath}")
+        print(f"运行测例文件： {filepath}")
         # 较高概率出错的部分，使用try-except捕获异常
         try:
             output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout

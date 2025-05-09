@@ -21,18 +21,17 @@ src_dir = "source-code"
 ORIGIN_FILE_PATH = f"{src_dir}/backup/heuristic.h.origin"
 OPTIMIZED_FILE_PATH = f"{src_dir}/heuristic.h"
 TARGET_FUNC = "int USW::pick_var()"
-ITER_NUM = 1  # 和LLM对话的次数
+ITER_NUM = 0  # 和LLM对话的次数
 
 
 # 与test相关的配置
-CUTOFF_TIME = 20  # 超过时间限制则结束当前实例的运算，单位是秒
+CUTOFF_TIME = 10  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
-BENCHMARK_SET_PATH = ""
 
 
-EPOCH = 3  # 总共进化轮数
+EPOCH = 1  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -47,12 +46,12 @@ def print_green(message):
     print(f"{GREEN}{message}{RESET}")
 
 
-def read_best_scores():
+def read_best_scores(benchmark_set_path):
     global best_scores
     best_scores = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in best_scores]
-    benchmark_set = os.path.basename(BENCHMARK_SET_PATH)
+    benchmark_set = os.path.basename(benchmark_set_path)
     if benchmark_set not in best_scores_benchmark_set:
         best_scores.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
@@ -61,9 +60,8 @@ def read_best_scores():
 
 def main(benchmark_set):
 
-    global BENCHMARK_SET_PATH
     global best_scores
-    BENCHMARK_SET_PATH = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
+    benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
     progress_cnt = 0
 
@@ -77,10 +75,10 @@ def main(benchmark_set):
         print_green("构建完成")
 
         print_yellow("开始基准测试")
-        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, BENCHMARK_SET_PATH)
+        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
         print_green("基准测试完成")
 
-        read_best_scores()
+        read_best_scores(benchmark_set_path)
 
         temp_file_name = "temp"
         with open(temp_file_name, "r") as temp_file:
