@@ -28,7 +28,7 @@ ITER_NUM = 1  # 和LLM对话的次数
 CUTOFF_TIME = 20  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
-BENCHMARK_DIR_PATH = "benchmark/mse24-anytime-weighted-old-format"  # 细分测试集
+BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 BENCHMARK_SET_PATH = ""
 
 

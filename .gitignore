@@ -15,3 +15,5 @@ temp
 *.out
 *.var
 *.wat
+
+*.zip
