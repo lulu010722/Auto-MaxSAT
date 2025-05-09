@@ -147,31 +147,41 @@ void USW::init(vector<int> &init_solution)
     }
 }
 
-Here's the rewritten `update_clause_weights()` function with optimizations:
+Here's the rewritten function for `update_clause_weights()`:
 
 void USW::update_clause_weights()
 {
-    if (num_hclauses > 0) {
+    if (num_hclauses > 0)
+    {
         hard_increase_weights();
-        if (hard_unsat_nb == 0) {
-            for (int i = 0; i < num_sclauses; ++i) {
+        if (hard_unsat_nb == 0)
+        {
+            for (int i = 0; i < num_sclauses; ++i)
+            {
                 int c = soft_clause_num_index[i];
                 clause_weight[c] += (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
                 
-                if (sat_count[c] <= 0) {
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
+                if (sat_count[c] <= 0)
+                {
+                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
+                    {
                         score[v] += (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
-                        if (score[v] > 0 && already_in_goodvar_stack[v] == -1) {
+                        if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
+                        {
                             already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
                             mypush(v, goodvar_stack);
                         }
                     }
                 }
-                else if (sat_count[c] < 2) {
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
-                        if (p->sense == cur_soln[v]) {
+                else if (sat_count[c] == 1)
+                {
+                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
+                    {
+                        if (p->sense == cur_soln[v])
+                        {
                             score[v] -= (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
-                            if (score[v] <= 0 && already_in_goodvar_stack[v] != -1) {
+                            if (score[v] <= 0 && already_in_goodvar_stack[v] != -1)
+                            {
                                 int index = already_in_goodvar_stack[v];
                                 int last_v = mypop(goodvar_stack);
                                 goodvar_stack[index] = last_v;
@@ -184,30 +194,35 @@ void USW::update_clause_weights()
             }
         }
     }
-    else {
+    else
+    {
         if (((rand() % MY_RAND_MAX_INT) * BASIC_SCALE) < soft_smooth_probability && 
-            soft_large_weight_clauses_count > soft_large_clause_count_threshold) {
+            soft_large_weight_clauses_count > soft_large_clause_count_threshold)
+        {
             soft_smooth_weights();
         }
-        else {
-            for (int i = 0; i < softunsat_stack_fill_pointer; ++i) {
+        else
+        {
+            for (int i = 0; i < softunsat_stack_fill_pointer; ++i)
+            {
                 int c = softunsat_stack[i];
-                double weight_threshold = (1 == problem_weighted) ? 
-                    (tuned_org_clause_weight[c] + softclause_weight_threshold) : 
-                    (coe_soft_clause_weight + softclause_weight_threshold);
+                if (clause_weight[c] >= ((1 == problem_weighted) ? tuned_org_clause_weight[c] : coe_soft_clause_weight) + softclause_weight_threshold)
+                    continue;
                 
-                if (clause_weight[c] < weight_threshold) {
-                    clause_weight[c] += s_inc;
-                    if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0) {
-                        already_in_soft_large_weight_stack[c] = 1;
-                        soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
-                    }
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
-                        score[v] += s_inc;
-                        if (score[v] > 0 && already_in_goodvar_stack[v] == -1) {
-                            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                            mypush(v, goodvar_stack);
-                        }
+                clause_weight[c] += s_inc;
+                if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0)
+                {
+                    already_in_soft_large_weight_stack[c] = 1;
+                    soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
+                }
+                
+                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
+                {
+                    score[v] += s_inc;
+                    if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
+                    {
+                        already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
+                        mypush(v, goodvar_stack);
                     }
                 }
             }

@@ -36,18 +36,16 @@ rewrite_prompt_template = f"""
     
     Steps:
     1. Read the <key code> and understand the functionality of the code.
-    2. Rewrite the selected function code in the <key code> according to the requirements below.
+    2. Rewrite the code with the given function name in the <key code> according to the requirements below.
 
     Requirements:
-    1. Your rewritten function code must be different from original code, not just rewrite code synonymously
-    2. Please make sure that the response text is a pure code response, without any explanation or comments
+    1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
+    2. Please make sure that the response text is a pure code response, without any explanation or comments.
     3. You should not respond the code in markdown format, i.e. no leading and trailing ```.
-    4. You should only output the rewritten function.
     
     This time, your goal is to optimize {TARGET_FUNC}.
     <key code> of MaxSAT solver is:
 """
-
 
 
 def set_system_prompt(chat_history: list, prompt):
@@ -106,7 +104,6 @@ def clear_iterations_dir():
             iter_file.unlink()
 
 
-
 # 集中优化一个函数
 def optimize_one_at_a_time():
     clear_iterations_dir()
@@ -134,7 +131,6 @@ def optimize_one_at_a_time():
             insert_function(optimized_file_name, res, TARGET_FUNC)
         convert_last_version_to_cpp(optimized_file_name)
 
-
     with open(log_file_name, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "优化完成")
@@ -160,7 +156,7 @@ def main(src_dir, origin_file_path, optimized_file_path, target_func, iter_num):
     OPTIMIZED_FILE_PATH = optimized_file_path
     TARGET_FUNC = target_func
     ITER_NUM = iter_num
-    
+
     ITER_DIR_PATH = f"{SRC_DIR}/iterations"
     LOG_DIR_PATH = f"{SRC_DIR}/log"
 
@@ -168,3 +164,7 @@ def main(src_dir, origin_file_path, optimized_file_path, target_func, iter_num):
     Path(LOG_DIR_PATH).mkdir(parents=True, exist_ok=True)
 
     optimize_one_at_a_time()
+
+
+if __name__ == "__main__":
+    pass

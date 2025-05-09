@@ -147,72 +147,58 @@ void USW::init(vector<int> &init_solution)
     }
 }
 
-Here's the rewritten `update_clause_weights()` function with optimizations:
-
-void USW::update_clause_weights()
+int USW::pick_var()
 {
-    if (num_hclauses > 0) {
-        hard_increase_weights();
-        if (hard_unsat_nb == 0) {
-            for (int i = 0; i < num_sclauses; ++i) {
-                int c = soft_clause_num_index[i];
-                clause_weight[c] += (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
-                
-                if (sat_count[c] <= 0) {
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
-                        score[v] += (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
-                        if (score[v] > 0 && already_in_goodvar_stack[v] == -1) {
-                            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                            mypush(v, goodvar_stack);
-                        }
-                    }
-                }
-                else if (sat_count[c] < 2) {
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
-                        if (p->sense == cur_soln[v]) {
-                            score[v] -= (1 == problem_weighted) ? tuned_org_clause_weight[c] : s_inc;
-                            if (score[v] <= 0 && already_in_goodvar_stack[v] != -1) {
-                                int index = already_in_goodvar_stack[v];
-                                int last_v = mypop(goodvar_stack);
-                                goodvar_stack[index] = last_v;
-                                already_in_goodvar_stack[last_v] = index;
-                                already_in_goodvar_stack[v] = -1;
-                            }
-                        }
-                    }
-                }
+    int i, v;
+    int best_var;
+    int sel_c;
+    lit *p;
+
+    if (goodvar_stack_fill_pointer > 0)
+    {
+        if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rdprob)
+            return goodvar_stack[rand() % goodvar_stack_fill_pointer];
+
+        best_var = goodvar_stack[0];
+        int max_score = score[best_var];
+        int min_time = time_stamp[best_var];
+
+        for (i = 1; i < goodvar_stack_fill_pointer; ++i)
+        {
+            v = goodvar_stack[i];
+            if (score[v] > max_score || (score[v] == max_score && time_stamp[v] < min_time))
+            {
+                best_var = v;
+                max_score = score[v];
+                min_time = time_stamp[v];
             }
         }
+        return best_var;
     }
-    else {
-        if (((rand() % MY_RAND_MAX_INT) * BASIC_SCALE) < soft_smooth_probability && 
-            soft_large_weight_clauses_count > soft_large_clause_count_threshold) {
-            soft_smooth_weights();
-        }
-        else {
-            for (int i = 0; i < softunsat_stack_fill_pointer; ++i) {
-                int c = softunsat_stack[i];
-                double weight_threshold = (1 == problem_weighted) ? 
-                    (tuned_org_clause_weight[c] + softclause_weight_threshold) : 
-                    (coe_soft_clause_weight + softclause_weight_threshold);
-                
-                if (clause_weight[c] < weight_threshold) {
-                    clause_weight[c] += s_inc;
-                    if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0) {
-                        already_in_soft_large_weight_stack[c] = 1;
-                        soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
-                    }
-                    for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++) {
-                        score[v] += s_inc;
-                        if (score[v] > 0 && already_in_goodvar_stack[v] == -1) {
-                            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                            mypush(v, goodvar_stack);
-                        }
-                    }
-                }
-            }
-        }
+
+    update_clause_weights();
+
+    if (hardunsat_stack_fill_pointer > 0)
+    {
+        sel_c = hardunsat_stack[rand() % hardunsat_stack_fill_pointer];
     }
+    else
+    {
+        sel_c = softunsat_stack[rand() % softunsat_stack_fill_pointer];
+    }
+
+    if ((rand() % MY_RAND_MAX_INT) * BASIC_SCALE < rwprob)
+        return clause_lit[sel_c][rand() % clause_lit_count[sel_c]].var_num;
+
+    best_var = clause_lit[sel_c][0].var_num;
+    p = clause_lit[sel_c];
+    for (p++; (v = p->var_num) != 0; p++)
+    {
+        if (score[v] > score[best_var] || (score[v] == score[best_var] && time_stamp[v] < time_stamp[best_var]))
+            best_var = v;
+    }
+
+    return best_var;
 }
 
 int USW::nearestPowerOfTen(double num)
