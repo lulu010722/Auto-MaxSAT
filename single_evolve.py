@@ -62,12 +62,8 @@ def main(benchmark_set):
 
     global best_scores
 
-    if len(sys.argv) == 2:
-        benchmark_set = sys.argv[1]
-
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
-    
     print_yellow("训练前的基准测试")
     run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
     print_green("训练前基准测试完成")
@@ -122,3 +118,8 @@ def main(benchmark_set):
 
                 else:
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
+
+
+if __name__ == "__main__":
+    benchmark_set = sys.argv[1]
+    main(benchmark_set)
