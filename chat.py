@@ -41,7 +41,7 @@ rewrite_prompt_template = f"""
     Requirements:
     1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
     2. Please make sure that the response text is a pure code response, without any explanation or comments.
-    3. You should not respond the code in markdown format, i.e. no leading and trailing ```.
+    3. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
     
     This time, your goal is to optimize {TARGET_FUNC}.
     <key code> of MaxSAT solver is:

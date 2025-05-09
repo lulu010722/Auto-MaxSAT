@@ -62,6 +62,22 @@ def main(benchmark_set):
     global best_scores
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
+    
+    print_yellow("训练前的基准测试")
+    run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
+    print_green("训练前基准测试完成")
+
+    read_best_scores(benchmark_set_path)
+
+    temp_file_name = "temp"
+    with open(temp_file_name, "r") as temp_file:
+        best_score_after_llm = float(temp_file.read())
+    os.remove(temp_file_name)
+    df = pd.read_csv("best_scores.csv")
+    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
+    df.to_csv("best_scores.csv", index=False)
+
+
     progress_cnt = 0
 
     for epoch in range(EPOCH):
