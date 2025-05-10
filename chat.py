@@ -8,9 +8,19 @@ import shutil
 
 
 # 模型交互信息
-API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29"
-BASE_URL = "https://api.deepseek.com"
-MODEL = "deepseek-chat"
+# API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
+API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
+BASE_URL = "https://api.132999.xyz/v1"
+MODELS = [
+    "gpt-3.5-turbo",
+    "gpt-4",
+    "gpt-4-32k",
+    "gpt-4-turbo",
+    "o1",
+    "o1-mini",
+    "gemini-pro"
+]
+MODEL = MODELS[5]
 CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 
@@ -31,7 +41,7 @@ system_prompt = """
     You will be given a code snippet and you need to generate a complete code that meets the requirements.
     Note that the MaxSAT problem solver that we are going to optimize is targeted to solve unweighted MaxSAT problem without hard clauses.
 """
-rewrite_prompt_template = f"""
+rewrite_prompt_template = """
     Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
     
     Steps:
@@ -43,8 +53,9 @@ rewrite_prompt_template = f"""
     2. Please make sure that the response text is a pure code response, without any explanation or comments.
     3. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
     
-    This time, your goal is to optimize {TARGET_FUNC}.
+    This time, your goal is to optimize %s.
     <key code> of MaxSAT solver is:
+    %s
 """
 
 
@@ -124,7 +135,7 @@ def optimize_one_at_a_time():
         optimized_file_name = f"{ITER_DIR_PATH}/iteration_{i + 1}.txt"
         with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
             code = baseline_file.read()
-            rewrite_prompt = rewrite_prompt_template + code
+            rewrite_prompt = rewrite_prompt_template % (TARGET_FUNC, code)
             res = chat(rewrite_prompt, chat_history)
 
             shutil.copyfile(baseline_file_name, optimized_file_name)
