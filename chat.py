@@ -8,10 +8,12 @@ import shutil
 
 
 # 模型交互信息
-# API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
-API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
-BASE_URL = "https://api.132999.xyz/v1"
+API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
+# API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
+# BASE_URL = "https://api.132999.xyz/v1"
+BASE_URL = "https://api.deepseek.com"
 MODELS = [
+    "deepseek-chat",
     "gpt-3.5-turbo",
     "gpt-4",
     "gpt-4-32k",
@@ -20,7 +22,7 @@ MODELS = [
     "o1-mini",
     "gemini-pro"
 ]
-MODEL = MODELS[5]
+MODEL = MODELS[0]
 CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 
