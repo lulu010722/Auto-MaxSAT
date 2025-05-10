@@ -25,13 +25,13 @@ ITER_NUM = 1  # 每轮和LLM对话的次数
 
 
 # 与test相关的配置
-CUTOFF_TIME = 10  # 超过时间限制则结束当前实例的运算，单位是秒
+CUTOFF_TIME = 5  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 3  # 总共进化轮数
+EPOCH = 1  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -120,6 +120,22 @@ def main(benchmark_set):
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
 
+def init():
+    with open("best_scores.csv", "w") as f:
+        f.write("benchmark_set,best_score\n")
+    with open("2024_my_costs.csv", "w") as f:
+        pass
+
+    shutil.rmtree("source-code/iterations", ignore_errors=True)
+    shutil.rmtree("source-code/log", ignore_errors=True)
+    shutil.rmtree("progress", ignore_errors=True)
+
+    os.mkdir("source-code/iterations")
+    os.mkdir("source-code/log")
+    os.mkdir("progress")
+
+
 if __name__ == "__main__":
+    init()
     benchmark_set = sys.argv[1]
     main(benchmark_set)

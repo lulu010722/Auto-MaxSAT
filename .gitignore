@@ -6,6 +6,7 @@ maxsat_benchmarks_code_base/
 __pycache__/
 .venv/
 .vscode/
+concurrent/
 
 
 test.py
