@@ -135,7 +135,12 @@ def init():
     os.mkdir("progress")
 
 
+def reset_origin_file():
+    shutil.copyfile("source-code/backup/heuristic.h.origin", "source-code/heuristic.h")
+
+
 if __name__ == "__main__":
     init()
+    reset_origin_file()
     benchmark_set = sys.argv[1]
     main(benchmark_set)
