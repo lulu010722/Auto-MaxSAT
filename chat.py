@@ -16,7 +16,7 @@ import shutil
 API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
 BASE_URL = "https://api.132999.xyz/v1"
 MODELS = {
-    "1": "deepseek-chat",
+    "1": "deepseek-v3",
     "2": "claude-3-5-sonnet-all",
     "3": "gpt-3.5-turbo",
     "4": "gpt-4-32k",
@@ -26,7 +26,7 @@ MODELS = {
     "8": "gemini-pro",
     "9": "deepseek-r1"
 }
-MODEL = MODELS["8"]
+MODEL = MODELS["4"]
 
 CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 

@@ -32,7 +32,7 @@ INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 8  # 总共进化轮数
+EPOCH = 10  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
