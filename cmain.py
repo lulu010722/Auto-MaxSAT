@@ -1,16 +1,23 @@
 import subprocess
 import os
 import datetime
+import sys
 
+# usage: python3 cmain.py <concurrent_dir_number>
+# example: python3 cmain.py 1
 
 benchmark_sets = []
 
-os.chdir("concurrent")
+CONCURRENT_DIR_NUMBER = sys.argv[1] if len(sys.argv) > 1 else 1 / 0
+
+os.chdir(f"concurrent_{CONCURRENT_DIR_NUMBER}")
+
 
 def get_benchmark_sets():
     for dirname in os.listdir("template/benchmark"):
         if os.path.isdir(os.path.join("template/benchmark", dirname)):
             benchmark_sets.append(dirname)
+
 
 def main():
     get_benchmark_sets()
@@ -25,10 +32,11 @@ def main():
         processes.append(p)
         print(f"测例集结束: {benchmark_set}")
         os.chdir("..")
-    
+
     for p in processes:
         p.wait()
     print("所有测例集处理完成")
+
 
 if __name__ == "__main__":
     main()

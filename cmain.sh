@@ -1,8 +1,13 @@
 #!/bin/bash
 
-rm -rf concurrent/
+# usage: ./cmain.sh <concurrent_dir_number>
+# example: ./cmain.sh 1
 
-mkdir -p concurrent/template
+CONCURRENT_DIR=concurrent_$1
+
+rm -rf $CONCURRENT_DIR
+
+mkdir -p $CONCURRENT_DIR/template
 
 rsync -av \
       --exclude='__pycache__' \
@@ -10,10 +15,11 @@ rsync -av \
       --exclude='maxsat_benchmarks_code_base' \
       --exclude='mse24-anytime-weighted.zip' \
       --exclude='.git' \
+      --exclude='concurrent*' \
       . \
-      concurrent/template
+      $CONCURRENT_DIR/template
 
-cd concurrent
+cd $CONCURRENT_DIR
 
 cd template
 rm -rf .git

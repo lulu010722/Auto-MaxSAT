@@ -58,6 +58,11 @@ def read_best_scores(benchmark_set_path):
         new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
 
 
+def reset_baseline_file():
+    # 在评分没有更高时，重置算法骨架
+    shutil.copyfile("source-code/iterations/iteration_0.txt", "source-code/heuristic.h")
+
+
 def main(benchmark_set):
 
     global best_scores
@@ -117,6 +122,7 @@ def main(benchmark_set):
                     print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
+                    reset_baseline_file()
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
 
