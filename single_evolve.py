@@ -9,6 +9,7 @@ import chat
 import run_benchmark
 
 
+RED = "\033[1;31m"
 GREEN = "\033[1;32m"
 YELLOW = "\033[1;33m"
 RESET = "\033[0m"
@@ -36,6 +37,10 @@ PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
 best_scores = []
+
+
+def print_red(message):
+    print(f"{RED}{message}{RESET}")
 
 
 def print_yellow(message):
@@ -86,13 +91,24 @@ def main(benchmark_set):
 
     progress_cnt = 0
 
-    for epoch in range(EPOCH):
+
+    epoch = 0
+    fail_cnt = 0
+    while epoch < EPOCH:
         print_yellow("开始LLM对话")
         chat.main(src_dir, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
         print_green("LLM对话迭代完成")
 
         print_yellow("构建算法可执行文件")
-        subprocess.run(["make", "-C", "source-code"])
+        make_result = subprocess.run(["make", "-C", "source-code"])
+        if make_result.returncode != 0:
+            print_red("Makefile执行失败，重新询问大模型")
+            reset_baseline_file()
+            if fail_cnt > EPOCH:
+                print_red("Makefile执行失败次数过多，退出")
+                return
+            fail_cnt += 1
+            continue
         print_green("构建完成")
 
         print_yellow("开始基准测试")
@@ -101,10 +117,9 @@ def main(benchmark_set):
 
         read_best_scores(benchmark_set_path)
 
-        temp_file_name = "temp"
-        with open(temp_file_name, "r") as temp_file:
+        with open("temp", "r") as temp_file:
             best_score_after_llm = float(temp_file.read())
-        os.remove(temp_file_name)
+        os.remove("temp")
 
         progress_history_wrt_benchmark_set_dir = f"{PROGRESS_HISTORY_ROOT_DIR}/{benchmark_set}"
         Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
@@ -124,7 +139,8 @@ def main(benchmark_set):
                 else:
                     reset_baseline_file()
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
-
+        
+        epoch += 1
 
 def init():
     with open("best_scores.csv", "w") as f:

@@ -1,9 +1,13 @@
 #!/bin/bash
 
-# usage: ./cmain.sh <concurrent_dir_number>
-# example: ./cmain.sh 1
+# usage: ./cmain.sh <concurrent_dir_number> <concurrent_dir_description>
+# example: ./cmain.sh 1 claude
 
-CONCURRENT_DIR=concurrent_$1
+CONCURRENT_DIR=concurrent_$1_$2
+    if [ -z "$1" ]; then
+    echo "Usage: $0 <concurrent_dir_number> <concurrent_dir_description>"
+    exit 1
+fi
 
 rm -rf $CONCURRENT_DIR
 
