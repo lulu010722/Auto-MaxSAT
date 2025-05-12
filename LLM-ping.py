@@ -20,13 +20,15 @@ client = OpenAI(
     base_url=BASE_URL
 )
 
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "你好，请问你叫什么？",
-        }
-    ],
-    model=MODEL,
-)
-print(chat_completion.choices[0].message.content)
+for index, model in MODELS.items():
+    print(f"测试模型 {index}: {model}")
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "你好，请问你叫什么？",
+            }
+        ],
+        model=model,
+    )
+    print(chat_completion.choices[0].message.content)

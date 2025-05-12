@@ -8,25 +8,27 @@ import shutil
 
 
 # 模型交互信息
-# API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
-# BASE_URL = "https://api.deepseek.com"
-# MODEL = "deepseek-chat"  # deepseek-chat
+# 自己的API_KEY
+API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
+BASE_URL = "https://api.deepseek.com"
+MODEL = "deepseek-chat"
 
 
-API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
-BASE_URL = "https://api.132999.xyz/v1"
-MODELS = {
-    "1": "deepseek-v3",
-    "2": "claude-3-5-sonnet-all",
-    "3": "gpt-3.5-turbo",
-    "4": "gpt-4-32k",
-    "5": "gpt-4-turbo",
-    "6": "o1",
-    "7": "o1-mini",
-    "8": "gemini-pro",
-    "9": "deepseek-r1"
-}
-MODEL = MODELS["4"]
+# 实验室的API_KEY
+# API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
+# BASE_URL = "https://api.132999.xyz/v1"
+# MODELS = {
+#     "1": "deepseek-v3",
+#     "2": "claude-3-5-sonnet-all",
+#     "3": "gpt-3.5-turbo",
+#     "4": "gpt-4-32k",
+#     "5": "gpt-4-turbo",
+#     "6": "o1",
+#     "7": "o1-mini",
+#     "8": "gemini-pro",
+#     "9": "deepseek-r1"
+# }
+# MODEL = MODELS["4"]
 
 CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
@@ -46,7 +48,8 @@ LOG_DIR_PATH = ""
 system_prompt = """
     You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
     You will be given a code snippet and you need to generate a complete code that meets the requirements.
-    Note that the MaxSAT problem solver that we are going to optimize is targeted to solve unweighted MaxSAT problem without hard clauses.
+    Note that the MaxSAT problem solver that we are going to optimize is targeted to solve weighted partial MaxSAT problem,
+    which is a variant of the MaxSAT problem where each clause has a weight and therea are two types of clauses: hard clauses and soft clauses.
 """
 rewrite_prompt_template = """
     Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
@@ -58,7 +61,8 @@ rewrite_prompt_template = """
     Requirements:
     1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
     2. Please make sure that the response text is a pure code response, without any explanation or comments.
-    3. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
+    3. You are not allowed to use data structures that is not defined or included in the <key code>.
+    4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
     
     This time, your goal is to optimize %s.
     <key code> of MaxSAT solver is:
