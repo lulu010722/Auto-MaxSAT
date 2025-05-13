@@ -35,6 +35,7 @@ CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 # 可变全局变量
 SRC_DIR = ""
+BENCHMARK_SET_FEATURE = ""
 ORIGIN_FILE_PATH = ""
 OPTIMIZED_FILE_PATH = ""
 TARGET_FUNC = ""
@@ -54,6 +55,12 @@ system_prompt = """
 rewrite_prompt_template = """
     Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
     
+    We provide you with the feature of the benchmark set that we are going to use to test the performance of the solver.
+    You can use this feature to optimize the code.
+    The feature includes the number of clauses, the number of variables, the number of hard clauses, the number of soft clauses, and the ratio of hard clauses to soft clauses.
+    The feature is as follows:
+    %s
+
     Steps:
     1. Read the <key code> and understand the functionality of the code.
     2. Rewrite the code with the given function name in the <key code> according to the requirements below.
@@ -63,7 +70,7 @@ rewrite_prompt_template = """
     2. Please make sure that the response text is a pure code response, without any explanation or comments.
     3. You are not allowed to use data structures that is not defined or included in the <key code>.
     4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
-    
+
     This time, your goal is to optimize %s.
     <key code> of MaxSAT solver is:
     %s
@@ -146,7 +153,7 @@ def optimize_one_at_a_time():
         optimized_file_name = f"{ITER_DIR_PATH}/iteration_{i + 1}.txt"
         with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
             code = baseline_file.read()
-            rewrite_prompt = rewrite_prompt_template % (TARGET_FUNC, code)
+            rewrite_prompt = rewrite_prompt_template % (TARGET_FUNC, BENCHMARK_SET_FEATURE, code)
             res = chat(rewrite_prompt, chat_history)
 
             shutil.copyfile(baseline_file_name, optimized_file_name)
@@ -164,8 +171,9 @@ def optimize_multiple():
 
 
 # 通过import的方式执行子模块
-def main(src_dir, origin_file_path, optimized_file_path, target_func, iter_num):
+def main(src_dir, benchmark_set_feature, origin_file_path, optimized_file_path, target_func, iter_num):
     global SRC_DIR
+    global BENCHMARK_SET_FEATURE
     global ORIGIN_FILE_PATH
     global OPTIMIZED_FILE_PATH
     global TARGET_FUNC

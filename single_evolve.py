@@ -68,6 +68,20 @@ def reset_baseline_file():
     shutil.copyfile("source-code/iterations/iteration_0.txt", "source-code/heuristic.h")
 
 
+# 获取某个子测例集中第一个测例文件的问题结构特征，就用原生的格式，可以去掉开头的先导comment字符c
+def get_benchmark_set_feature(benchmark_set_path):
+    feature = ""
+    wcnf_file = os.listdir(benchmark_set_path)[0]
+    with open(os.path.join(benchmark_set_path, wcnf_file), "r") as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.startswith("c"):
+                feature += line.strip[2:]
+            else:
+                return feature
+    return feature
+
+
 def main(benchmark_set):
 
     global best_scores
@@ -94,9 +108,10 @@ def main(benchmark_set):
 
     epoch = 0
     fail_cnt = 0
+    benchmark_set_feature = get_benchmark_set_feature(benchmark_set_path)
     while epoch < EPOCH:
         print_yellow("开始LLM对话")
-        chat.main(src_dir, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
+        chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
         print_green("LLM对话迭代完成")
 
         print_yellow("构建算法可执行文件")
