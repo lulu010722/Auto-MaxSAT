@@ -3,16 +3,14 @@ import os
 import datetime
 import sys
 
-# usage: python3 cmain.py <concurrent_dir_number> <concurrent_dir_description>
-# example: python3 cmain.py 1 claude
 
 
 benchmark_sets = []
 
-CONCURRENT_DIR_NUMBER = sys.argv[1]
-CONCURRENT_DIR_DESCRIPTION = sys.argv[2]
+with open("concurrent/index", "r") as index_file:
+    CONCURRENT_DIR_NUMBER = int(index_file.read().strip())
 
-os.chdir(f"concurrent_{CONCURRENT_DIR_NUMBER}_{CONCURRENT_DIR_DESCRIPTION}")
+os.chdir(f"concurrent/concurrent_{CONCURRENT_DIR_NUMBER}")
 
 
 def get_benchmark_sets():

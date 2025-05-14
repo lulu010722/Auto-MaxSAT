@@ -1,6 +1,6 @@
 log/
 iterations/
-benchmark/
+benchmark*/
 solvers/
 maxsat_benchmarks_code_base/
 __pycache__/
@@ -18,3 +18,5 @@ temp
 *.wat
 
 *.zip
+
+my_*

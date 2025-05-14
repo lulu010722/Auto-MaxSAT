@@ -1,7 +1,7 @@
 import os
 import shutil
 
-benchmark_dir = "benchmark"
+benchmark_dir = "benchmark-new-format"
 
 
 def has_benchmark_set(benchmark_set_name):
