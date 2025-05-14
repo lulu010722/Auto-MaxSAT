@@ -8,15 +8,12 @@ __pycache__/
 .vscode/
 concurrent*/
 
-
-test.py
-temp
-
-
 *.out
 *.var
 *.wat
 
 *.zip
 
+*test*
+temp
 my_*
