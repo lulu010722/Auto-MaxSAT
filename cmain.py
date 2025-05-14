@@ -23,7 +23,7 @@ def get_benchmark_sets():
 def main():
     get_benchmark_sets()
     processes = []
-
+    benchmark_sets.sort(key=lambda x: x.lower())
     for index, benchmark_set in enumerate(benchmark_sets):
         print(f"进入测例集: {benchmark_set}")
         os.chdir(f"sub_{index}")
