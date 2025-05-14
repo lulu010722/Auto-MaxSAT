@@ -26,13 +26,13 @@ ITER_NUM = 1  # 每轮和LLM对话的次数
 
 
 # 与test相关的配置
-CUTOFF_TIME = 120  # 超过时间限制则结束当前实例的运算，单位是秒
+CUTOFF_TIME = 30  # 超过时间限制则结束当前实例的运算，单位是秒
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 0  # 总共进化轮数
+EPOCH = 20  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -51,12 +51,12 @@ def print_green(message):
     print(f"{GREEN}{message}{RESET}")
 
 
-def read_best_scores(benchmark_set_path):
+def read_best_scores(benchmark_set):
     global best_scores
     best_scores = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in best_scores]
-    benchmark_set = os.path.basename(benchmark_set_path)
+    benchmark_set = os.path.basename(f"benchmark-new-format/{benchmark_set}")
     if benchmark_set not in best_scores_benchmark_set:
         best_scores.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
@@ -69,14 +69,17 @@ def reset_baseline_file():
 
 
 # 获取某个子测例集中第一个测例文件的问题结构特征，就用原生的格式，可以去掉开头的先导comment字符c
-def get_benchmark_set_feature(benchmark_set_path):
+def get_benchmark_set_feature(benchmark_set):
     feature = ""
+    benchmark_set_path = f"benchmark-new-format/{benchmark_set}"
     wcnf_file = os.listdir(benchmark_set_path)[0]
     with open(os.path.join(benchmark_set_path, wcnf_file), "r") as file:
         lines = file.readlines()
         for line in lines:
-            if line.startswith("c"):
-                feature += line.strip[2:]
+            if line.startswith("c--"):
+                return feature
+            elif line.startswith("c"):
+                feature += line[1:]
             else:
                 return feature
     return feature
@@ -108,7 +111,7 @@ def main(benchmark_set):
 
     epoch = 0
     fail_cnt = 0
-    benchmark_set_feature = get_benchmark_set_feature(benchmark_set_path)
+    benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
     while epoch < EPOCH:
         print_yellow("开始LLM对话")
         chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
@@ -171,13 +174,10 @@ def init():
     os.mkdir("source-code/log")
     os.mkdir("progress")
 
-
-def reset_origin_file():
     shutil.copyfile("source-code/backup/heuristic.h.origin", "source-code/heuristic.h")
 
 
 if __name__ == "__main__":
     init()
-    reset_origin_file()
     benchmark_set = sys.argv[1]
     main(benchmark_set)

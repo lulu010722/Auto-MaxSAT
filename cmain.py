@@ -6,11 +6,12 @@ import sys
 
 
 benchmark_sets = []
+DESCRIPTION = "" if len(sys.argv) == 1 else sys.argv[1]
 
 with open("concurrent/index", "r") as index_file:
     CONCURRENT_DIR_NUMBER = int(index_file.read().strip())
 
-os.chdir(f"concurrent/concurrent_{CONCURRENT_DIR_NUMBER}")
+os.chdir(f"concurrent/concurrent_{CONCURRENT_DIR_NUMBER}_{DESCRIPTION}")
 
 
 def get_benchmark_sets():

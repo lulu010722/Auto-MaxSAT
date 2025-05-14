@@ -47,33 +47,61 @@ LOG_DIR_PATH = ""
 
 # prompt信息
 system_prompt = """
-    You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
-    You will be given a code snippet and you need to generate a complete code that meets the requirements.
-    Note that the MaxSAT problem solver that we are going to optimize is targeted to solve weighted partial MaxSAT problem,
-    which is a variant of the MaxSAT problem where each clause has a weight and therea are two types of clauses: hard clauses and soft clauses.
+You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
+You will be given a code snippet and you need to generate a complete code that meets the requirements.
+Note that the MaxSAT problem solver that we are going to optimize is targeted to solve weighted partial MaxSAT problem,
+which is a variant of the MaxSAT problem where each clause has a weight and therea are two types of clauses: hard clauses and soft clauses.
 """
 rewrite_prompt_template = """
-    Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
-    
-    We provide you with the feature of the benchmark set that we are going to use to test the performance of the solver.
-    You can use this feature to optimize the code.
-    The feature includes the number of clauses, the number of variables, the number of hard clauses, the number of soft clauses, and the ratio of hard clauses to soft clauses.
-    The feature is as follows:
-    %s
+Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
 
-    Steps:
-    1. Read the <key code> and understand the functionality of the code.
-    2. Rewrite the code with the given function name in the <key code> according to the requirements below.
+We provide you with the feature of the benchmark set that we are going to use to test the performance of the solver.
+You can use this feature to optimize the code.
+The feature is as follows (ended with a mark ---):
+%s
+---
+Explanation of the benchmark set feature using an example:
+ Standard MaxSat Instance
+{
+ "sha1sum": "929379226355ee19e327a2ee481f00cbbcefe410", # the hash value of the instance
+ "nvars": 40290, # number of variables
+ "ncls": 145910, # number of clauses
+ "total_lits": 355550, # number of literals
+ "nhards": 145238, # number of har clauses
+ "nhard_nlits": 354878, # number of literals in hard clauses
+ "nhard_len_stats": # some statistics of the length of hard clauses
+    { "min": 1, # minimum length
+      "max": 6, # maximum length
+      "ave": 2.4434, # average length
+      "stddev": 0.9066 }, # standard deviation of length
+ "nsofts": 672, # number of soft clauses
+ "nsoft_nlits": 672, # number of literals in soft clauses
+ "nsoft_len_stats": # some statistics of the length of soft clauses
+    { "min": 1, # minimum length
+      "max": 1, # maximum length
+      "ave": 1.0000, # average length
+      "stddev": 0.0000 }, # standard deviation of length
+ "nsoft_wts": 667, # number of weights of soft clauses
+ "soft_wt_stats": # some statistics of the weights of soft clauses
+    { "min": 22, # minimum weight
+      "max": 49600, # maximum weight
+      "ave": 17352.1726, # average weight
+      "stddev": 10300.9184 } # standard deviation of weight
+}
 
-    Requirements:
-    1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
-    2. Please make sure that the response text is a pure code response, without any explanation or comments.
-    3. You are not allowed to use data structures that is not defined or included in the <key code>.
-    4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
+Steps:
+1. Read the <key code> and understand the functionality of the code.
+2. Rewrite the code with the given function name in the <key code> according to the requirements below.
 
-    This time, your goal is to optimize %s.
-    <key code> of MaxSAT solver is:
-    %s
+Requirements:
+1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
+2. Please make sure that the response text is a pure code response, without any explanation or comments.
+3. You are not allowed to use data structures that is not defined or included in the <key code>.
+4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
+
+This time, your goal is to optimize %s.
+<key code> of MaxSAT solver is:
+%s
 """
 
 
@@ -153,7 +181,7 @@ def optimize_one_at_a_time():
         optimized_file_name = f"{ITER_DIR_PATH}/iteration_{i + 1}.txt"
         with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
             code = baseline_file.read()
-            rewrite_prompt = rewrite_prompt_template % (TARGET_FUNC, BENCHMARK_SET_FEATURE, code)
+            rewrite_prompt = rewrite_prompt_template % (BENCHMARK_SET_FEATURE, TARGET_FUNC, code)
             res = chat(rewrite_prompt, chat_history)
 
             shutil.copyfile(baseline_file_name, optimized_file_name)
@@ -182,6 +210,7 @@ def main(src_dir, benchmark_set_feature, origin_file_path, optimized_file_path, 
     global LOG_DIR_PATH
 
     SRC_DIR = src_dir
+    BENCHMARK_SET_FEATURE = benchmark_set_feature
     ORIGIN_FILE_PATH = origin_file_path
     OPTIMIZED_FILE_PATH = optimized_file_path
     TARGET_FUNC = target_func
