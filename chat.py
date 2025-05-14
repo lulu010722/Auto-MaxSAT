@@ -5,6 +5,7 @@ import json
 import time
 import datetime
 import shutil
+import os
 
 
 # 模型交互信息
@@ -39,7 +40,6 @@ BENCHMARK_SET_FEATURE = ""
 ORIGIN_FILE_PATH = ""
 OPTIMIZED_FILE_PATH = ""
 TARGET_FUNC = ""
-ITER_NUM = 0
 
 ITER_DIR_PATH = ""
 LOG_DIR_PATH = ""
@@ -173,22 +173,29 @@ def optimize_one_at_a_time():
 
     # 开始问答
     chat_history = []
-    set_system_prompt(chat_history, system_prompt)
-    log_file_name = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
+    history_files = os.listdir(LOG_DIR_PATH)
+    if len(history_files) > 1:
+        raise Exception()
+    elif len(history_files) == 1:
+        with open(f"{LOG_DIR_PATH}/{history_files[0]}", "r") as history_file:
+            chat_history = json.load(history_file)
+            log_file_path = f"{LOG_DIR_PATH}/{history_files[0]}"
+    else:
+        set_system_prompt(chat_history, system_prompt)
+        log_file_path = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
 
-    for i in range(ITER_NUM):
-        baseline_file_name = f"{ITER_DIR_PATH}/iteration_{i}.txt"
-        optimized_file_name = f"{ITER_DIR_PATH}/iteration_{i + 1}.txt"
-        with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
-            code = baseline_file.read()
-            rewrite_prompt = rewrite_prompt_template % (BENCHMARK_SET_FEATURE, TARGET_FUNC, code)
-            res = chat(rewrite_prompt, chat_history)
+    baseline_file_name = f"{ITER_DIR_PATH}/iteration_0.txt"
+    optimized_file_name = f"{ITER_DIR_PATH}/iteration_1.txt"
+    with open(baseline_file_name, "r", encoding="utf-8") as baseline_file:
+        code = baseline_file.read()
+        rewrite_prompt = rewrite_prompt_template % (BENCHMARK_SET_FEATURE, TARGET_FUNC, code)
+        res = chat(rewrite_prompt, chat_history)
 
-            shutil.copyfile(baseline_file_name, optimized_file_name)
-            insert_function(optimized_file_name, res, TARGET_FUNC)
-        convert_last_version_to_cpp(optimized_file_name)
+        shutil.copyfile(baseline_file_name, optimized_file_name)
+        insert_function(optimized_file_name, res, TARGET_FUNC)
+    convert_last_version_to_cpp(optimized_file_name)
 
-    with open(log_file_name, "w", encoding="utf-8") as log_file:
+    with open(log_file_path, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "优化完成")
 
@@ -199,13 +206,12 @@ def optimize_multiple():
 
 
 # 通过import的方式执行子模块
-def main(src_dir, benchmark_set_feature, origin_file_path, optimized_file_path, target_func, iter_num):
+def main(src_dir, benchmark_set_feature, origin_file_path, optimized_file_path, target_func):
     global SRC_DIR
     global BENCHMARK_SET_FEATURE
     global ORIGIN_FILE_PATH
     global OPTIMIZED_FILE_PATH
     global TARGET_FUNC
-    global ITER_NUM
     global ITER_DIR_PATH
     global LOG_DIR_PATH
 
@@ -214,7 +220,6 @@ def main(src_dir, benchmark_set_feature, origin_file_path, optimized_file_path, 
     ORIGIN_FILE_PATH = origin_file_path
     OPTIMIZED_FILE_PATH = optimized_file_path
     TARGET_FUNC = target_func
-    ITER_NUM = iter_num
 
     ITER_DIR_PATH = f"{SRC_DIR}/iterations"
     LOG_DIR_PATH = f"{SRC_DIR}/log"

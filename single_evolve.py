@@ -21,8 +21,15 @@ src_dir = "source-code"
 # 与chat相关的配置
 ORIGIN_FILE_PATH = f"{src_dir}/backup/heuristic.h.origin"
 OPTIMIZED_FILE_PATH = f"{src_dir}/heuristic.h"
-TARGET_FUNC = "int USW::pick_var()"
-ITER_NUM = 1  # 每轮和LLM对话的次数
+TARGET_FUNCS = [
+    "int USW::pick_var()",
+    "void USW::hard_increase_weights()",
+    "void USW::soft_increase_weights_partial()",
+    "void USW::soft_increase_weights_not_partial()",
+    "void USW::hard_smooth_weights()",
+    "void USW::soft_smooth_weights()",
+    "void USW::update_clause_weights()",
+]
 
 
 # 与test相关的配置
@@ -32,7 +39,7 @@ INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 20  # 总共进化轮数
+EPOCH = 30  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -105,16 +112,15 @@ def main(benchmark_set):
     df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
     df.to_csv("best_scores.csv", index=False)
 
-
     progress_cnt = 0
-
 
     epoch = 0
     fail_cnt = 0
     benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
     while epoch < EPOCH:
+        target_func_num = len(TARGET_FUNCS)
         print_yellow("开始LLM对话")
-        chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNC, ITER_NUM)
+        chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNCS[epoch % target_func_num])
         print_green("LLM对话迭代完成")
 
         print_yellow("构建算法可执行文件")
@@ -157,8 +163,9 @@ def main(benchmark_set):
                 else:
                     reset_baseline_file()
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
-        
+
         epoch += 1
+
 
 def init():
     with open("best_scores.csv", "w") as f:
