@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# usage: ./cmain.sh <concurrent_dir_number> <concurrent_dir_description>
-# example: ./cmain.sh 1 claude
+# usage: ./cmain.sh
+# example: ./cmain.sh
 
-CONCURRENT_DIR=concurrent_$1_$2
-    if [ -z "$1" ]; then
-    echo "Usage: $0 <concurrent_dir_number> <concurrent_dir_description>"
-    exit 1
-fi
+work_dir=$(cd "$(dirname "$0")"; pwd)
+
+index=$(cat concurrent/index)
+
+CONCURRENT_DIR=concurrent/concurrent_$index
 
 rm -rf $CONCURRENT_DIR
 
@@ -40,6 +40,12 @@ for i in {0..16}; do
     ln -s "/home/users/tylu/USW-LS-LLM/benchmark" "sub_$i/benchmark"
 done
 
+
+cd $work_dir
+python3 cmain.py
+
+new_index=$((index + 1))
+echo $new_index > concurrent/index
 
 # 工具命令
 # ps aux | grep single | grep -v grep
