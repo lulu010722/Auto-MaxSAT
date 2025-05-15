@@ -28,7 +28,6 @@ TARGET_FUNCS = [
     "void USW::soft_increase_weights_not_partial()",
     "void USW::hard_smooth_weights()",
     "void USW::soft_smooth_weights()",
-    "void USW::update_clause_weights()",
 ]
 
 
@@ -39,7 +38,7 @@ INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
 
 
-EPOCH = 30  # 总共进化轮数
+EPOCH = 10  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -98,19 +97,20 @@ def main(benchmark_set):
 
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
-    print_yellow("训练前的基准测试")
-    run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
-    print_green("训练前基准测试完成")
+    if True: # 在测试大模型交互性能时，可以把这个迭代前测评关了
+        print_yellow("训练前的基准测试")
+        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
+        print_green("训练前基准测试完成")
 
-    read_best_scores(benchmark_set_path)
+        read_best_scores(benchmark_set_path)
 
-    temp_file_name = "temp"
-    with open(temp_file_name, "r") as temp_file:
-        best_score_after_llm = float(temp_file.read())
-    os.remove(temp_file_name)
-    df = pd.read_csv("best_scores.csv")
-    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
-    df.to_csv("best_scores.csv", index=False)
+        temp_file_name = "temp"
+        with open(temp_file_name, "r") as temp_file:
+            best_score_after_llm = float(temp_file.read())
+        os.remove(temp_file_name)
+        df = pd.read_csv("best_scores.csv")
+        df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
+        df.to_csv("best_scores.csv", index=False)
 
     progress_cnt = 0
 
@@ -120,7 +120,7 @@ def main(benchmark_set):
     while epoch < EPOCH:
         target_func_num = len(TARGET_FUNCS)
         print_yellow("开始LLM对话")
-        chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNCS[epoch % target_func_num])
+        chat.main(src_dir, benchmark_set_feature, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, TARGET_FUNCS[epoch % target_func_num], TARGET_FUNCS)
         print_green("LLM对话迭代完成")
 
         print_yellow("构建算法可执行文件")
