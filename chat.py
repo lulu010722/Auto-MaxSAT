@@ -173,16 +173,8 @@ def optimize_one_at_a_time():
 
     # 开始问答
     chat_history = []
-    history_files = os.listdir(LOG_DIR_PATH)
-    if len(history_files) > 1:
-        raise Exception()
-    elif len(history_files) == 1:
-        with open(f"{LOG_DIR_PATH}/{history_files[0]}", "r") as history_file:
-            chat_history = json.load(history_file)
-            log_file_path = f"{LOG_DIR_PATH}/{history_files[0]}"
-    else:
-        set_system_prompt(chat_history, system_prompt)
-        log_file_path = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
+    set_system_prompt(chat_history, system_prompt)
+    log_file_path = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
 
     baseline_file_name = f"{ITER_DIR_PATH}/iteration_0.txt"
     optimized_file_name = f"{ITER_DIR_PATH}/iteration_1.txt"

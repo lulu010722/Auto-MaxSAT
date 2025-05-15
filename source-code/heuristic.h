@@ -371,15 +371,7 @@ void USW::local_search_with_decimation(char *inputfile)
                     // break;
                 }
             }
-            // if(goodvar_stack_fill_pointer==0) cout<<step<<": 0"<<endl;
-            /*if (step % 1000 == 0)
-            {
-                double elapse_time = get_runtime();
-                if (elapse_time >= cutoff_time)
-                    return;
-                else if (opt_unsat_weight == 0)
-                    return;
-            }*/
+
             int flipvar = pick_var();
             flip(flipvar);
             time_stamp[flipvar] = step;
@@ -395,9 +387,6 @@ void USW::hard_increase_weights()
     {
         c = hardunsat_stack[i];
         clause_weight[c] += h_inc;
-
-        // if (clause_weight[c] == (h_inc + 1))
-        //     large_weight_clauses[large_weight_clauses_count++] = c;
 
         for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
         {
