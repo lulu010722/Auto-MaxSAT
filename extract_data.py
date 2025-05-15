@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 
 def extract_performance_over_cutoff_time():
@@ -67,13 +68,13 @@ BLUE = "\033[1;34m"
 RESET = "\033[0m"
 
 if __name__ == "__main__":
-    index = 25
+    index = int(sys.argv[1])
     all_data = extract_single_concurrent_result(index)
-    with open("test.ans", "w") as output_file:
-        output_file.write(f"第{index}号并发测试的结果为：\n")
-        for item in all_data:
+    with open(f"data/scores_{index}.ans", "w") as output_file:
+        output_file.write(f"第{index:>3}号并发测试的结果为：\n")
+        for i, item in enumerate(all_data):
             benchmark_set = item["benchmark_set"]
             initial_score = item["data"][0]
             max_score = max(item["data"])
 
-            output_file.write(f"子测例集{BLUE}{benchmark_set:>12}{RESET}训练前：{YELLOW}{initial_score:>5.3f}{RESET}，最高分：{GREEN}{max_score:5.3f}{RESET}\n")
+            output_file.write(f"第{i + 1:>3}个子集{BLUE}{benchmark_set:>12}{RESET}训练前：{YELLOW}{initial_score:>5.3f}{RESET}，最高分：{GREEN}{max_score:5.3f}{RESET}\n")
