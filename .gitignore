@@ -15,5 +15,5 @@ concurrent*/
 *.zip
 
 *test*
-temp
+*temp*
 my_*

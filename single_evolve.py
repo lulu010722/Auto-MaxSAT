@@ -36,9 +36,10 @@ CUTOFF_TIME = 30  # 超过时间限制则结束当前实例的运算，单位是
 INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
+BENCHMARK_ITER_TIME = 20  # 遍历测试集次数
 
 
-EPOCH = 10  # 总共进化轮数
+EPOCH = 30  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -57,7 +58,7 @@ def print_green(message):
     print(f"{GREEN}{message}{RESET}")
 
 
-def read_best_scores(benchmark_set):
+def read_best_scores(benchmark_set, score_num: int):
     global best_scores
     best_scores = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
@@ -102,7 +103,7 @@ def main(benchmark_set):
         run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
         print_green("训练前基准测试完成")
 
-        read_best_scores(benchmark_set_path)
+        read_best_scores(benchmark_set_path, BENCHMARK_ITER_TIME)
 
         temp_file_name = "temp"
         with open(temp_file_name, "r") as temp_file:
@@ -135,15 +136,16 @@ def main(benchmark_set):
             continue
         print_green("构建完成")
 
-        print_yellow("开始基准测试")
-        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
-        print_green("基准测试完成")
+        for i in range(BENCHMARK_ITER_TIME):
+            print_yellow("开始基准测试")
+            run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
+            print_green("基准测试完成")
 
-        read_best_scores(benchmark_set_path)
+            read_best_scores(benchmark_set_path, BENCHMARK_ITER_TIME)
 
-        with open("temp", "r") as temp_file:
-            best_score_after_llm = float(temp_file.read())
-        os.remove("temp")
+            with open("temp", "r") as temp_file:
+                best_score_after_llm = float(temp_file.read())
+            os.remove("temp")
 
         progress_history_wrt_benchmark_set_dir = f"{PROGRESS_HISTORY_ROOT_DIR}/{benchmark_set}"
         Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)

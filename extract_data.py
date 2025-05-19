@@ -1,6 +1,15 @@
 import os
 import re
 import sys
+import json
+
+
+RED = "\033[1;31m"
+GREEN = "\033[1;32m"
+YELLOW = "\033[1;33m"
+BLUE = "\033[1;34m"
+RESET = "\033[0m"
+
 
 
 def extract_performance_over_cutoff_time():
@@ -58,23 +67,30 @@ def extract_single_concurrent_result(index):
                 data.append(sub_data)
     data.sort(key=lambda x: x["benchmark_set"].lower())
 
-    return data
-
-
-RED = "\033[1;31m"
-GREEN = "\033[1;32m"
-YELLOW = "\033[1;33m"
-BLUE = "\033[1;34m"
-RESET = "\033[0m"
-
-if __name__ == "__main__":
-    index = int(sys.argv[1])
-    all_data = extract_single_concurrent_result(index)
     with open(f"data/scores_{index}.ans", "w") as output_file:
         output_file.write(f"第{index:>3}号并发测试的结果为：\n")
-        for i, item in enumerate(all_data):
+        for i, item in enumerate(data):
             benchmark_set = item["benchmark_set"]
             initial_score = item["data"][0]
             max_score = max(item["data"])
 
             output_file.write(f"第{i + 1:>3}个子集{BLUE}{benchmark_set:>12}{RESET}训练前：{YELLOW}{initial_score:>5.3f}{RESET}，最高分：{GREEN}{max_score:5.3f}{RESET}\n")
+
+    return data
+
+
+if __name__ == "__main__":
+    index = int(sys.argv[1])
+    data = extract_single_concurrent_result(index)
+
+    print(json.dumps(data))
+    
+
+    # with open(f"test.ans", "w") as output_file:
+    #     for i, item in enumerate(all_data):
+    #         benchmark_set = item["benchmark_set"]
+    #         initial_score = item["data"][0]
+    #         max_score = max(item["data"])
+
+    #         output_file.write(f"{BLUE}{benchmark_set:>12}{RESET} & {YELLOW}{initial_score:>5.3f}{RESET}&{GREEN}{max_score:5.3f}{RESET}\\\\\n")
+    #         output_file.write("\\hline\n")

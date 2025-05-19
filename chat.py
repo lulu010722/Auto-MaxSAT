@@ -36,7 +36,7 @@ MODEL = "qwen-max"
 # }
 # MODEL = MODELS["4"]
 
-TEMPERATURE = 0.0
+TEMPERATURE = 0.3
 CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 
