@@ -26,6 +26,7 @@ rsync -av \
       --exclude='mse24-anytime-weighted.zip' \
       --exclude='.git' \
       --exclude='concurrent*' \
+      --exclude='data' \
       . \
       $CONCURRENT_DIR/template
 

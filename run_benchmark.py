@@ -3,6 +3,7 @@ import os
 import random
 import pandas as pd
 import re
+import threading
 
 SHELL_SCRIPT = "starexec_usw-ls-runsolver.sh"
 
@@ -39,13 +40,15 @@ def read_best_costs():
 def parse_starexec_output(output: str) -> int:
     lines = output.splitlines()
     current_best = -2
+    verified = False
     for line in lines:
         pattern = r"\bo [1-9][0-9]*\b"
         matches = re.findall(pattern, line)
         if len(matches) > 0:
             current_best = int(matches[0][2:])
-
-    return current_best
+        if "verified" in line:
+            verified = True
+    return current_best if verified else -2
 
 
 def run_starexec_with_benchmark_set():
@@ -66,6 +69,13 @@ def run_starexec_with_benchmark_set():
         # 较高概率出错的部分，使用try-except捕获异常
         try:
             output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
+            print("1")
+            print("1")
+            print("1")
+            print(output)
+            print("2")
+            print("2")
+            print("2")
             cost = parse_starexec_output(output)
             all_costs.append({
                 "instance": filename,
@@ -92,7 +102,7 @@ def compare_with_best_costs():
             print(f"实例{cost_item['instance']}的最佳cost没找到")
 
 
-def write_costs_to_csv():
+def  write_costs_to_csv():
     df = pd.DataFrame(all_costs)
     df.to_csv("2024_my_costs.csv", index=False)
     print("输出结果已保存到2024_my_costs.csv")
@@ -117,11 +127,12 @@ def rate():
 
 
 # 通过import执行子模块
-def main(cutoff_time: int, instance_num_limit: int, instance_size_limit: int, benchmark_set_path: str):
+def main(cutoff_time: int, instance_num_limit: int, instance_size_limit: int, benchmark_set_path: str, lock: threading.Lock):
     global CUTOFF_TIME
     global INSTANCE_NUM_LIMIT
     global INSTANCE_SIZE_LIMIT
     global BENCHMARK_SET_PATH
+
     CUTOFF_TIME = cutoff_time
     INSTANCE_NUM_LIMIT = instance_num_limit
     INSTANCE_SIZE_LIMIT = instance_size_limit
@@ -136,11 +147,21 @@ def main(cutoff_time: int, instance_num_limit: int, instance_size_limit: int, be
     # run_starexec_with_all_benchmark_set()
     run_starexec_with_benchmark_set()
 
-    read_best_costs()
-    compare_with_best_costs()
-    write_costs_to_csv()
+    with lock:
+        read_best_costs()
+        compare_with_best_costs()
+        write_costs_to_csv()
 
-    score = rate()
-    print(f"该算法最终得分：{score}")
-    with open("temp", "w") as temp_file:
-        temp_file.write(str(score))
+        score = rate()
+        print(f"该算法最终得分：{score}")
+        print(1)
+        print(2)
+        print(3)
+        print(4)
+        print("现在的all_costs是：", all_costs)
+        print(4)
+        print(3)
+        print(2)
+        print(1)
+        with open("temp", "a") as temp_file:
+            temp_file.write(f"{score}\n")

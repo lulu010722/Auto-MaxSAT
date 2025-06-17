@@ -1,23 +1,150 @@
-void USW::hard_increase_weights()
-{
-    int i, c, v;
-    for (i = 0; i < hardunsat_stack_fill_pointer; ++i)
-    {
-        c = hardunsat_stack[i];
-        clause_weight[c] += h_inc * (1 + clause_selected_count[c] / 10);
-        clause_selected_count[c]++;
+#ifndef _HEURISTIC_H_
+#define _HEURISTIC_H_
 
-        for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
+#include "basis_pms.h"
+#include "deci.h"
+
+void USW::init(vector<int> &init_solution)
+{
+    soft_large_weight_clauses_count = 0;
+    if (1 == problem_weighted) // weighted
+    {
+        if (0 != num_hclauses) // weighted partial
         {
-            score[v] += h_inc * (1 + clause_selected_count[c] / 10);
-            if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
+            for (int c = 0; c < num_clauses; c++)
             {
-                already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                mypush(v, goodvar_stack);
+                already_in_soft_large_weight_stack[c] = 0;
+                clause_selected_count[c] = 0;
+
+                if (org_clause_weight[c] == top_clause_weight)
+                    clause_weight[c] = 1;
+                else
+                {
+                    clause_weight[c] = 0;
+                    if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0)
+                    {
+                        already_in_soft_large_weight_stack[c] = 1;
+                        soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
+                    }
+                }
+            }
+        }
+        else // weighted not partial
+        {
+            for (int c = 0; c < num_clauses; c++)
+            {
+                already_in_soft_large_weight_stack[c] = 0;
+                clause_selected_count[c] = 0;
+                clause_weight[c] = tuned_org_clause_weight[c];
+                if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0)
+                {
+                    already_in_soft_large_weight_stack[c] = 1;
+                    soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
+                }
             }
         }
     }
-    return;
+    else // unweighted
+    {
+        for (int c = 0; c < num_clauses; c++)
+        {
+            already_in_soft_large_weight_stack[c] = 0;
+            clause_selected_count[c] = 0;
+
+            if (org_clause_weight[c] == top_clause_weight)
+                clause_weight[c] = 1;
+            else
+            {
+                if (num_hclauses > 0)
+                {
+                    clause_weight[c] = 0;
+                }
+                else
+                {
+                    clause_weight[c] = coe_soft_clause_weight;
+                    if (clause_weight[c] > 1 && already_in_soft_large_weight_stack[c] == 0)
+                    {
+                        already_in_soft_large_weight_stack[c] = 1;
+                        soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
+                    }
+                }
+            }
+        }
+    }
+
+    if (init_solution.size() == 0)
+    {
+        for (int v = 1; v <= num_vars; v++)
+        {
+            cur_soln[v] = rand() % 2;
+            time_stamp[v] = 0;
+            unsat_app_count[v] = 0;
+        }
+    }
+    else
+    {
+        for (int v = 1; v <= num_vars; v++)
+        {
+            cur_soln[v] = init_solution[v];
+            if (cur_soln[v] != 0 && cur_soln[v] != 1)
+                cur_soln[v] = rand() % 2;
+            time_stamp[v] = 0;
+            unsat_app_count[v] = 0;
+        }
+    }
+    local_soln_feasible = 0;
+    // init stacks
+    hard_unsat_nb = 0;
+    soft_unsat_weight = 0;
+    hardunsat_stack_fill_pointer = 0;
+    softunsat_stack_fill_pointer = 0;
+    unsatvar_stack_fill_pointer = 0;
+    large_weight_clauses_count = 0;
+
+    /* figure out sat_count, sat_var and init unsat_stack */
+    for (int c = 0; c < num_clauses; ++c)
+    {
+        sat_count[c] = 0;
+        for (int j = 0; j < clause_lit_count[c]; ++j)
+        {
+            if (cur_soln[clause_lit[c][j].var_num] == clause_lit[c][j].sense)
+            {
+                sat_count[c]++;
+                sat_var[c] = clause_lit[c][j].var_num;
+            }
+        }
+        if (sat_count[c] == 0)
+        {
+            unsat(c);
+        }
+    }
+
+    /*figure out score*/
+    for (int v = 1; v <= num_vars; v++)
+    {
+        score[v] = 0.0;
+        for (int i = 0; i < var_lit_count[v]; ++i)
+        {
+            int c = var_lit[v][i].clause_num;
+            if (sat_count[c] == 0)
+                score[v] += clause_weight[c];
+            else if (sat_count[c] == 1 && var_lit[v][i].sense == cur_soln[v])
+                score[v] -= clause_weight[c];
+        }
+    }
+
+    // init goodvars stack
+    goodvar_stack_fill_pointer = 0;
+    for (int v = 1; v <= num_vars; v++)
+    {
+        if (score[v] > 0)
+        {
+            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
+            mypush(v, goodvar_stack);
+        }
+        else
+            already_in_goodvar_stack[v] = -1;
+    }
 }
 
 int USW::pick_var()

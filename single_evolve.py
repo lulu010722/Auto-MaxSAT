@@ -3,10 +3,15 @@ import pandas as pd
 import os
 import sys
 import shutil
+import multiprocessing
+import json
 from pathlib import Path
 
 import chat
 import run_benchmark
+
+
+lock = multiprocessing.Lock()
 
 
 RED = "\033[1;31m"
@@ -33,13 +38,13 @@ TARGET_FUNCS = [
 
 # 与test相关的配置
 CUTOFF_TIME = 30  # 超过时间限制则结束当前实例的运算，单位是秒
-INSTANCE_NUM_LIMIT = 100  # 运行实例数量上限，运行到这个数量就停机
+INSTANCE_NUM_LIMIT = 200  # 运行实例数量上限，运行到这个数量就停机
 INSTANCES_SIZE_LIMIT = 1024 * 1024 * 1024 * 10  # 单位是字节
 BENCHMARK_DIR_PATH = "benchmark"  # 细分测试集
-BENCHMARK_ITER_TIME = 20  # 遍历测试集次数
+BENCHMARK_ITER_TIME = 16  # 遍历测试集次数
 
 
-EPOCH = 30  # 总共进化轮数
+EPOCH = 10  # 总共进化轮数
 PROGRESS_HISTORY_ROOT_DIR = "progress"
 
 
@@ -58,7 +63,7 @@ def print_green(message):
     print(f"{GREEN}{message}{RESET}")
 
 
-def read_best_scores(benchmark_set, score_num: int):
+def read_best_scores(benchmark_set):
     global best_scores
     best_scores = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
@@ -93,17 +98,17 @@ def get_benchmark_set_feature(benchmark_set):
 
 
 def main(benchmark_set):
-
     global best_scores
 
+    init()
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
 
-    if True: # 在测试大模型交互性能时，可以把这个迭代前测评关了
+    if False:  # 在测试大模型交互性能时，可以把这个迭代前测评关了
         print_yellow("训练前的基准测试")
         run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
         print_green("训练前基准测试完成")
 
-        read_best_scores(benchmark_set_path, BENCHMARK_ITER_TIME)
+        read_best_scores(benchmark_set_path)
 
         temp_file_name = "temp"
         with open(temp_file_name, "r") as temp_file:
@@ -118,6 +123,9 @@ def main(benchmark_set):
     epoch = 0
     fail_cnt = 0
     benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
+
+    best_scores_with_epoch = []
+
     while epoch < EPOCH:
         target_func_num = len(TARGET_FUNCS)
         print_yellow("开始LLM对话")
@@ -136,16 +144,31 @@ def main(benchmark_set):
             continue
         print_green("构建完成")
 
+        best_scores_after_llm = []
+        processes = []
         for i in range(BENCHMARK_ITER_TIME):
             print_yellow("开始基准测试")
-            run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
+            process = multiprocessing.Process(target=run_benchmark.main, args=(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path, lock))
+            process.start()
+            processes.append(process)
+
+
+        for process in processes:
+            process.join()
             print_green("基准测试完成")
 
-            read_best_scores(benchmark_set_path, BENCHMARK_ITER_TIME)
+        read_best_scores(benchmark_set_path)
 
-            with open("temp", "r") as temp_file:
-                best_score_after_llm = float(temp_file.read())
-            os.remove("temp")
+        with open("temp", "r") as temp_file:
+            for line in temp_file.readlines():
+                best_scores_after_llm.append(float(line.strip()))
+        os.remove("temp")
+
+        best_score_after_llm = max(best_scores_after_llm)
+        best_scores_with_epoch.append({
+            "epoch": epoch,
+            "scores": best_scores_after_llm
+        })
 
         progress_history_wrt_benchmark_set_dir = f"{PROGRESS_HISTORY_ROOT_DIR}/{benchmark_set}"
         Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
@@ -167,6 +190,9 @@ def main(benchmark_set):
                     print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1
+    
+    with open("best_scores_with_epoch.json", "w") as output_file:
+        json.dump(best_scores_with_epoch, output_file)
 
 
 def init():

@@ -11,14 +11,14 @@ import random
 
 # 模型交互信息
 # 自己的API_KEY
-# API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
-# BASE_URL = "https://api.deepseek.com"
-# MODEL = "deepseek-chat"
+API_KEY = "sk-ce01122bd312429e83c9f2bd8640cc29" # deepseek
+BASE_URL = "https://api.deepseek.com"
+MODEL = "deepseek-chat"
 # MODEL = "deepseek-reasoner"
 
-API_KEY = "sk-ca13676a17cc4ee0a4e7bce47e6ce643" # qwen
-BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-MODEL = "qwen-max"
+# API_KEY = "sk-ca13676a17cc4ee0a4e7bce47e6ce643" # qwen
+# BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+# MODEL = "qwen-max"
 
 # 实验室的API_KEY
 # API_KEY = "sk-DCexuFsJNJS1A7DpAa8a29800e2e4488A2A016F6D6B34f99" # proxy
@@ -154,7 +154,6 @@ def chat(message, chat_history):
 
 
 def insert_function(optimized_file_name: str, response: str, func_name_to_replace: str):
-    # formatted_code = subprocess.run(["clang-format"], input=code, capture_output=True, text=True).stdout
 
     with open(optimized_file_name, "r", encoding="utf-8") as file:
         lines = file.readlines()
@@ -220,7 +219,7 @@ def optimize_one_at_a_time():
         res = chat(rewrite_prompt, chat_history)
 
         shutil.copyfile(baseline_file_name, optimized_file_name)
-        insert_function(optimized_file_name, res, TARGET_FUNC)
+        insert_function(optimized_file_name, res, TARGET_FUNC) # type: ignore
     convert_last_version_to_cpp(optimized_file_name)
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
@@ -255,7 +254,7 @@ def optimize_multiple():
 
         shutil.copyfile(baseline_file_name, optimized_file_name)
         for target_func in func_to_be_optimize:
-            insert_function(optimized_file_name, res, target_func)
+            insert_function(optimized_file_name, res, target_func) # type: ignore
     convert_last_version_to_cpp(optimized_file_name)
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
