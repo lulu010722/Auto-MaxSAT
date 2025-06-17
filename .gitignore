@@ -12,8 +12,6 @@ concurrent*/
 *.var
 *.wat
 
-*.zip
-
 *test*
 *temp*
 my_*

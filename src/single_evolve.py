@@ -7,7 +7,7 @@ import multiprocessing
 import json
 from pathlib import Path
 
-import chat
+import src.chat as chat
 import run_benchmark
 
 
