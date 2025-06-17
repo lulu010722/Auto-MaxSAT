@@ -7,8 +7,8 @@ import multiprocessing
 import json
 from pathlib import Path
 
-import src.chat as chat
 import run_benchmark
+import chat
 
 
 lock = multiprocessing.Lock()
@@ -102,21 +102,6 @@ def main(benchmark_set):
 
     init()
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
-
-    if False:  # 在测试大模型交互性能时，可以把这个迭代前测评关了
-        print_yellow("训练前的基准测试")
-        run_benchmark.main(CUTOFF_TIME, INSTANCE_NUM_LIMIT, INSTANCES_SIZE_LIMIT, benchmark_set_path)
-        print_green("训练前基准测试完成")
-
-        read_best_scores(benchmark_set_path)
-
-        temp_file_name = "temp"
-        with open(temp_file_name, "r") as temp_file:
-            best_score_after_llm = float(temp_file.read())
-        os.remove(temp_file_name)
-        df = pd.read_csv("best_scores.csv")
-        df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
-        df.to_csv("best_scores.csv", index=False)
 
     progress_cnt = 0
 
