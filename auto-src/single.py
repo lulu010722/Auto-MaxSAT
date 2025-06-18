@@ -26,7 +26,7 @@ lock = multiprocessing.Lock()
 SOLVER_SRC_PATH = ""
 ORIGIN_FILE_PATH = ""
 OPTIMIZED_FILE_PATH = ""
-BENCHMARK_DIR_PATH = ""
+BENCHMARK_OLD_PATH = ""
 PROGRESS_DIR_PATH = ""
 LOG_DIR_PATH = ""
 
@@ -46,20 +46,22 @@ BEST_COSTS_PATH = ""
 BEST_SCORES_PATH = ""
 MY_COSTS_PATH = ""
 
-BENCHMARK_SET_PATH = ""
+BENCHMARK_NEW_PATH = ""
+BENCHMARK_OLD_PATH = ""
 
 
-def init():
-    global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_DIR_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
+def init() -> None:
+    global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_OLD_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
     global EXECUTER_SCRIPT
     global TARGET_FUNCTIONS, CUTOFF_TIME, EPOCH, BENCHMARK_ITER_TIME
-    global BENCHMARK_SET_PATH
+    global BENCHMARK_NEW_PATH, BENCHMARK_OLD_PATH
     global BEST_SCORES_PATH, BEST_SCORES_PATH, MY_COSTS_PATH
 
     SOLVER_SRC_PATH = config["route"]["solver_src"]
     ORIGIN_FILE_PATH = config["route"]["origin_file"]
     OPTIMIZED_FILE_PATH = config["route"]["optimized_file"]
-    BENCHMARK_DIR_PATH = config["route"]["benchmark"]
+    BENCHMARK_NEW_PATH = config["route"]["benchmark_new"]
+    BENCHMARK_OLD_PATH = config["route"]["benchmark_old"]
     PROGRESS_DIR_PATH = config["route"]["progress"]
     LOG_DIR_PATH = config["route"]["log"]
 
@@ -68,6 +70,7 @@ def init():
     TARGET_FUNCTIONS = config["train"]["target_functions"]
     CUTOFF_TIME = config["runtime"]["cutoff_time"]
     EPOCH = config["runtime"]["epoch"]
+    BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
 
     BEST_COSTS_PATH = config["data"]["best_costs"]
     BEST_SCORES_PATH = config["data"]["best_scores"]
@@ -102,7 +105,7 @@ def parse_executer_output(output: str) -> int:
     return current_best if verified else -2
 
 
-def read_best_scores(benchmark_set):
+def read_best_scores(benchmark_set: str) -> None:
     global BEST_SCORES
     BEST_SCORES = pd.read_csv("best_scores.csv").to_dict(orient="records")
 
@@ -114,7 +117,7 @@ def read_best_scores(benchmark_set):
         new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
 
 
-def get_benchmark_set_feature(benchmark_set):
+def get_benchmark_set_feature(benchmark_set: str) -> str:
     feature = ""
     benchmark_set_path = f"benchmark-new-format/{benchmark_set}"
     wcnf_file = os.listdir(benchmark_set_path)[0]
@@ -130,7 +133,7 @@ def get_benchmark_set_feature(benchmark_set):
     return feature
 
 
-def run_single_benchmark_set(benchmark_set_path, lock):
+def run_single_benchmark_set(benchmark_set_path: str, lock) -> None:
     global MY_COSTS
 
     instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
@@ -161,7 +164,7 @@ def run_single_benchmark_set(benchmark_set_path, lock):
             temp_file.write(f"{score}\n")
 
 
-def compare_with_best_costs():
+def compare_with_best_costs() -> None:
     global MY_COSTS, BEST_COSTS
     for cost_item in MY_COSTS:
         for best_cost_item in BEST_COSTS:
@@ -172,14 +175,14 @@ def compare_with_best_costs():
             logger.warning(f"实例{cost_item['instance']}的最佳cost没找到")
 
 
-def write_costs_to_csv():
+def write_costs_to_csv() -> None:
     my_costs_file = config["data"]["my_costs"]
     df = pd.DataFrame(MY_COSTS)
     df.to_csv(my_costs_file, index=False)
     logger.info(f"输出结果已保存到{my_costs_file}")
 
 
-def rate():
+def rate() -> float:
     tota_score = 0
     valid_instance_cnt = 0
     for item in MY_COSTS:
@@ -201,7 +204,7 @@ def main(benchmark_set):
     global BEST_SCORES
 
     init()
-    benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
+    benchmark_set_path = f"{BENCHMARK_OLD_PATH}/{benchmark_set}"
 
     progress_cnt = 0
     epoch = 0
@@ -279,7 +282,6 @@ def main(benchmark_set):
 
 
 if __name__ == "__main__":
-    init()
     benchmark_set = sys.argv[1]
     main(benchmark_set)
 

@@ -4,11 +4,12 @@ route:
   auto_src: auto-src
   origin_file: solver-src/backup/heuristic.h.origin
   optimized_file: solver-src/heuristic.h.origin
-  log: solver-src/log
+  log: log
   result: result
   progress: progress
   executer: auto-src/starexec_usw-ls-runsolver.sh
-  benchmark: benchmark
+  benchmark_old: benchmark_old
+  benchmark_new: benchmark_new
 
 
 model:
@@ -21,6 +22,7 @@ model:
 runtime:
   cutoff_time: 30
   epoch: 30
+  benchmark_iter_time: 3
 
 
 data:

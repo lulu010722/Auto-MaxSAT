@@ -1,6 +1,5 @@
 from pathlib import Path
 from rich.logging import RichHandler
-from datetime import datetime
 from multiprocessing import Process
 
 import logging
@@ -26,8 +25,7 @@ logger.addHandler(file_handler)
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
-BENCHMARK_DIR_PATH = config["route"]["benchmark"]
-
+BENCHMARK_DIR_PATH = config["route"]["benchmark_old"]
 
 
 def get_benchmark_sets():
