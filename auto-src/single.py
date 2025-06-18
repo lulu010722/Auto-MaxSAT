@@ -30,7 +30,7 @@ BENCHMARK_DIR_PATH = ""
 PROGRESS_DIR_PATH = ""
 LOG_DIR_PATH = ""
 
-SHELL_SCRIPT = ""
+EXECUTER_SCRIPT = ""
 
 TARGET_FUNCTIONS = []
 CUTOFF_TIME = 0
@@ -38,18 +38,23 @@ EPOCH = 0
 BENCHMARK_ITER_TIME = 0
 
 
-ALL_COSTS = []
+MY_COSTS = []
 BEST_COSTS = []
 BEST_SCORES = []
+
+BEST_COSTS_PATH = ""
+BEST_SCORES_PATH = ""
+MY_COSTS_PATH = ""
 
 BENCHMARK_SET_PATH = ""
 
 
 def init():
     global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_DIR_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
-    global SHELL_SCRIPT
+    global EXECUTER_SCRIPT
     global TARGET_FUNCTIONS, CUTOFF_TIME, EPOCH, BENCHMARK_ITER_TIME
     global BENCHMARK_SET_PATH
+    global BEST_SCORES_PATH, BEST_SCORES_PATH, MY_COSTS_PATH
 
     SOLVER_SRC_PATH = config["route"]["solver_src"]
     ORIGIN_FILE_PATH = config["route"]["origin_file"]
@@ -58,15 +63,20 @@ def init():
     PROGRESS_DIR_PATH = config["route"]["progress"]
     LOG_DIR_PATH = config["route"]["log"]
 
-    SHELL_SCRIPT = config["route"]["shell_script"]
+    EXECUTER_SCRIPT = config["route"]["executer"]
 
     TARGET_FUNCTIONS = config["train"]["target_functions"]
     CUTOFF_TIME = config["runtime"]["cutoff_time"]
     EPOCH = config["runtime"]["epoch"]
 
-    with open("best_scores.csv", "w") as f:
+    BEST_COSTS_PATH = config["data"]["best_costs"]
+    BEST_SCORES_PATH = config["data"]["best_scores"]
+    MY_COSTS_PATH = config["data"]["my_costs"]
+
+
+    with open(BEST_SCORES_PATH, "w") as f:
         f.write("benchmark_set,best_score\n")
-    with open("2024_my_costs.csv", "w") as f:
+    with open(MY_COSTS_PATH, "w") as f:
         pass
 
     shutil.rmtree(LOG_DIR_PATH, ignore_errors=True)
@@ -75,7 +85,7 @@ def init():
     os.mkdir(LOG_DIR_PATH)
     os.mkdir(PROGRESS_DIR_PATH)
 
-    shutil.copyfile("source-code/backup/heuristic.h.origin", "source-code/heuristic.h")
+    shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
 
 
 def parse_executer_output(output: str) -> int:
@@ -121,19 +131,19 @@ def get_benchmark_set_feature(benchmark_set):
 
 
 def run_single_benchmark_set(benchmark_set_path, lock):
-    global ALL_COSTS
+    global MY_COSTS
 
     instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
 
-    ALL_COSTS = []
+    MY_COSTS = []
     for filepath in instances_path:
         filename = os.path.basename(filepath)
         seed = random.randint(0, 1000000)
         logger.info(f"运行测例文件： {filepath}")
         try:
-            output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
+            output = subprocess.run(f"./{EXECUTER_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
             cost = parse_executer_output(output)
-            ALL_COSTS.append({
+            MY_COSTS.append({
                 "instance": filename,
                 "cost": cost,
                 "best_cost": -1
@@ -152,8 +162,8 @@ def run_single_benchmark_set(benchmark_set_path, lock):
 
 
 def compare_with_best_costs():
-    global ALL_COSTS, BEST_COSTS
-    for cost_item in ALL_COSTS:
+    global MY_COSTS, BEST_COSTS
+    for cost_item in MY_COSTS:
         for best_cost_item in BEST_COSTS:
             if cost_item["instance"] == best_cost_item["instance"]:
                 cost_item["best_cost"] = best_cost_item["best_cost"]
@@ -164,7 +174,7 @@ def compare_with_best_costs():
 
 def write_costs_to_csv():
     my_costs_file = config["data"]["my_costs"]
-    df = pd.DataFrame(ALL_COSTS)
+    df = pd.DataFrame(MY_COSTS)
     df.to_csv(my_costs_file, index=False)
     logger.info(f"输出结果已保存到{my_costs_file}")
 
@@ -172,7 +182,7 @@ def write_costs_to_csv():
 def rate():
     tota_score = 0
     valid_instance_cnt = 0
-    for item in ALL_COSTS:
+    for item in MY_COSTS:
         if item["cost"] < 0:
             logger.warning(f"实例{item['instance']}的my_cost没找到")
             continue
@@ -189,7 +199,6 @@ def rate():
 
 def main(benchmark_set):
     global BEST_SCORES
-
 
     init()
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"

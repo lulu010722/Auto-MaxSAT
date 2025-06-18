@@ -51,7 +51,8 @@ def main():
         p.start()
         logger.info(f"开始处理测例集: {p.name}")
     for p in processes:
-        p.wait()
+        p.join()
+        logger.info(f"测例集处理完成: {p.name}")
     logger.info("所有测例集处理完成")
 
 

@@ -8,6 +8,9 @@ import shutil
 import numpy as np
 import random
 import yaml
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 API_KEY = ""
@@ -133,10 +136,9 @@ def optimize():
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
-        print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "优化完成")
+        logger.info(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "优化完成")
 
 
-# 通过import的方式执行子模块
 def main(benchmark_set_feature, target_functions):
     init(benchmark_set_feature, target_functions)
     optimize()
