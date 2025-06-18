@@ -25,9 +25,6 @@ def main():
     processes = []
     benchmark_sets.sort(key=lambda x: x.lower())
     for index, benchmark_set in enumerate(benchmark_sets):
-        # 暂时测试causal数据集，别的不管了
-        if "causal" not in benchmark_set:
-            continue
         print(f"进入测例集: {benchmark_set}")
         os.chdir(f"sub_{index}")
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")

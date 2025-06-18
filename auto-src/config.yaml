@@ -6,6 +6,9 @@ route:
   optimized_file: solver-src/heuristic.h.origin
   log: solver-src/log
   result: result
+  progress: progress
+  executer: auto-src/starexec_usw-ls-runsolver.sh
+  benchmark: benchmark
 
 
 model:
@@ -20,10 +23,13 @@ runtime:
   epoch: 30
 
 
+data:
+  best_costs: data/best_costs.csv
+  best_scores: data/best_scores.csv
+  my_costs: data/my_costs.csv
 
 
 train:
-  target_function: "int USW::pick_var()"
   target_functions:
     - "int USW::pick_var()"
     - "void USW::hard_increase_weights()"
@@ -31,7 +37,6 @@ train:
     - "void USW::soft_increase_weights_not_partial()"
     - "void USW::hard_smooth_weights()"
     - "void USW::soft_smooth_weights()"
-  benchmark_set_feature:
   prompt:
     system_template: |
       You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
@@ -93,6 +98,3 @@ train:
       <key code> of MaxSAT solver is (ended with a mark ---):
       %s
       ---
-
-pretty_print: true
-

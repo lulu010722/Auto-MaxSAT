@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# usage: ./cmain.sh
-# example: ./cmain.sh
-
 work_dir=$(cd "$(dirname "$0")"; pwd)
 
 index=$(cat concurrent/index)
