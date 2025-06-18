@@ -1,0 +1,85 @@
+INFO     [2025-06-18 18:23:16]开始处理测例集: BTBNSL_wt-                                                                                     main.py:47
+INFO     [2025-06-18 18:23:16]开始LLM对话                                                                                                 single.py:212
+INFO     [2025-06-18 18:23:16]HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"                            _client.py:1025
+INFO     [2025-06-18 18:23:30]大模型优化完成，日志已保存到: log/history_1750242196065.json                                                  chat.py:139
+INFO     [2025-06-18 18:23:30]LLM对话迭代完成                                                                                             single.py:214
+INFO     [2025-06-18 18:23:30]构建算法可执行文件                                                                                          single.py:216
+make: 进入目录“/home/users/tylu/auto/solver-src”
+make: 离开目录“/home/users/tylu/auto/solver-src”
+INFO     [2025-06-18 18:23:31]构建完成                                                                                                    single.py:227
+INFO     [2025-06-18 18:23:31]开始基准测试: BTBNSL_wt-                                                                                    single.py:231
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf                             single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf                                 single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf                                             single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf                                            single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf                                                 single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf                                single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf                                             single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf                            single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf                                         single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf                            single.py:146
+INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf                          single.py:146
+INFO     [2025-06-18 18:23:31]输出结果已保存到data/my_costs.csv                                                                           single.py:179
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                        single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                            single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf的my_cost没找到                                        single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf的my_cost没找到                                       single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf的my_cost没找到                                            single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf的my_cost没找到                           single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf的my_cost没找到                                        single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                       single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf的my_cost没找到                                    single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                       single.py:187
+WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf的my_cost没找到                     single.py:187
+INFO     [2025-06-18 18:23:31]基准测试完成                                                                                                single.py:238
+WARNING  [2025-06-18 18:23:31]对于BTBNSL_wt-，第0轮问询没有找到更好的算法                                                                 single.py:260
+INFO     [2025-06-18 18:23:31]开始LLM对话                                                                                                 single.py:212
+INFO     [2025-06-18 18:23:32]HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"                            _client.py:1025
+INFO     [2025-06-18 18:23:42]大模型优化完成，日志已保存到: log/history_1750242211844.json                                                  chat.py:139
+INFO     [2025-06-18 18:23:42]LLM对话迭代完成                                                                                             single.py:214
+INFO     [2025-06-18 18:23:42]构建算法可执行文件                                                                                          single.py:216
+make: 进入目录“/home/users/tylu/auto/solver-src”
+make: 离开目录“/home/users/tylu/auto/solver-src”
+INFO     [2025-06-18 18:23:43]构建完成                                                                                                    single.py:227
+INFO     [2025-06-18 18:23:43]开始基准测试: BTBNSL_wt-                                                                                    single.py:231
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf                             single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf                                 single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf                                             single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf                                            single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf                                                 single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf                                single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf                                             single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf                           single.py:146
+INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf                            single.py:146
+INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf                                         single.py:146
+INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf                            single.py:146
+INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf                          single.py:146
+INFO     [2025-06-18 18:23:44]输出结果已保存到data/my_costs.csv                                                                           single.py:179
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                        single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                            single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf的my_cost没找到                                        single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf的my_cost没找到                                       single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf的my_cost没找到                                            single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf的my_cost没找到                           single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf的my_cost没找到                                        single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                      single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                       single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf的my_cost没找到                                    single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                       single.py:187
+WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf的my_cost没找到                     single.py:187
+INFO     [2025-06-18 18:23:44]基准测试完成                                                                                                single.py:238
+WARNING  [2025-06-18 18:23:44]对于BTBNSL_wt-，第1轮问询没有找到更好的算法                                                                 single.py:260
+测例集处理完成: BTBNSL_wt-
+INFO     [2025-06-18 18:23:44]测例集处理完成: BTBNSL_wt-                                                                                     main.py:52
+所有测例集处理完成
+INFO     [2025-06-18 18:23:44]所有测例集处理完成                                                                                             main.py:53

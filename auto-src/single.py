@@ -229,7 +229,7 @@ def main(benchmark_set):
         processes = []
         for i in range(BENCHMARK_ITER_TIME):
             logger.info(f"开始基准测试: {benchmark_set}")
-            process = multiprocessing.Process(target=run_single, args=(CUTOFF_TIME, benchmark_set_path, lock))
+            process = multiprocessing.Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock))
             process.start()
             processes.append(process)
 

@@ -1,16 +1,15 @@
-log/
-iterations/
-benchmark*/
-solvers/
+benchmark_old/
+benchmark_new/
+
 maxsat_benchmarks_code_base/
+mse24-anytime-weighted.zip
+
 __pycache__/
 .venv/
 .vscode/
-concurrent*/
 
 *.out
 *.var
 *.wat
 
-
-mse24-anytime-weighted.zip
+bin/

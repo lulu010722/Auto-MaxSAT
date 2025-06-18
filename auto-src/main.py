@@ -10,8 +10,8 @@ import single
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(message)s",
-    datefmt="[%X]",
+    format="%(asctime)s%(message)s",
+    datefmt="[%Y-%m-%d %H:%M:%S]",
     handlers=[RichHandler(rich_tracebacks=True, show_time=False)]
 )
 
@@ -37,7 +37,7 @@ def get_benchmark_sets():
 
 
 def main():
-    benchmark_sets = get_benchmark_sets()
+    benchmark_sets = get_benchmark_sets()[:1]
     benchmark_sets.sort(key=lambda x: x.lower())
 
     processes = []
