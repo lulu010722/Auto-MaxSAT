@@ -107,10 +107,10 @@ def parse_executer_output(output: str) -> int:
 
 def read_best_scores(benchmark_set: str) -> None:
     global BEST_SCORES
-    BEST_SCORES = pd.read_csv("best_scores.csv").to_dict(orient="records")
+    BEST_SCORES = pd.read_csv(BEST_SCORES_PATH).to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in BEST_SCORES]
-    benchmark_set = os.path.basename(f"benchmark/{benchmark_set}")
+    benchmark_set = os.path.basename(f"{BENCHMARK_OLD_PATH}/{benchmark_set}")
     if benchmark_set not in best_scores_benchmark_set:
         BEST_SCORES.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
@@ -133,8 +133,8 @@ def get_benchmark_set_feature(benchmark_set: str) -> str:
     return feature
 
 
-def run_single_benchmark_set(benchmark_set_path: str, lock) -> None:
-    global MY_COSTS
+def run_single(benchmark_set_path: str, lock) -> None:
+    global MY_COSTS, BEST_COSTS
 
     instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
 
@@ -142,7 +142,7 @@ def run_single_benchmark_set(benchmark_set_path: str, lock) -> None:
     for filepath in instances_path:
         filename = os.path.basename(filepath)
         seed = random.randint(0, 1000000)
-        logger.info(f"运行测例文件： {filepath}")
+        logger.info(f"运行测例文件: {filepath}")
         try:
             output = subprocess.run(f"./{EXECUTER_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
             cost = parse_executer_output(output)
@@ -152,27 +152,24 @@ def run_single_benchmark_set(benchmark_set_path: str, lock) -> None:
                 "best_cost": -1
             })
         except Exception as e:
-            logger.error(f"Error running {filename}: {e}")
+            logger.error(f"执行文件错误: {filename}: {e}")
 
+    BEST_COSTS = pd.read_csv(BEST_COSTS_PATH).to_dict(orient="records")
+    compare_with_best_costs()
     with lock:
-        BEST_COSTS = pd.read_csv("2024_best_costs.csv").to_dict(orient="records")
-        compare_with_best_costs()
         write_costs_to_csv()
 
         score = rate()
-        with open("temp", "a") as temp_file:
-            temp_file.write(f"{score}\n")
 
 
 def compare_with_best_costs() -> None:
-    global MY_COSTS, BEST_COSTS
     for cost_item in MY_COSTS:
         for best_cost_item in BEST_COSTS:
             if cost_item["instance"] == best_cost_item["instance"]:
                 cost_item["best_cost"] = best_cost_item["best_cost"]
                 break
         else:
-            logger.warning(f"实例{cost_item['instance']}的最佳cost没找到")
+            logger.warning(f"实例{cost_item['instance']}的最佳代价没找到")
 
 
 def write_costs_to_csv() -> None:
@@ -206,9 +203,9 @@ def main(benchmark_set):
     init()
     benchmark_set_path = f"{BENCHMARK_OLD_PATH}/{benchmark_set}"
 
-    progress_cnt = 0
     epoch = 0
-    fail_cnt = 0
+    progress_cnt = 0
+    make_fail_cnt = 0
     benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
 
     best_scores_with_epoch = []
@@ -224,10 +221,10 @@ def main(benchmark_set):
             logger.warning("Makefile执行失败，重新询问大模型")
             shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
 
-            if fail_cnt > EPOCH:
+            if make_fail_cnt > EPOCH:
                 logger.error("Makefile执行失败次数过多，退出")
                 return
-            fail_cnt += 1
+            make_fail_cnt += 1
             continue
         logger.info("构建完成")
 
@@ -235,7 +232,7 @@ def main(benchmark_set):
         processes = []
         for i in range(BENCHMARK_ITER_TIME):
             logger.info("开始基准测试")
-            process = multiprocessing.Process(target=run_single_benchmark_set, args=(CUTOFF_TIME, benchmark_set_path, lock))
+            process = multiprocessing.Process(target=run_single, args=(CUTOFF_TIME, benchmark_set_path, lock))
             process.start()
             processes.append(process)
 
@@ -245,10 +242,6 @@ def main(benchmark_set):
 
         read_best_scores(benchmark_set_path)
 
-        with open("temp", "r") as temp_file:
-            for line in temp_file.readlines():
-                best_scores_after_llm.append(float(line.strip()))
-        os.remove("temp")
 
         best_score_after_llm = max(best_scores_after_llm)
         best_scores_with_epoch.append({

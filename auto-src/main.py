@@ -42,15 +42,14 @@ def main():
 
     processes = []
     for benchmark_set in benchmark_sets:
-        process = Process(target=single.main, kwargs={"benchmark_set": benchmark_set})
+        process = Process(target=single.main, name=benchmark_set, kwargs={"benchmark_set": benchmark_set})
+        process.start()
+        logger.info(f"开始处理测例集: {process.name}")
         processes.append(process)
 
-    for p in processes:
-        p.start()
-        logger.info(f"开始处理测例集: {p.name}")
-    for p in processes:
-        p.join()
-        logger.info(f"测例集处理完成: {p.name}")
+    for process in processes:
+        process.join()
+        logger.info(f"测例集处理完成: {process.name}")
     logger.info("所有测例集处理完成")
 
 
