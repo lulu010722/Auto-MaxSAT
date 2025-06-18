@@ -9,23 +9,18 @@ import multiprocessing
 import json
 import random
 import re
-import threading
 import yaml
+import logging
 
 import chat
 
+logger = logging.getLogger(__name__)
 
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
 
 lock = multiprocessing.Lock()
-
-
-RED = "\033[1;31m"
-GREEN = "\033[1;32m"
-YELLOW = "\033[1;33m"
-RESET = "\033[0m"
 
 
 SOLVER_SRC_PATH = ""
@@ -43,13 +38,18 @@ EPOCH = 0
 BENCHMARK_ITER_TIME = 0
 
 
+ALL_COSTS = []
+BEST_COSTS = []
 BEST_SCORES = []
+
+BENCHMARK_SET_PATH = ""
 
 
 def init():
     global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_DIR_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
     global SHELL_SCRIPT
     global TARGET_FUNCTIONS, CUTOFF_TIME, EPOCH, BENCHMARK_ITER_TIME
+    global BENCHMARK_SET_PATH
 
     SOLVER_SRC_PATH = config["route"]["solver_src"]
     ORIGIN_FILE_PATH = config["route"]["origin_file"]
@@ -78,16 +78,18 @@ def init():
     shutil.copyfile("source-code/backup/heuristic.h.origin", "source-code/heuristic.h")
 
 
-def print_red(message):
-    print(f"{RED}{message}{RESET}")
-
-
-def print_yellow(message):
-    print(f"{YELLOW}{message}{RESET}")
-
-
-def print_green(message):
-    print(f"{GREEN}{message}{RESET}")
+def parse_executer_output(output: str) -> int:
+    lines = output.splitlines()
+    current_best = -2
+    verified = False
+    for line in lines:
+        pattern = r"\bo [1-9][0-9]*\b"
+        matches = re.findall(pattern, line)
+        if len(matches) > 0:
+            current_best = int(matches[0][2:])
+        if "verified" in line:
+            verified = True
+    return current_best if verified else -2
 
 
 def read_best_scores(benchmark_set):
@@ -118,8 +120,76 @@ def get_benchmark_set_feature(benchmark_set):
     return feature
 
 
+def run_single_benchmark_set(benchmark_set_path, lock):
+    global ALL_COSTS
+
+    instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
+
+    ALL_COSTS = []
+    for filepath in instances_path:
+        filename = os.path.basename(filepath)
+        seed = random.randint(0, 1000000)
+        logger.info(f"运行测例文件： {filepath}")
+        try:
+            output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
+            cost = parse_executer_output(output)
+            ALL_COSTS.append({
+                "instance": filename,
+                "cost": cost,
+                "best_cost": -1
+            })
+        except Exception as e:
+            logger.error(f"Error running {filename}: {e}")
+
+    with lock:
+        BEST_COSTS = pd.read_csv("2024_best_costs.csv").to_dict(orient="records")
+        compare_with_best_costs()
+        write_costs_to_csv()
+
+        score = rate()
+        with open("temp", "a") as temp_file:
+            temp_file.write(f"{score}\n")
+
+
+def compare_with_best_costs():
+    global ALL_COSTS, BEST_COSTS
+    for cost_item in ALL_COSTS:
+        for best_cost_item in BEST_COSTS:
+            if cost_item["instance"] == best_cost_item["instance"]:
+                cost_item["best_cost"] = best_cost_item["best_cost"]
+                break
+        else:
+            logger.warning(f"实例{cost_item['instance']}的最佳cost没找到")
+
+
+def write_costs_to_csv():
+    my_costs_file = config["data"]["my_costs"]
+    df = pd.DataFrame(ALL_COSTS)
+    df.to_csv(my_costs_file, index=False)
+    logger.info(f"输出结果已保存到{my_costs_file}")
+
+
+def rate():
+    tota_score = 0
+    valid_instance_cnt = 0
+    for item in ALL_COSTS:
+        if item["cost"] < 0:
+            logger.warning(f"实例{item['instance']}的my_cost没找到")
+            continue
+        if item["best_cost"] < 0:
+            logger.warning(f"实例{item['instance']}的best_cost没找到")
+            continue
+
+        score = (1 + item['best_cost']) / (1 + item['cost'])
+        tota_score += score
+        valid_instance_cnt += 1
+
+    return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
+
+
 def main(benchmark_set):
     global BEST_SCORES
+
 
     init()
     benchmark_set_path = f"{BENCHMARK_DIR_PATH}/{benchmark_set}"
@@ -132,34 +202,34 @@ def main(benchmark_set):
     best_scores_with_epoch = []
 
     while epoch < EPOCH:
-        print_yellow("开始LLM对话")
+        logger.info("开始LLM对话")
         chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
-        print_green("LLM对话迭代完成")
+        logger.info("LLM对话迭代完成")
 
-        print_yellow("构建算法可执行文件")
+        logger.info("构建算法可执行文件")
         make_result = subprocess.run(["make", "-C", "source-code"])
         if make_result.returncode != 0:
-            print_red("Makefile执行失败，重新询问大模型")
+            logger.warning("Makefile执行失败，重新询问大模型")
             shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
 
             if fail_cnt > EPOCH:
-                print_red("Makefile执行失败次数过多，退出")
+                logger.error("Makefile执行失败次数过多，退出")
                 return
             fail_cnt += 1
             continue
-        print_green("构建完成")
+        logger.info("构建完成")
 
         best_scores_after_llm = []
         processes = []
         for i in range(BENCHMARK_ITER_TIME):
-            print_yellow("开始基准测试")
-            process = multiprocessing.Process(target=run_benchmark.main, args=(CUTOFF_TIME, benchmark_set_path, lock))
+            logger.info("开始基准测试")
+            process = multiprocessing.Process(target=run_single_benchmark_set, args=(CUTOFF_TIME, benchmark_set_path, lock))
             process.start()
             processes.append(process)
 
         for process in processes:
             process.join()
-            print_green("基准测试完成")
+            logger.info("基准测试完成")
 
         read_best_scores(benchmark_set_path)
 
@@ -187,11 +257,11 @@ def main(benchmark_set):
                     df = pd.read_csv("best_scores.csv")
                     df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
                     df.to_csv("best_scores.csv", index=False)
-                    print_green(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
+                    logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
                     shutil.copyfile("source-code/iterations/iteration_0.txt", "source-code/heuristic.h")
-                    print_yellow(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
+                    logger.warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1
 
@@ -204,90 +274,3 @@ if __name__ == "__main__":
     benchmark_set = sys.argv[1]
     main(benchmark_set)
 
-ALL_COSTS = []
-BEST_COSTS = []
-
-
-def parse_executer_output(output: str) -> int:
-    lines = output.splitlines()
-    current_best = -2
-    verified = False
-    for line in lines:
-        pattern = r"\bo [1-9][0-9]*\b"
-        matches = re.findall(pattern, line)
-        if len(matches) > 0:
-            current_best = int(matches[0][2:])
-        if "verified" in line:
-            verified = True
-    return current_best if verified else -2
-
-
-def run_single_benchmark_set():
-    global ALL_COSTS
-
-    all_wcnf_files_path = [os.path.join(BENCHMARK_SET_PATH, filename) for filename in os.listdir(BENCHMARK_SET_PATH)]
-
-    ALL_COSTS = []
-    for filepath in all_wcnf_files_path:
-        filename = os.path.basename(filepath)
-        seed = random.randint(1, 1000000)
-        print(f"运行测例文件： {filepath}")
-        try:
-            output = subprocess.run(f"./{SHELL_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
-            cost = parse_executer_output(output)
-            ALL_COSTS.append({
-                "instance": filename,
-                "cost": cost,
-                "best_cost": -1
-            })
-        except Exception as e:
-            print(f"Error running {filename}: {e}")
-
-
-def compare_with_best_costs():
-    global ALL_COSTS, BEST_COSTS
-    for cost_item in ALL_COSTS:
-        for best_cost_item in BEST_COSTS:
-            if cost_item["instance"] == best_cost_item["instance"]:
-                cost_item["best_cost"] = best_cost_item["best_cost"]
-                break
-        else:
-            print(f"实例{cost_item['instance']}的最佳cost没找到")
-
-
-def write_costs_to_csv():
-    df = pd.DataFrame(ALL_COSTS)
-    df.to_csv("2024_my_costs.csv", index=False)
-    print("输出结果已保存到2024_my_costs.csv")
-
-
-def rate():
-    tota_score = 0
-    valid_instance_cnt = 0
-    for item in ALL_COSTS:
-        if item["cost"] < 0:
-            print(f"实例{item['instance']}的my_cost没找到")
-            continue
-        if item["best_cost"] < 0:
-            print(f"实例{item['instance']}的best_cost没找到")
-            continue
-
-        score = (1 + item['best_cost']) / (1 + item['cost'])
-        tota_score += score
-        valid_instance_cnt += 1
-
-    return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
-
-
-# 通过import执行子模块
-def main(cutoff_time: int, instance_num_limit: int, instance_size_limit: int, benchmark_set_path: str, lock: threading.Lock):
-    run_single_benchmark_set()
-
-    with lock:
-        BEST_COSTS = pd.read_csv("2024_best_costs.csv").to_dict(orient="records")
-        compare_with_best_costs()
-        write_costs_to_csv()
-
-        score = rate()
-        with open("temp", "a") as temp_file:
-            temp_file.write(f"{score}\n")
