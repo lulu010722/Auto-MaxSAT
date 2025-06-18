@@ -4,7 +4,7 @@
 #$3: cutoff time
 wl=$3
 
-./runsolver --timestamp -d 15 -o output.out -v output.var -w output.wat -C $wl -W $wl solver-src/bin/USW-LS $1 $2
+./auto-src/runsolver --timestamp -d 15 -o output.out -v output.var -w output.wat -C $wl -W $wl ./solver-src/bin/USW-LS $1 $2
 cat output.out
 rm -f output.out
 rm -f output.var

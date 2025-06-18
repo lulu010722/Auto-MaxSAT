@@ -1,85 +1,536 @@
-INFO     [2025-06-18 18:23:16]开始处理测例集: BTBNSL_wt-                                                                                     main.py:47
-INFO     [2025-06-18 18:23:16]开始LLM对话                                                                                                 single.py:212
-INFO     [2025-06-18 18:23:16]HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"                            _client.py:1025
-INFO     [2025-06-18 18:23:30]大模型优化完成，日志已保存到: log/history_1750242196065.json                                                  chat.py:139
-INFO     [2025-06-18 18:23:30]LLM对话迭代完成                                                                                             single.py:214
-INFO     [2025-06-18 18:23:30]构建算法可执行文件                                                                                          single.py:216
-make: 进入目录“/home/users/tylu/auto/solver-src”
-make: 离开目录“/home/users/tylu/auto/solver-src”
-INFO     [2025-06-18 18:23:31]构建完成                                                                                                    single.py:227
-INFO     [2025-06-18 18:23:31]开始基准测试: BTBNSL_wt-                                                                                    single.py:231
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf                             single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf                                 single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf                                             single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf                                            single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf                                                 single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf                                single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf                                             single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf                            single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf                                         single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf                            single.py:146
-INFO     [2025-06-18 18:23:31]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf                          single.py:146
-INFO     [2025-06-18 18:23:31]输出结果已保存到data/my_costs.csv                                                                           single.py:179
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                        single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                            single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf的my_cost没找到                                        single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf的my_cost没找到                                       single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf的my_cost没找到                                            single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf的my_cost没找到                           single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf的my_cost没找到                                        single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                       single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf的my_cost没找到                                    single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                       single.py:187
-WARNING  [2025-06-18 18:23:31]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf的my_cost没找到                     single.py:187
-INFO     [2025-06-18 18:23:31]基准测试完成                                                                                                single.py:238
-WARNING  [2025-06-18 18:23:31]对于BTBNSL_wt-，第0轮问询没有找到更好的算法                                                                 single.py:260
-INFO     [2025-06-18 18:23:31]开始LLM对话                                                                                                 single.py:212
-INFO     [2025-06-18 18:23:32]HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"                            _client.py:1025
-INFO     [2025-06-18 18:23:42]大模型优化完成，日志已保存到: log/history_1750242211844.json                                                  chat.py:139
-INFO     [2025-06-18 18:23:42]LLM对话迭代完成                                                                                             single.py:214
-INFO     [2025-06-18 18:23:42]构建算法可执行文件                                                                                          single.py:216
-make: 进入目录“/home/users/tylu/auto/solver-src”
-make: 离开目录“/home/users/tylu/auto/solver-src”
-INFO     [2025-06-18 18:23:43]构建完成                                                                                                    single.py:227
-INFO     [2025-06-18 18:23:43]开始基准测试: BTBNSL_wt-                                                                                    single.py:231
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf                             single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf                                 single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf                                             single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf                                            single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf                                                 single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf                                single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf                                             single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf                           single.py:146
-INFO     [2025-06-18 18:23:43]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf                            single.py:146
-INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf                                         single.py:146
-INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf                            single.py:146
-INFO     [2025-06-18 18:23:44]运行测例文件: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf                          single.py:146
-INFO     [2025-06-18 18:23:44]输出结果已保存到data/my_costs.csv                                                                           single.py:179
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                        single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf的my_cost没找到                            single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf的my_cost没找到                                        single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf的my_cost没找到                                       single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf的my_cost没找到                                            single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf的my_cost没找到                           single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf的my_cost没找到                                        single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                      single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf的my_cost没找到                       single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf的my_cost没找到                                    single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf的my_cost没找到                       single.py:187
-WARNING  [2025-06-18 18:23:44]实例BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf的my_cost没找到                     single.py:187
-INFO     [2025-06-18 18:23:44]基准测试完成                                                                                                single.py:238
-WARNING  [2025-06-18 18:23:44]对于BTBNSL_wt-，第1轮问询没有找到更好的算法                                                                 single.py:260
-测例集处理完成: BTBNSL_wt-
-INFO     [2025-06-18 18:23:44]测例集处理完成: BTBNSL_wt-                                                                                     main.py:52
-所有测例集处理完成
-INFO     [2025-06-18 18:23:44]所有测例集处理完成                                                                                             main.py:53
+[06-18 19:48:23] [INFO    ] [main.py:42] 开始处理测例集: BTBNSL_wt-
+[06-18 19:48:23] [INFO    ] [single.py:214] 开始LLM对话
+[06-18 19:48:23] [INFO    ] [single.py:216] LLM对话迭代完成
+[06-18 19:48:23] [INFO    ] [single.py:218] 构建算法可执行文件
+[06-18 19:48:24] [INFO    ] [single.py:229] 构建完成
+[06-18 19:48:24] [INFO    ] [single.py:233] 开始基准测试: BTBNSL_wt-
+[06-18 19:48:24] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf
+[06-18 19:48:35] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.03	o 218968073
+0.00/0.03	o 194981934
+0.00/0.03	o 191616287
+0.00/0.03	o 190445022
+0.00/0.04	o 187757468
+0.00/0.04	o 182364476
+0.00/0.04	o 180434002
+0.00/0.05	o 180224165
+0.00/0.05	o 179141361
+0.00/0.10	o 178302474
+0.00/0.10	o 178259153
+0.00/0.12	o 177487832
+0.00/0.17	o 177429791
+0.00/0.17	o 177275500
+0.00/0.17	o 176352683
+0.28/0.33	o 176325076
+0.28/0.36	o 175191559
+0.28/0.36	o 173804142
+7.89/7.99	o 173687048
+9.98/10.00	c verified
+
+[06-18 19:48:35] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf, 代价: 173687048
+[06-18 19:48:35] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf
+[06-18 19:48:45] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.09	o 173267819
+0.00/0.09	o 155291830
+0.00/0.10	o 154298281
+0.00/0.10	o 150420038
+0.00/0.10	o 149083134
+0.00/0.12	o 149068523
+0.00/0.12	o 147481971
+0.00/0.15	o 146131249
+0.29/0.46	o 145885789
+0.29/0.49	o 144226599
+0.29/0.50	o 143808001
+0.29/0.54	o 143712113
+0.29/0.54	o 143113003
+0.29/0.54	o 143078052
+3.69/3.76	o 142797860
+5.48/5.59	o 142349257
+5.48/5.59	o 142298443
+5.48/5.59	o 142172058
+5.48/5.59	o 142028822
+5.88/5.93	o 141169261
+9.98/10.00	c verified
+
+[06-18 19:48:45] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf, 代价: 141169261
+[06-18 19:48:45] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf
+[06-18 19:48:56] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.06	o 294489077
+0.00/0.06	o 292480582
+0.00/0.06	o 291852733
+0.00/0.06	o 291097274
+0.00/0.06	o 290640695
+0.00/0.06	o 289326622
+0.00/0.06	o 289077227
+0.00/0.06	o 288007002
+0.00/0.06	o 286490874
+0.00/0.06	o 285959852
+0.00/0.06	o 285667683
+0.00/0.06	o 284830166
+0.00/0.06	o 284743613
+0.00/0.06	o 284159179
+0.00/0.06	o 284068343
+0.00/0.06	o 283794511
+0.00/0.06	o 283546428
+0.00/0.06	o 283109209
+0.00/0.06	o 282850941
+0.00/0.07	o 282674894
+0.00/0.07	o 282267476
+0.00/0.07	o 282109995
+0.00/0.07	o 282020883
+0.00/0.07	o 281708143
+0.00/0.07	o 281703580
+0.00/0.07	o 281287549
+0.00/0.07	o 281077735
+0.00/0.08	o 281071854
+0.00/0.22	o 280642191
+0.88/0.90	o 280499411
+1.07/1.16	o 280492555
+1.07/1.16	o 280419670
+1.07/1.17	o 280311721
+1.07/1.17	o 280310726
+2.98/3.06	o 279979179
+8.18/8.20	o 279761671
+8.18/8.20	o 279751638
+9.98/10.00	c verified
+
+[06-18 19:48:56] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf, 代价: 279751638
+[06-18 19:48:56] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf
+[06-18 19:49:06] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.21	o 6219011333
+0.00/0.22	o 5833747894
+0.00/0.22	o 5618379177
+0.00/0.26	o 5425018824
+0.58/0.68	o 5422516169
+0.58/0.69	o 5393529621
+0.58/0.71	o 5385549599
+2.99/3.09	o 5368396878
+3.09/3.10	o 5357635235
+9.98/10.00	c verified
+
+[06-18 19:49:06] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf, 代价: 5357635235
+[06-18 19:49:06] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf
+[06-18 19:49:17] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.19	o 6304574709
+0.00/0.19	o 5837301862
+0.00/0.20	o 5801892792
+0.00/0.20	o 5784939472
+0.00/0.20	o 5773824057
+0.00/0.20	o 5689862571
+0.00/0.20	o 5667761411
+0.00/0.20	o 5651647241
+0.00/0.20	o 5633070379
+0.00/0.26	o 5606176060
+0.00/0.26	o 5500042290
+0.00/0.26	o 5486341150
+0.00/0.26	o 5478056268
+0.00/0.26	o 5474193598
+0.00/0.29	o 5461442558
+0.00/0.29	o 5459388478
+0.00/0.29	o 5451554568
+0.28/0.29	o 5437629187
+0.28/0.49	o 5400982325
+0.28/0.50	o 5398981833
+0.28/0.50	o 5397744843
+1.38/1.52	o 5332250249
+1.38/1.52	o 5331048849
+1.38/1.52	o 5329523589
+1.38/1.54	o 5329124755
+1.38/1.54	o 5323170585
+1.38/1.54	o 5320587875
+1.38/1.54	o 5320231725
+9.98/10.00	c verified
+
+[06-18 19:49:17] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf, 代价: 5320231725
+[06-18 19:49:17] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf
+[06-18 19:49:27] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.04	o 488905707
+0.00/0.04	o 486373029
+0.00/0.04	o 482008690
+0.00/0.04	o 475379410
+0.00/0.04	o 470321851
+0.00/0.04	o 469038391
+0.00/0.04	o 465637275
+0.00/0.04	o 465423572
+0.00/0.04	o 463100407
+0.00/0.04	o 461152192
+0.00/0.04	o 459738286
+0.00/0.04	o 459349005
+0.00/0.04	o 459095509
+0.00/0.12	o 458527347
+0.00/0.12	o 458498753
+0.00/0.14	o 458409089
+0.00/0.14	o 458248861
+0.28/0.44	o 458128421
+3.78/4.08	o 458076768
+3.78/4.09	o 457891871
+4.08/4.11	o 457840087
+4.88/5.03	o 457622958
+7.98/8.06	o 457197556
+7.98/8.06	o 456594129
+9.98/10.00	c verified
+
+[06-18 19:49:27] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf, 代价: 456594129
+[06-18 19:49:27] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf
+[06-18 19:49:38] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.01	o 167100787
+0.00/0.01	o 159926142
+0.00/0.01	o 149121459
+0.00/0.01	o 145591069
+0.00/0.02	o 144002197
+0.00/0.02	o 141386875
+0.00/0.02	o 138405199
+0.00/0.02	o 138127015
+0.00/0.02	o 136460688
+0.00/0.02	o 134613229
+0.00/0.07	o 133913702
+0.00/0.07	o 132981987
+0.00/0.19	o 132174613
+0.00/0.19	o 130862023
+0.00/0.22	o 130566620
+0.00/0.23	o 128425274
+4.09/4.13	o 127820916
+9.98/10.00	c verified
+
+[06-18 19:49:38] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf, 代价: 127820916
+[06-18 19:49:38] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf
+[06-18 19:49:48] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.06	o 1668041820
+0.00/0.06	o 1517480916
+0.00/0.06	o 1461022713
+0.00/0.06	o 1452271269
+0.00/0.06	o 1432052782
+0.00/0.06	o 1416877445
+0.00/0.06	o 1399745354
+0.00/0.06	o 1376577301
+0.00/0.06	o 1375890216
+0.00/0.07	o 1363859343
+0.00/0.11	o 1357334385
+0.00/0.11	o 1357211861
+0.00/0.11	o 1356181948
+0.00/0.11	o 1356152173
+0.00/0.11	o 1355584189
+0.00/0.11	o 1346544530
+0.00/0.16	o 1338754799
+1.99/2.07	o 1336453033
+1.99/2.07	o 1336313543
+1.99/2.08	o 1336214949
+2.39/2.42	o 1332422786
+9.78/9.88	o 1331769009
+9.78/9.88	o 1331659108
+9.78/9.89	o 1331590326
+9.78/9.89	o 1331587775
+9.78/9.89	o 1331581386
+9.78/9.89	o 1331528092
+9.78/9.89	o 1331525766
+9.78/9.89	o 1331349677
+9.78/9.89	o 1331344007
+9.78/9.89	o 1331130607
+9.89/9.92	o 1331076429
+9.89/9.93	o 1331000400
+9.89/9.93	o 1330994730
+9.89/9.93	o 1330915134
+9.89/9.94	o 1330910619
+9.98/10.00	c verified
+
+[06-18 19:49:48] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf, 代价: 1330910619
+[06-18 19:49:48] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf
+[06-18 19:49:59] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.06	o 307996724
+0.00/0.06	o 306986213
+0.00/0.06	o 302397056
+0.00/0.06	o 298140770
+0.00/0.06	o 295235418
+0.00/0.06	o 294841192
+0.00/0.06	o 294019146
+0.00/0.06	o 291229610
+0.00/0.06	o 289845654
+0.00/0.06	o 289541444
+0.00/0.06	o 288117708
+0.00/0.06	o 287201860
+0.00/0.06	o 286235824
+0.00/0.06	o 286111979
+0.00/0.06	o 285964736
+0.00/0.06	o 285714699
+0.00/0.06	o 285444991
+0.00/0.06	o 285444466
+0.00/0.06	o 284538663
+0.00/0.06	o 284422519
+0.00/0.06	o 284406482
+0.00/0.06	o 284269261
+0.00/0.07	o 284103602
+0.00/0.07	o 283425164
+0.00/0.07	o 283198589
+0.00/0.07	o 283185855
+0.00/0.07	o 282940317
+0.00/0.07	o 282715785
+0.00/0.07	o 282624949
+0.00/0.08	o 282483365
+0.00/0.10	o 281980754
+0.00/0.10	o 281534491
+0.00/0.12	o 281354518
+0.00/0.12	o 281143756
+0.00/0.12	o 281044661
+0.00/0.12	o 280896497
+0.00/0.12	o 280243259
+0.00/0.12	o 280172415
+0.00/0.12	o 279850486
+0.00/0.13	o 279768550
+0.00/0.14	o 279636323
+4.48/4.58	o 279414262
+9.97/10.00	c verified
+
+[06-18 19:49:59] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf, 代价: 279414262
+[06-18 19:49:59] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf
+[06-18 19:50:09] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.21	o 6262777701
+0.00/0.21	o 5626391662
+0.00/0.24	o 5585041570
+0.00/0.24	o 5487910648
+0.00/0.24	o 5442290692
+1.19/1.25	o 5439981388
+1.29/1.30	o 5427924699
+1.29/1.31	o 5426349499
+1.29/1.33	o 5380789818
+1.29/1.33	o 5369062438
+1.29/1.33	o 5362809102
+1.69/1.78	o 5356393646
+1.69/1.78	o 5346899416
+9.97/10.00	c verified
+
+[06-18 19:50:09] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf, 代价: 5346899416
+[06-18 19:50:09] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf
+[06-18 19:50:20] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.05	o 1641516915
+0.00/0.05	o 1539708879
+0.00/0.05	o 1482509628
+0.00/0.05	o 1474917294
+0.00/0.06	o 1452464609
+0.00/0.22	o 1451378742
+0.00/0.22	o 1439372363
+0.00/0.23	o 1436550859
+0.00/0.23	o 1435669899
+9.98/10.00	c verified
+
+[06-18 19:50:20] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf, 代价: 1435669899
+[06-18 19:50:20] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf
+[06-18 19:50:30] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.02	o 141859924
+0.00/0.02	o 139066636
+0.00/0.02	o 135813626
+0.00/0.02	o 135394700
+0.00/0.02	o 135189213
+0.00/0.02	o 134889784
+0.00/0.02	o 134729369
+0.00/0.02	o 134602071
+0.00/0.02	o 134488327
+0.00/0.03	o 133899567
+0.00/0.03	o 133849572
+0.00/0.17	o 133731273
+0.29/0.41	o 133707394
+0.29/0.41	o 133660600
+0.59/0.64	o 133490596
+0.79/0.82	o 133440297
+0.79/0.83	o 133372874
+0.79/0.84	o 133060341
+9.98/10.00	c verified
+
+[06-18 19:50:30] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf, 代价: 133060341
+[06-18 19:50:30] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf
+[06-18 19:50:41] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.04	o 1767681005
+0.00/0.05	o 1567385180
+0.00/0.05	o 1509775425
+0.00/0.05	o 1485116475
+0.00/0.05	o 1473100860
+0.00/0.05	o 1470749235
+0.00/0.06	o 1469196924
+0.00/0.07	o 1463930261
+2.58/2.63	o 1458471710
+2.58/2.63	o 1449744550
+6.98/7.09	o 1446730380
+8.28/8.34	o 1440313020
+8.28/8.34	o 1435806645
+9.98/10.00	c verified
+
+[06-18 19:50:41] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf, 代价: 1435806645
+[06-18 19:50:41] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf
+[06-18 19:50:51] [INFO    ] [single.py:149] 册立文件输出: 0.29/0.41	o 65095604797
+0.29/0.43	o 63900642101
+0.29/0.43	o 63812576951
+0.29/0.45	o 61941188431
+0.29/0.45	o 61819104231
+0.29/0.46	o 58000603775
+0.29/0.46	o 57487291155
+0.29/0.47	o 57350999255
+0.60/0.61	o 56764021018
+0.60/0.61	o 56361351468
+0.60/0.61	o 55946591808
+0.60/0.61	o 55801428108
+0.60/0.61	o 55601121908
+0.60/0.61	o 55546789458
+0.60/0.61	o 55213625765
+0.60/0.61	o 55075511765
+0.60/0.61	o 54412857295
+0.89/0.92	o 54358055610
+0.89/0.93	o 54291879390
+0.89/0.94	o 54089111690
+0.89/0.94	o 54024151890
+0.89/0.94	o 53950062490
+0.89/0.94	o 53852896390
+0.89/0.94	o 53691083090
+0.89/0.94	o 53507092420
+0.89/0.94	o 53500261620
+0.89/0.95	o 53473024300
+0.89/0.97	o 53305375420
+4.19/4.28	o 52998886608
+7.08/7.12	o 52914025195
+7.08/7.12	o 52913544694
+7.08/7.12	o 52913434261
+7.08/7.12	o 52905379131
+7.08/7.12	o 52777051011
+7.08/7.13	o 52505893911
+7.08/7.15	o 52348631821
+7.18/7.20	o 52265542231
+9.98/10.00	c verified
+
+[06-18 19:50:51] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf, 代价: 52265542231
+[06-18 19:50:51] [INFO    ] [single.py:181] 输出结果已保存到data/my_costs.csv
+[06-18 19:50:51] [INFO    ] [single.py:240] 基准测试完成
+[06-18 19:50:51] [WARNING ] [single.py:262] 对于BTBNSL_wt-，第0轮问询没有找到更好的算法
+[06-18 19:50:51] [INFO    ] [single.py:214] 开始LLM对话
+[06-18 19:50:51] [INFO    ] [single.py:216] LLM对话迭代完成
+[06-18 19:50:51] [INFO    ] [single.py:218] 构建算法可执行文件
+[06-18 19:50:52] [INFO    ] [single.py:229] 构建完成
+[06-18 19:50:52] [INFO    ] [single.py:233] 开始基准测试: BTBNSL_wt-
+[06-18 19:50:52] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf
+[06-18 19:51:03] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.02	o 219083253
+0.00/0.02	o 194878328
+0.00/0.03	o 185355447
+0.00/0.03	o 184582364
+0.00/0.03	o 182847191
+0.00/0.03	o 181815580
+0.00/0.03	o 180627132
+0.00/0.04	o 177998589
+0.00/0.04	o 177815033
+0.00/0.13	o 176842937
+0.00/0.14	o 175058574
+0.00/0.14	o 174805957
+1.69/1.81	o 173713939
+2.09/2.11	o 173064843
+2.09/2.12	o 172800871
+2.09/2.18	o 172688097
+9.98/10.00	c verified
+
+[06-18 19:51:03] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf, 代价: 172688097
+[06-18 19:51:03] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf
+[06-18 19:51:14] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.09	o 181811576
+0.00/0.10	o 161664627
+0.00/0.10	o 158062960
+0.00/0.10	o 155360166
+0.00/0.10	o 152616980
+0.00/0.10	o 150716220
+0.00/0.11	o 147503670
+0.00/0.14	o 147459113
+0.00/0.21	o 147422219
+0.00/0.22	o 147109843
+0.00/0.24	o 143705990
+0.30/0.37	o 142364825
+0.30/0.38	o 142010169
+9.98/10.00	c verified
+
+[06-18 19:51:14] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf, 代价: 142010169
+[06-18 19:51:14] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf
+[06-18 19:51:24] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.06	o 298791187
+0.00/0.06	o 298719752
+0.00/0.06	o 297585897
+0.00/0.06	o 295347630
+0.00/0.06	o 293565888
+0.00/0.06	o 291270853
+0.00/0.06	o 290452253
+0.00/0.06	o 290242439
+0.00/0.06	o 290176803
+0.00/0.06	o 289384156
+0.00/0.07	o 287627510
+0.00/0.07	o 285994099
+0.00/0.07	o 285528428
+0.00/0.07	o 285224658
+0.00/0.07	o 284745351
+0.00/0.07	o 284074411
+0.00/0.07	o 283914207
+0.00/0.07	o 283617676
+0.00/0.07	o 283086005
+0.00/0.07	o 282601894
+0.00/0.08	o 282464658
+0.00/0.08	o 281791008
+0.00/0.08	o 281705213
+0.00/0.09	o 281366063
+0.00/0.09	o 280705721
+0.59/0.72	o 280485277
+2.49/2.57	o 280411687
+2.59/2.73	o 280356926
+2.59/2.74	o 280136351
+3.09/3.17	o 280056933
+8.49/8.54	o 280010814
+9.98/10.00	c verified
+
+[06-18 19:51:24] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf, 代价: 280010814
+[06-18 19:51:24] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf
+[06-18 19:51:35] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.21	o 6202153845
+0.00/0.22	o 5692511817
+0.00/0.23	o 5658298097
+0.00/0.25	o 5616956943
+0.00/0.27	o 5524208690
+0.28/0.43	o 5523435405
+0.28/0.43	o 5456054456
+0.28/0.44	o 5448904244
+0.28/0.44	o 5447385740
+1.39/1.40	o 5446861128
+1.39/1.44	o 5434441972
+1.39/1.44	o 5411610202
+1.39/1.46	o 5376690355
+1.39/1.47	o 5369032924
+1.39/1.51	o 5367022863
+1.39/1.51	o 5367022860
+1.79/1.89	o 5361096288
+8.88/8.91	o 5357750905
+9.98/10.00	c verified
+
+[06-18 19:51:35] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf, 代价: 5357750905
+[06-18 19:51:35] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf
+[06-18 19:51:45] [INFO    ] [single.py:149] 册立文件输出: 0.00/0.19	o 6305766303
+0.00/0.19	o 6171376863
+0.00/0.19	o 6028002375
+0.00/0.19	o 6027257505
+0.00/0.20	o 5910340287
+0.00/0.20	o 5869513562
+0.00/0.20	o 5814772654
+0.00/0.20	o 5764751092
+0.00/0.21	o 5752559203
+0.00/0.21	o 5743891463
+0.00/0.21	o 5683310468
+0.00/0.21	o 5683173968
+0.00/0.21	o 5671691818
+0.00/0.21	o 5647574098
+0.00/0.22	o 5639112638
+0.00/0.22	o 5617898158
+0.00/0.22	o 5601918294
+0.00/0.22	o 5578645064
+0.00/0.22	o 5560823530
+0.00/0.22	o 5546872070
+0.00/0.27	o 5542177221
+0.00/0.27	o 5516158665
+0.00/0.28	o 5515361155
+0.00/0.28	o 5513735125
+0.00/0.28	o 5511681045
+0.00/0.29	o 5509624985
+0.00/0.29	o 5508943045
+0.00/0.29	o 5506896045
+0.28/0.30	o 5499094800
+0.28/0.30	o 5464110210
+0.28/0.41	o 5460687989
+0.28/0.41	o 5460360469
+0.28/0.41	o 5453890869
+1.18/1.20	o 5453248812
+1.18/1.21	o 5451723552
+1.28/1.35	o 5424698246
+1.28/1.36	o 5418746607
+1.28/1.36	o 5407264457
+1.28/1.36	o 5395383757
+1.28/1.36	o 5387549847
+1.38/1.47	o 5363296667
+1.48/1.61	o 5362337994
+1.77/1.83	o 5361562944
+1.89/1.93	o 5360311198
+1.89/1.93	o 5348829048
+9.98/10.00	c verified
+
+[06-18 19:51:45] [INFO    ] [single.py:156] 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf, 代价: 5348829048
+[06-18 19:51:45] [INFO    ] [single.py:147] 运行测例文件: /home/users/tylu/auto/benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf

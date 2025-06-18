@@ -137,14 +137,14 @@ def get_benchmark_set_feature(benchmark_set: str) -> str:
 def run_single(benchmark_set_path: str, lock) -> None:
     global MY_COSTS, BEST_COSTS, SCORE
 
-    instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
+    instances_path = [path.joinpath() for path in Path(benchmark_set_path).iterdir()]
 
     MY_COSTS = []
     for filepath in instances_path:
         filename = os.path.basename(filepath)
         seed = random.randint(0, 1000000)
-        logger.info(f"运行测例文件: {filepath}")
         try:
+            logger.info(f"运行测例文件: {filepath}")
             output = subprocess.run(f"./{EXECUTER_SCRIPT} {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
             cost = parse_executer_output(output)
             MY_COSTS.append({
@@ -152,6 +152,7 @@ def run_single(benchmark_set_path: str, lock) -> None:
                 "cost": cost,
                 "best_cost": -1
             })
+            logger.info(f"测例文件运行完毕: {filename}, 代价: {cost}")
         except Exception as e:
             logger.error(f"执行文件错误: {filename}: {e}")
 
@@ -210,7 +211,7 @@ def main(benchmark_set):
 
     while epoch < EPOCH:
         logger.info("开始LLM对话")
-        chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
+        # chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
         logger.info("LLM对话迭代完成")
 
         logger.info("构建算法可执行文件")
@@ -227,7 +228,7 @@ def main(benchmark_set):
         logger.info("构建完成")
 
         processes = []
-        for i in range(BENCHMARK_ITER_TIME):
+        for _ in range(BENCHMARK_ITER_TIME):
             logger.info(f"开始基准测试: {benchmark_set}")
             process = multiprocessing.Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock))
             process.start()
@@ -263,6 +264,6 @@ def main(benchmark_set):
 
 
 if __name__ == "__main__":
-    benchmark_set = sys.argv[1]
+    benchmark_set = "drmx-crypt"
     main(benchmark_set)
 

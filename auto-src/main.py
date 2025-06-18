@@ -1,5 +1,4 @@
 from pathlib import Path
-from rich.logging import RichHandler
 from multiprocessing import Process
 
 import logging
@@ -8,19 +7,15 @@ import yaml
 import single
 
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s%(message)s",
-    datefmt="[%Y-%m-%d %H:%M:%S]",
-    handlers=[RichHandler(rich_tracebacks=True, show_time=False)]
-)
-
-
 logger = logging.getLogger(__name__)
 
-file_handler = logging.FileHandler("test.log", mode="a", encoding="utf-8")
-
-logger.addHandler(file_handler)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)-8s] [%(filename)s:%(lineno)s] %(message)s",
+    datefmt="[%m-%d %H:%M:%S]",
+    filename="test.log",
+    filemode="w"
+)
 
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
