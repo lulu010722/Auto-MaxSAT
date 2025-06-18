@@ -49,13 +49,14 @@ MY_COSTS_PATH = ""
 BENCHMARK_NEW_PATH = ""
 BENCHMARK_OLD_PATH = ""
 
+SCORE = 0.0
 
 def init() -> None:
     global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_OLD_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
     global EXECUTER_SCRIPT
     global TARGET_FUNCTIONS, CUTOFF_TIME, EPOCH, BENCHMARK_ITER_TIME
     global BENCHMARK_NEW_PATH, BENCHMARK_OLD_PATH
-    global BEST_SCORES_PATH, BEST_SCORES_PATH, MY_COSTS_PATH
+    global BEST_COSTS_PATH, BEST_SCORES_PATH, MY_COSTS_PATH
 
     SOLVER_SRC_PATH = config["route"]["solver_src"]
     ORIGIN_FILE_PATH = config["route"]["origin_file"]
@@ -114,12 +115,12 @@ def read_best_scores(benchmark_set: str) -> None:
     if benchmark_set not in best_scores_benchmark_set:
         BEST_SCORES.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
-        new_row.to_csv("best_scores.csv", mode="a", index=False, header=False)
+        new_row.to_csv(BEST_SCORES_PATH, mode="a", index=False, header=False)
 
 
 def get_benchmark_set_feature(benchmark_set: str) -> str:
     feature = ""
-    benchmark_set_path = f"benchmark-new-format/{benchmark_set}"
+    benchmark_set_path = f"{BENCHMARK_NEW_PATH}/{benchmark_set}"
     wcnf_file = os.listdir(benchmark_set_path)[0]
     with open(os.path.join(benchmark_set_path, wcnf_file), "r") as file:
         lines = file.readlines()
@@ -134,7 +135,7 @@ def get_benchmark_set_feature(benchmark_set: str) -> str:
 
 
 def run_single(benchmark_set_path: str, lock) -> None:
-    global MY_COSTS, BEST_COSTS
+    global MY_COSTS, BEST_COSTS, SCORE
 
     instances_path = [path.name for path in Path(benchmark_set_path).iterdir()]
 
@@ -158,8 +159,7 @@ def run_single(benchmark_set_path: str, lock) -> None:
     compare_with_best_costs()
     with lock:
         write_costs_to_csv()
-
-        score = rate()
+    SCORE = rate()
 
 
 def compare_with_best_costs() -> None:
@@ -208,15 +208,13 @@ def main(benchmark_set):
     make_fail_cnt = 0
     benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
 
-    best_scores_with_epoch = []
-
     while epoch < EPOCH:
         logger.info("开始LLM对话")
         chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
         logger.info("LLM对话迭代完成")
 
         logger.info("构建算法可执行文件")
-        make_result = subprocess.run(["make", "-C", "source-code"])
+        make_result = subprocess.run(["make", "-C", SOLVER_SRC_PATH])
         if make_result.returncode != 0:
             logger.warning("Makefile执行失败，重新询问大模型")
             shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
@@ -228,10 +226,9 @@ def main(benchmark_set):
             continue
         logger.info("构建完成")
 
-        best_scores_after_llm = []
         processes = []
         for i in range(BENCHMARK_ITER_TIME):
-            logger.info("开始基准测试")
+            logger.info(f"开始基准测试: {benchmark_set}")
             process = multiprocessing.Process(target=run_single, args=(CUTOFF_TIME, benchmark_set_path, lock))
             process.start()
             processes.append(process)
@@ -243,35 +240,26 @@ def main(benchmark_set):
         read_best_scores(benchmark_set_path)
 
 
-        best_score_after_llm = max(best_scores_after_llm)
-        best_scores_with_epoch.append({
-            "epoch": epoch,
-            "scores": best_scores_after_llm
-        })
-
-        progress_history_wrt_benchmark_set_dir = f"{PROGRESS_DIR_PATH}/{benchmark_set}"
-        Path(progress_history_wrt_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
+        progress_of_benchmark_set_dir = f"{PROGRESS_DIR_PATH}/{benchmark_set}"
+        Path(progress_of_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
-                if best_score_after_llm > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
-                    origin_filename = os.path.basename(ORIGIN_FILE_PATH)
-                    shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_history_wrt_benchmark_set_dir}/{origin_filename}.progress_{progress_cnt}")
+                if SCORE > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
+                    origin_file = os.path.basename(ORIGIN_FILE_PATH)
+                    shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
                     progress_cnt += 1
 
-                    df = pd.read_csv("best_scores.csv")
-                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [best_score_after_llm]
-                    df.to_csv("best_scores.csv", index=False)
+                    df = pd.read_csv(BEST_SCORES_PATH)
+                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [SCORE]
+                    df.to_csv(BEST_SCORES_PATH, index=False)
                     logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
-                    shutil.copyfile("source-code/iterations/iteration_0.txt", "source-code/heuristic.h")
+                    shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
                     logger.warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1
-
-    with open("best_scores_with_epoch.json", "w") as output_file:
-        json.dump(best_scores_with_epoch, output_file)
 
 
 if __name__ == "__main__":

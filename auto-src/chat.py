@@ -132,7 +132,7 @@ def optimize():
 
         shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
         for target_func in func_to_be_optimize:
-            insert_function(ORIGIN_FILE_PATH, res, target_func)  # type: ignore
+            insert_function(OPTIMIZED_FILE_PATH, res, target_func)  # type: ignore
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))

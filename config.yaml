@@ -3,7 +3,7 @@ route:
   solver_src: solver-src
   auto_src: auto-src
   origin_file: solver-src/backup/heuristic.h.origin
-  optimized_file: solver-src/heuristic.h.origin
+  optimized_file: solver-src/heuristic.h
   log: log
   result: result
   progress: progress
@@ -13,7 +13,7 @@ route:
 
 
 model:
-  api_key: sk-ce01122bd312429e83c9f2bd8640cc29 # 天宇の个人deepseek api
+  api_key: sk-fee47ec881c446a7a5de72af87943127
   base_url: https://api.deepseek.com
   name: deepseek-chat
   temperature: 0.0
@@ -39,64 +39,65 @@ train:
     - "void USW::soft_increase_weights_not_partial()"
     - "void USW::hard_smooth_weights()"
     - "void USW::soft_smooth_weights()"
-  prompt:
-    system_template: |
-      You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
-      You will be given a complete code module and you need to rewrite selected parts that meets the requirements.
-      Note that the MaxSAT problem solver that we are going to optimize is targeted to solve weighted partial MaxSAT problem,
-      which is a variant of the MaxSAT problem where each clause has a weight and therea are two types of clauses: hard clauses and soft clauses.
-    user_template: |
-      Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
 
-      Steps:
-      1. Read the <key code> and understand the functionality of the code.
-      2. Rewrite the code with the given function name in the <key code> according to the requirements below.
+prompt:
+  system: |
+    You are a code generator, your goal is to generate a MaxSAT solver based on the given requirements and the code provided.
+    You will be given a complete code module and you need to rewrite selected parts that meets the requirements.
+    Note that the MaxSAT problem solver that we are going to optimize is targeted to solve weighted partial MaxSAT problem,
+    which is a variant of the MaxSAT problem where each clause has a weight and therea are two types of clauses: hard clauses and soft clauses.
+  user: |
+    Your goal is to improve the MaxSAT solver by rewriting a selected function included in the <key code>, after reading and understanding the <key code> of MaxSAT solver below
 
-      Requirements:
-      1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
-      2. Please make sure that the response text is a pure code response, without any explanation or comments.
-      3. You are not allowed to use data structures that is not defined or included in the <key code>.
-      4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
-      5. You maybe required to optimized multiple functions. In this case, rewrite each function and give output in order, separated by 2 new lines.
+    Steps:
+    1. Read the <key code> and understand the functionality of the code.
+    2. Rewrite the code with the given function name in the <key code> according to the requirements below.
+
+    Requirements:
+    1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
+    2. Please make sure that the response text is a pure code response, without any explanation or comments.
+    3. You are not allowed to use data structures that is not defined or included in the <key code>.
+    4. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
+    5. You maybe required to optimized multiple functions. In this case, rewrite each function and give output in order, separated by 2 new lines.
 
 
-      We provide you with the feature of the benchmark set that we are going to use to test the performance of the solver.
-      You can use this feature to optimize the code.
-      The feature is as follows (ended with a mark ---):
-      %s
-      ---
-      Explanation of the benchmark set feature by an example:
-      Standard MaxSat Instance
-      {
-      "sha1sum": "929379226355ee19e327a2ee481f00cbbcefe410", # the hash value of the instance
-      "nvars": 40290, # number of variables
-      "ncls": 145910, # number of clauses
-      "total_lits": 355550, # number of literals
-      "nhards": 145238, # number of har clauses
-      "nhard_nlits": 354878, # number of literals in hard clauses
-      "nhard_len_stats": # some statistics of the length of hard clauses
-          { "min": 1, # minimum length
-            "max": 6, # maximum length
-            "ave": 2.4434, # average length
-            "stddev": 0.9066 }, # standard deviation of length
-      "nsofts": 672, # number of soft clauses
-      "nsoft_nlits": 672, # number of literals in soft clauses
-      "nsoft_len_stats": # some statistics of the length of soft clauses
-          { "min": 1, # minimum length
-            "max": 1, # maximum length
-            "ave": 1.0000, # average length
-            "stddev": 0.0000 }, # standard deviation of length
-      "nsoft_wts": 667, # number of weights of soft clauses
-      "soft_wt_stats": # some statistics of the weights of soft clauses
-          { "min": 22, # minimum weight
-            "max": 49600, # maximum weight
-            "ave": 17352.1726, # average weight
-            "stddev": 10300.9184 } # standard deviation of weight
-      }
+    We provide you with the feature of the benchmark set that we are going to use to test the performance of the solver.
+    You can use this feature to optimize the code.
+    The feature is as follows (ended with a mark ---):
+    %s
+    ---
+    Explanation of the benchmark set feature by an example:
+    Standard MaxSat Instance
+    {
+    "sha1sum": "929379226355ee19e327a2ee481f00cbbcefe410", # the hash value of the instance
+    "nvars": 40290, # number of variables
+    "ncls": 145910, # number of clauses
+    "total_lits": 355550, # number of literals
+    "nhards": 145238, # number of har clauses
+    "nhard_nlits": 354878, # number of literals in hard clauses
+    "nhard_len_stats": # some statistics of the length of hard clauses
+        { "min": 1, # minimum length
+          "max": 6, # maximum length
+          "ave": 2.4434, # average length
+          "stddev": 0.9066 }, # standard deviation of length
+    "nsofts": 672, # number of soft clauses
+    "nsoft_nlits": 672, # number of literals in soft clauses
+    "nsoft_len_stats": # some statistics of the length of soft clauses
+        { "min": 1, # minimum length
+          "max": 1, # maximum length
+          "ave": 1.0000, # average length
+          "stddev": 0.0000 }, # standard deviation of length
+    "nsoft_wts": 667, # number of weights of soft clauses
+    "soft_wt_stats": # some statistics of the weights of soft clauses
+        { "min": 22, # minimum weight
+          "max": 49600, # maximum weight
+          "ave": 17352.1726, # average weight
+          "stddev": 10300.9184 } # standard deviation of weight
+    }
 
-      This time, the function(s) you need to optimize is:
-      %s
+    This time, the function(s) you need to optimize is:
+    %s
 
-      <key code> of MaxSAT solver is (ended with a mark ---):
-      %s
-      ---
+    <key code> of MaxSAT solver is (ended with a mark ---):
+    %s
+    ---
