@@ -16,15 +16,6 @@ import chat
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
-SOLVER_SRC_PATH = config["route"]["solver_src"]
-ORIGIN_FILE_PATH = config["route"]["origin_file"]
-OPTIMIZED_FILE_PATH = config["route"]["optimized_file"]
-BENCHMARK_NEW_PATH = config["route"]["benchmark_new"]
-BENCHMARK_OLD_PATH = config["route"]["benchmark_old"]
-PROGRESS_DIR_PATH = config["route"]["progress"]
-LOG_DIR_PATH = config["route"]["log"]
-OUTPUT_DIR_PATH = config["route"]["output"]
-
 EXECUTER_SCRIPT = config["route"]["executer"]
 
 TARGET_FUNCTIONS = config["train"]["target_functions"]
@@ -32,40 +23,27 @@ CUTOFF_TIME = config["runtime"]["cutoff_time"]
 EPOCH = config["runtime"]["epoch"]
 BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
 
-BEST_COSTS_PATH = config["data"]["best_costs"]
-BEST_SCORES_PATH = config["data"]["best_scores"]
-MY_COSTS_PATH = config["data"]["my_costs"]
 
 logger = logging.getLogger()
-
-class StderrLogger:
-    def write(self, message):
-        if message.strip():
-            logger.error(message.strip())
-
-    def flush(self):
-        pass
 
 
 def init(benchmark_set) -> None:
     global logger
 
-    with open(BEST_SCORES_PATH, "w") as f:
+    with open("data/best_scores.csv", "w") as f:
         f.write("benchmark_set,best_score\n")
-    with open(MY_COSTS_PATH, "w") as f:
+    with open("data/my_costs.csv", "w") as f:
         f.write("instance,cost\n")
 
-    shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
+    shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
 
     logger = logging.getLogger(benchmark_set)
     logger.setLevel(logging.INFO)
-    handler = logging.FileHandler(Path(OUTPUT_DIR_PATH) / f"{benchmark_set}.log")
+    handler = logging.FileHandler(f"output/{benchmark_set}.log")
     formatter = logging.Formatter('[%(asctime)s] [%(levelname)-7s] %(name)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     
-    sys.stderr = StderrLogger()
-
 
 
 def parse_executer_output(output: str) -> int:
@@ -84,19 +62,19 @@ def parse_executer_output(output: str) -> int:
 
 def read_best_scores(benchmark_set: str) -> None:
     global BEST_SCORES
-    BEST_SCORES = pd.read_csv(BEST_SCORES_PATH).to_dict(orient="records")
+    BEST_SCORES = pd.read_csv("data/best_scores.csv").to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in BEST_SCORES]
-    benchmark_set = os.path.basename(f"{BENCHMARK_OLD_PATH}/{benchmark_set}")
+    benchmark_set = os.path.basename(f"{"benchmark_old"}/{benchmark_set}")
     if benchmark_set not in best_scores_benchmark_set:
         BEST_SCORES.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])
-        new_row.to_csv(BEST_SCORES_PATH, mode="a", index=False, header=False)
+        new_row.to_csv("data/best_scores.csv", mode="a", index=False, header=False)
 
 
 def get_benchmark_set_feature(benchmark_set: str) -> str:
     feature = ""
-    benchmark_set_path = f"{BENCHMARK_NEW_PATH}/{benchmark_set}"
+    benchmark_set_path = f"benchmark_new/{benchmark_set}"
     wcnf_file = os.listdir(benchmark_set_path)[0]
     with open(os.path.join(benchmark_set_path, wcnf_file), "r") as file:
         lines = file.readlines()
@@ -131,7 +109,7 @@ def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
         except Exception as e:
             logger.error(f"执行文件错误: {filename}: {e}")
 
-    BEST_COSTS = pd.read_csv(BEST_COSTS_PATH).to_dict(orient="records")
+    BEST_COSTS = pd.read_csv("data/best_costs.csv").to_dict(orient="records")
 
     with lock:
         write_costs_to_csv()
@@ -141,15 +119,15 @@ def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
 
 
 def write_costs_to_csv() -> None:
-    df = pd.read_csv(MY_COSTS_PATH)
+    df = pd.read_csv("data/my_costs.csv")
     for my_cost_item in MY_COSTS:
         match = df["instance"] == my_cost_item["instance"]
         if match.any():    
             df.loc[df["instance"] == my_cost_item["instance"], "cost"] = my_cost_item["cost"]
         else:
             df = pd.concat([df, pd.DataFrame([my_cost_item])], ignore_index=True)
-    df.to_csv(MY_COSTS_PATH, index=False)
-    logger.info(f"输出结果已保存到{MY_COSTS_PATH}")
+    df.to_csv("data/my_costs.csv", index=False)
+    logger.info("输出结果已保存到data/my_costs.csv")
 
 
 def rate() -> float:
@@ -177,7 +155,7 @@ def main(benchmark_set, lock):
     global BEST_SCORES
 
     init(benchmark_set)
-    benchmark_set_path = f"{BENCHMARK_OLD_PATH}/{benchmark_set}"
+    benchmark_set_path = f"benchmark_old/{benchmark_set}"
 
     epoch = 0
     progress_cnt = 0
@@ -190,10 +168,10 @@ def main(benchmark_set, lock):
         logger.info("LLM对话迭代完成")
 
         logger.info("构建算法可执行文件")
-        make_result = subprocess.run(["make", "-C", SOLVER_SRC_PATH])
+        make_result = subprocess.run(["make", "-C", "solver_src"])
         if make_result.returncode != 0:
             logger.warning("Makefile执行失败，重新询问大模型")
-            shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
+            shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
 
             if make_fail_cnt > EPOCH:
                 logger.error("Makefile执行失败次数过多，退出")
@@ -220,24 +198,24 @@ def main(benchmark_set, lock):
         score = sum(scores) / len(scores) if scores else 0
         read_best_scores(benchmark_set_path)
 
-        progress_of_benchmark_set_dir = f"{PROGRESS_DIR_PATH}/{benchmark_set}"
+        progress_of_benchmark_set_dir = f"progress/{benchmark_set}"
         Path(progress_of_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
                 if score > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
-                    origin_file = os.path.basename(ORIGIN_FILE_PATH)
-                    shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
+                    origin_file = os.path.basename("solver_src/backup/heuristic.h.origin")
+                    shutil.copyfile("solver_src/heuristic.h", f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
                     progress_cnt += 1
 
                     with lock:
-                        df = pd.read_csv(BEST_SCORES_PATH)
+                        df = pd.read_csv("data/best_scores.csv")
                         df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
-                        df.to_csv(BEST_SCORES_PATH, index=False)
+                        df.to_csv("data/best_scores.csv", index=False)
                         logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
-                    shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
+                    shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
                     logger.warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1

@@ -1,16 +1,3 @@
-route:
-  solver_src: solver_src
-  auto_src: auto_src
-  origin_file: solver_src/backup/heuristic.h.origin
-  optimized_file: solver_src/heuristic.h
-  log: log
-  output: output
-  progress: progress
-  executer: auto_src/starexec_usw-ls-runsolver.sh
-  benchmark_old: benchmark_old
-  benchmark_new: benchmark_new
-
-
 model:
   api_key: sk-fee47ec881c446a7a5de72af87943127
   base_url: https://api.deepseek.com
@@ -22,12 +9,6 @@ runtime:
   cutoff_time: 5
   epoch: 3
   benchmark_iter_time: 3
-
-
-data:
-  best_costs: data/best_costs.csv
-  best_scores: data/best_scores.csv
-  my_costs: data/my_costs.csv
 
 
 train:

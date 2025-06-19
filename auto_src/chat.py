@@ -10,21 +10,16 @@ import random
 import yaml
 import logging
 
-logger = logging.getLogger(__name__)
-
 
 API_KEY = ""
 BASE_URL = ""
 MODEL = ""
 TEMPERATURE = 0.0
 
-SOLVER_SRC_PATH = ""
-ORIGIN_FILE_PATH = ""
-OPTIMIZED_FILE_PATH = ""
-LOG_DIR_PATH = ""
 
 SYSTEM_PROMPT = ""
 USER_PROMPT = ""
+
 
 BENCHMARK_SET_FEATURE = ""
 TARGET_FUNCTIONS = []
@@ -33,10 +28,11 @@ TARGET_FUNCTIONS = []
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
+logger = logging.getLogger(__name__)
+
 
 def init(benchmark_set_feature, target_functions):
     global API_KEY, BASE_URL, MODEL, TEMPERATURE, CLIENT
-    global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, LOG_DIR_PATH
     global SYSTEM_PROMPT, USER_PROMPT
     global BENCHMARK_SET_FEATURE, TARGET_FUNCTIONS
 
@@ -45,16 +41,11 @@ def init(benchmark_set_feature, target_functions):
     MODEL = config["model"]["name"]
     TEMPERATURE = config["model"]["temperature"]
 
-    SOLVER_SRC_PATH = config["route"]["solver_src"]
-    ORIGIN_FILE_PATH = config["route"]["origin_file"]
-    OPTIMIZED_FILE_PATH = config["route"]["optimized_file"]
-    LOG_DIR_PATH = config["route"]["log"]
-
     SYSTEM_PROMPT = config["prompt"]["system"]
     USER_PROMPT = config["prompt"]["user"]
 
-    TARGET_FUNCTIONS = target_functions
     BENCHMARK_SET_FEATURE = benchmark_set_feature
+    TARGET_FUNCTIONS = target_functions
 
     CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
@@ -112,7 +103,7 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
 
 def optimize():
     # 初始化算法骨架
-    with open(ORIGIN_FILE_PATH, "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/backup/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
 
     func_num = len(TARGET_FUNCTIONS)
@@ -122,17 +113,17 @@ def optimize():
     # 开始问答
     chat_history = []
     set_system_prompt(chat_history)
-    log_file_path = f"{LOG_DIR_PATH}/history_{int(time.time() * 1000)}.json"
+    log_file_path = f"log/history_{int(time.time() * 1000)}.json"
 
-    with open(ORIGIN_FILE_PATH, "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/backup/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
         target_funcs_str = "\n".join(func_to_be_optimize)
         rewrite_prompt = USER_PROMPT % (BENCHMARK_SET_FEATURE, target_funcs_str, code)
         res = chat(rewrite_prompt, chat_history)
 
-        shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
+        shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
         for target_func in func_to_be_optimize:
-            insert_function(OPTIMIZED_FILE_PATH, res, target_func)  # type: ignore
+            insert_function("solver_src/heuristic.h", res, target_func)  # type: ignore
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
@@ -145,7 +136,7 @@ def main(benchmark_set_feature, target_functions):
 
 
 if __name__ == "__main__":
-    
+
     benchmark_set_feature = ""
     target_functions = ["int USW::pick_var()"]
 
