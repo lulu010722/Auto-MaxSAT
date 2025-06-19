@@ -1,5 +1,6 @@
 benchmark_old/
 benchmark_new/
+concurrent/
 
 maxsat_benchmarks_code_base/
 mse24-anytime-weighted.zip

@@ -127,7 +127,6 @@ def optimize():
 
     with open(log_file_path, "w", encoding="utf-8") as log_file:
         log_file.write(json.dumps(chat_history, ensure_ascii=False, indent=4))
-        logger.info(f"大模型优化完成，日志已保存到: {log_file_path}")
 
 
 def main(benchmark_set_feature, target_functions):
