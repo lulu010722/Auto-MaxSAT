@@ -1,12 +1,12 @@
 route:
-  solver_src: solver-src
-  auto_src: auto-src
-  origin_file: solver-src/backup/heuristic.h.origin
-  optimized_file: solver-src/heuristic.h
+  solver_src: solver_src
+  auto_src: auto_src
+  origin_file: solver_src/backup/heuristic.h.origin
+  optimized_file: solver_src/heuristic.h
   log: log
   result: result
   progress: progress
-  executer: auto-src/starexec_usw-ls-runsolver.sh
+  executer: auto_src/starexec_usw-ls-runsolver.sh
   benchmark_old: benchmark_old
   benchmark_new: benchmark_new
 
