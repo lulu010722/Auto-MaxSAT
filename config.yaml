@@ -19,9 +19,9 @@ model:
 
 
 runtime:
-  cutoff_time: 10
-  epoch: 2
-  benchmark_iter_time: 1
+  cutoff_time: 5
+  epoch: 3
+  benchmark_iter_time: 3
 
 
 data:

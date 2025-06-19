@@ -1,17 +1,246 @@
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: abstractio
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: af-synthes
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: BTBNSL_wt-
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: causal-dis
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: correlatio
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: decision-t
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: drmx-crypt
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: judgment-a
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: lisbon-wed
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: MinimumWei
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: Parametric
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: protein_in
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: railway-tr
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: setcover_w
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: switchinga
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: synplicate
-[2025-06-19 13:54:54] [INFO   ] main - 开始处理测例集: timetablin
+[2025-06-19 16:10:16] [INFO   ] main - 开始处理测例集: abstractio
+[2025-06-19 16:10:16] [INFO   ] main - 开始处理测例集: af-synthes
+[2025-06-19 16:13:28] [ERROR  ] main - Traceback (most recent call last):
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/runpy.py", line 198, in _run_module_as_main
+[2025-06-19 16:13:28] [ERROR  ] main - return _run_code(code, main_globals, None,
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/runpy.py", line 88, in _run_code
+[2025-06-19 16:13:28] [ERROR  ] main - exec(code, run_globals)
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/__main__.py", line 71, in <module>
+[2025-06-19 16:13:28] [ERROR  ] main - cli.main()
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 501, in main
+[2025-06-19 16:13:28] [ERROR  ] main - run()
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 351, in run_file
+[2025-06-19 16:13:28] [ERROR  ] main - runpy.run_path(target, run_name="__main__")
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 310, in run_path
+[2025-06-19 16:13:28] [ERROR  ] main - return _run_module_code(code, init_globals, run_name, pkg_name=pkg_name, script_name=fname)
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 127, in _run_module_code
+[2025-06-19 16:13:28] [ERROR  ] main - _run_code(code, mod_globals, init_globals, mod_name, mod_spec, pkg_name, script_name)
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/.vscode-server/extensions/ms-python.debugpy-2025.11.2025061301-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 118, in _run_code
+[2025-06-19 16:13:28] [ERROR  ] main - exec(code, run_globals)
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/auto/auto_src/main.py", line 76, in <module>
+[2025-06-19 16:13:28] [ERROR  ] main - main()
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/auto/auto_src/main.py", line 70, in main
+[2025-06-19 16:13:28] [ERROR  ] main - process.join()
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/multiprocessing/process.py", line 149, in join
+[2025-06-19 16:13:28] [ERROR  ] main - res = self._popen.wait(timeout)
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/multiprocessing/popen_fork.py", line 43, in wait
+[2025-06-19 16:13:28] [ERROR  ] main - return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/multiprocessing/popen_fork.py", line 27, in poll
+[2025-06-19 16:13:28] [ERROR  ] main - pid, sts = os.waitpid(self.pid, flag)
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - ^
+[2025-06-19 16:13:28] [ERROR  ] main - KeyboardInterrupt

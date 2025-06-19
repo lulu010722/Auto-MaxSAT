@@ -1,50 +1,189 @@
-[2025-06-19 13:54:55] [INFO   ] abstractio - 开始LLM对话
-[2025-06-19 13:54:55] [INFO   ] abstractio - LLM对话迭代完成
-[2025-06-19 13:54:55] [INFO   ] abstractio - 构建算法可执行文件
-[2025-06-19 13:54:57] [INFO   ] abstractio - 构建完成
-[2025-06-19 13:54:57] [INFO   ] abstractio - 开始基准测试: abstractio
-[2025-06-19 13:54:57] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
-[2025-06-19 13:55:14] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
-[2025-06-19 13:55:14] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
-[2025-06-19 13:55:34] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-hsqldb.wcnf, 代价: -2
-[2025-06-19 13:55:34] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
-[2025-06-19 13:55:53] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-xalan.wcnf, 代价: -2
-[2025-06-19 13:55:53] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
-[2025-06-19 13:56:11] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-bloat.wcnf, 代价: -2
-[2025-06-19 13:56:11] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
-[2025-06-19 13:56:30] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-lusearch.wcnf, 代价: -2
-[2025-06-19 13:56:30] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
-[2025-06-19 13:56:49] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-hsqldb.wcnf, 代价: -2
-[2025-06-19 13:56:49] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
-[2025-06-19 13:57:08] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-pmd.wcnf, 代价: -2
-[2025-06-19 13:57:08] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
-[2025-06-19 13:57:27] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-avrora.wcnf, 代价: -2
-[2025-06-19 13:57:27] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
-[2025-06-19 13:57:47] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-antlr.wcnf, 代价: -2
-[2025-06-19 13:57:47] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
-[2025-06-19 13:58:05] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-xalan.wcnf, 代价: -2
-[2025-06-19 13:58:05] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
-[2025-06-19 13:58:22] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-pmd.wcnf, 代价: -2
-[2025-06-19 13:58:22] [INFO   ] abstractio - 输出结果已保存到data/my_costs.csv
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-avrora.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-hsqldb.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-xalan.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-bloat.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-lusearch.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-hsqldb.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-pmd.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-avrora.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-antlr.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-xalan.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-pmd.wcnf的本求解器代价没找到
-[2025-06-19 13:58:22] [INFO   ] abstractio - 当前测例集的本轮评分: 0
-[2025-06-19 13:58:22] [INFO   ] abstractio - 基准测试完成
-[2025-06-19 13:58:22] [WARNING] abstractio - 对于abstractio，第0轮问询没有找到更好的算法
-[2025-06-19 13:58:22] [INFO   ] abstractio - 开始LLM对话
-[2025-06-19 13:58:22] [INFO   ] abstractio - LLM对话迭代完成
-[2025-06-19 13:58:22] [INFO   ] abstractio - 构建算法可执行文件
-[2025-06-19 13:58:23] [INFO   ] abstractio - 构建完成
-[2025-06-19 13:58:23] [INFO   ] abstractio - 开始基准测试: abstractio
-[2025-06-19 13:58:23] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
-[2025-06-19 13:58:39] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
-[2025-06-19 13:58:39] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+[2025-06-19 16:10:18] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 16:10:45] [INFO   ] abstractio - LLM对话迭代完成
+[2025-06-19 16:10:45] [INFO   ] abstractio - 构建算法可执行文件
+[2025-06-19 16:10:45] [WARNING] abstractio - Makefile执行失败，重新询问大模型
+[2025-06-19 16:10:45] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 16:11:09] [INFO   ] abstractio - LLM对话迭代完成
+[2025-06-19 16:11:09] [INFO   ] abstractio - 构建算法可执行文件
+[2025-06-19 16:11:10] [INFO   ] abstractio - 构建完成
+[2025-06-19 16:11:10] [INFO   ] abstractio - 开始基准测试: abstractio
+[2025-06-19 16:11:10] [INFO   ] abstractio - 开始基准测试: abstractio
+[2025-06-19 16:11:10] [INFO   ] abstractio - 开始基准测试: abstractio
+[2025-06-19 16:11:11] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+[2025-06-19 16:11:12] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+[2025-06-19 16:11:12] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+[2025-06-19 16:11:19] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: 125
+[2025-06-19 16:11:19] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+[2025-06-19 16:11:19] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
+[2025-06-19 16:11:19] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+[2025-06-19 16:11:20] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
+[2025-06-19 16:11:20] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+[2025-06-19 16:11:28] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-hsqldb.wcnf, 代价: 133
+[2025-06-19 16:11:28] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
+[2025-06-19 16:11:28] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-hsqldb.wcnf, 代价: 133
+[2025-06-19 16:11:28] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
+[2025-06-19 16:11:28] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-hsqldb.wcnf, 代价: -2
+[2025-06-19 16:11:28] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
+[2025-06-19 16:11:36] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-xalan.wcnf, 代价: 140
+[2025-06-19 16:11:36] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
+[2025-06-19 16:11:36] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-xalan.wcnf, 代价: 140
+[2025-06-19 16:11:36] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
+[2025-06-19 16:11:36] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-xalan.wcnf, 代价: -2
+[2025-06-19 16:11:36] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
+[2025-06-19 16:11:44] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-bloat.wcnf, 代价: 132
+[2025-06-19 16:11:44] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-bloat.wcnf, 代价: 132
+[2025-06-19 16:11:44] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
+[2025-06-19 16:11:44] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-bloat.wcnf, 代价: 132
+[2025-06-19 16:11:44] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
+[2025-06-19 16:11:44] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
+[2025-06-19 16:11:52] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-lusearch.wcnf, 代价: 129
+[2025-06-19 16:11:52] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
+[2025-06-19 16:11:52] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-lusearch.wcnf, 代价: -2
+[2025-06-19 16:11:52] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
+[2025-06-19 16:11:52] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-lusearch.wcnf, 代价: -2
+[2025-06-19 16:11:52] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
+[2025-06-19 16:12:00] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-hsqldb.wcnf, 代价: -2
+[2025-06-19 16:12:00] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
+[2025-06-19 16:12:00] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-hsqldb.wcnf, 代价: -2
+[2025-06-19 16:12:00] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
+[2025-06-19 16:12:00] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-hsqldb.wcnf, 代价: -2
+[2025-06-19 16:12:00] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
+[2025-06-19 16:12:08] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:08] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
+[2025-06-19 16:12:08] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:08] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
+[2025-06-19 16:12:08] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:08] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
+[2025-06-19 16:12:16] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-avrora.wcnf, 代价: -2
+[2025-06-19 16:12:16] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
+[2025-06-19 16:12:16] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-avrora.wcnf, 代价: -2
+[2025-06-19 16:12:16] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-avrora.wcnf, 代价: -2
+[2025-06-19 16:12:16] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
+[2025-06-19 16:12:16] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
+[2025-06-19 16:12:24] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-antlr.wcnf, 代价: -2
+[2025-06-19 16:12:24] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
+[2025-06-19 16:12:24] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-antlr.wcnf, 代价: -2
+[2025-06-19 16:12:24] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-antlr.wcnf, 代价: -2
+[2025-06-19 16:12:24] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
+[2025-06-19 16:12:24] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
+[2025-06-19 16:12:32] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-xalan.wcnf, 代价: -2
+[2025-06-19 16:12:32] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
+[2025-06-19 16:12:32] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-xalan.wcnf, 代价: -2
+[2025-06-19 16:12:32] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
+[2025-06-19 16:12:33] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-xalan.wcnf, 代价: -2
+[2025-06-19 16:12:33] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
+[2025-06-19 16:12:40] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:40] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:40] [INFO   ] abstractio - 输出结果已保存到data/my_costs.csv
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-avrora.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-xalan.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-lusearch.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-hsqldb.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-avrora.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-antlr.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-xalan.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [INFO   ] abstractio - 当前测例集的本轮评分: 643.3592469980923
+[2025-06-19 16:12:40] [INFO   ] abstractio - 输出结果已保存到data/my_costs.csv
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-lusearch.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-hsqldb.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-avrora.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-antlr.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-xalan.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:40] [INFO   ] abstractio - 当前测例集的本轮评分: 627.6900929350475
+[2025-06-19 16:12:41] [INFO   ] abstractio - 基准测试完成
+[2025-06-19 16:12:41] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-pmd.wcnf, 代价: -2
+[2025-06-19 16:12:41] [INFO   ] abstractio - 输出结果已保存到data/my_costs.csv
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-avrora.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-hsqldb.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-hsqldb.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-avrora.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-antlr.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-xalan.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-pmd.wcnf的当前求解器代价没找到
+[2025-06-19 16:12:41] [INFO   ] abstractio - 当前测例集的本轮评分: 1351.723337394222
+[2025-06-19 16:12:41] [INFO   ] abstractio - 基准测试完成
+[2025-06-19 16:12:41] [INFO   ] abstractio - 基准测试完成
+[2025-06-19 16:12:41] [INFO   ] abstractio - 对于abstractio，第0轮问询找到了更好的算法
+[2025-06-19 16:12:41] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 16:13:24] [INFO   ] abstractio - LLM对话迭代完成
+[2025-06-19 16:13:24] [INFO   ] abstractio - 构建算法可执行文件
+[2025-06-19 16:13:24] [WARNING] abstractio - Makefile执行失败，重新询问大模型
+[2025-06-19 16:13:24] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 16:13:28] [ERROR  ] abstractio - Process abstractio:
+[2025-06-19 16:13:28] [ERROR  ] abstractio - Traceback (most recent call last):
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/auto/auto_src/single.py", line 189, in main
+    chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/auto/auto_src/chat.py", line 144, in main
+    optimize()
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/auto/auto_src/chat.py", line 131, in optimize
+    res = chat(rewrite_prompt, chat_history)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/auto/auto_src/chat.py", line 72, in chat
+    response = CLIENT.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 925, in create
+    return self._post(
+           ^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/openai/_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/openai/_base_client.py", line 969, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_client.py", line 928, in send
+    raise exc
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_client.py", line 922, in send
+    response.read()
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_models.py", line 881, in read
+    self._content = b"".join(self.iter_bytes())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_models.py", line 897, in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_models.py", line 951, in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_client.py", line 153, in __iter__
+    for chunk in self._stream:
+                 ^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpx/_transports/default.py", line 127, in __iter__
+    for part in self._httpcore_stream:
+                ^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 407, in __iter__
+    raise exc from None
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 403, in __iter__
+    for part in self._stream:
+                ^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 342, in __iter__
+    raise exc
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 334, in __iter__
+    for chunk in self._connection._receive_response_body(**kwargs):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 203, in _receive_response_body
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/ssl.py", line 1232, in recv
+    return self.read(buflen)
+           ^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - File "/home/users/tylu/miniconda3/envs/py312/lib/python3.12/ssl.py", line 1105, in read
+    return self._sslobj.read(len)
+           ^^^^^^^^^^^^^^^^^^^^^^
+[2025-06-19 16:13:28] [ERROR  ] abstractio - KeyboardInterrupt

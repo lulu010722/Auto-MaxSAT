@@ -9,14 +9,12 @@ import random
 import re
 import yaml
 import logging
+import sys
 
 import chat
 
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
-
-
-lock = Lock()
 
 SOLVER_SRC_PATH = config["route"]["solver_src"]
 ORIGIN_FILE_PATH = config["route"]["origin_file"]
@@ -40,6 +38,14 @@ MY_COSTS_PATH = config["data"]["my_costs"]
 
 logger = logging.getLogger()
 
+class StderrLogger:
+    def write(self, message):
+        if message.strip():
+            logger.error(message.strip())
+
+    def flush(self):
+        pass
+
 
 def init(benchmark_set) -> None:
     global logger
@@ -47,13 +53,7 @@ def init(benchmark_set) -> None:
     with open(BEST_SCORES_PATH, "w") as f:
         f.write("benchmark_set,best_score\n")
     with open(MY_COSTS_PATH, "w") as f:
-        pass
-
-    shutil.rmtree(LOG_DIR_PATH, ignore_errors=True)
-    shutil.rmtree(PROGRESS_DIR_PATH, ignore_errors=True)
-
-    Path(LOG_DIR_PATH).mkdir(parents=True, exist_ok=True)
-    Path(PROGRESS_DIR_PATH).mkdir(parents=True, exist_ok=True)
+        f.write("instance,cost\n")
 
     shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
 
@@ -63,6 +63,9 @@ def init(benchmark_set) -> None:
     formatter = logging.Formatter('[%(asctime)s] [%(levelname)-7s] %(name)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
+    
+    sys.stderr = StderrLogger()
+
 
 
 def parse_executer_output(output: str) -> int:
@@ -138,10 +141,15 @@ def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
 
 
 def write_costs_to_csv() -> None:
-    my_costs_file = config["data"]["my_costs"]
-    df = pd.DataFrame(MY_COSTS)
-    df.to_csv(my_costs_file, index=False)
-    logger.info(f"输出结果已保存到{my_costs_file}")
+    df = pd.read_csv(MY_COSTS_PATH)
+    for my_cost_item in MY_COSTS:
+        match = df["instance"] == my_cost_item["instance"]
+        if match.any():    
+            df.loc[df["instance"] == my_cost_item["instance"], "cost"] = my_cost_item["cost"]
+        else:
+            df = pd.concat([df, pd.DataFrame([my_cost_item])], ignore_index=True)
+    df.to_csv(MY_COSTS_PATH, index=False)
+    logger.info(f"输出结果已保存到{MY_COSTS_PATH}")
 
 
 def rate() -> float:
@@ -152,7 +160,7 @@ def rate() -> float:
             if my_cost_item["instance"] != best_cost_item["instance"]:
                 continue
             if my_cost_item["cost"] < 0:
-                logger.warning(f"实例{my_cost_item['instance']}的本求解器代价没找到")
+                logger.warning(f"实例{my_cost_item['instance']}的当前求解器代价没找到")
                 continue
             if best_cost_item["cost"] < 0:
                 logger.warning(f"实例{best_cost_item['instance']}的最佳代价没找到")
@@ -165,7 +173,7 @@ def rate() -> float:
     return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
 
 
-def main(benchmark_set):
+def main(benchmark_set, lock):
     global BEST_SCORES
 
     init(benchmark_set)
@@ -178,7 +186,7 @@ def main(benchmark_set):
 
     while epoch < EPOCH:
         logger.info("开始LLM对话")
-        # chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
+        chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
         logger.info("LLM对话迭代完成")
 
         logger.info("构建算法可执行文件")
@@ -222,10 +230,11 @@ def main(benchmark_set):
                     shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
                     progress_cnt += 1
 
-                    df = pd.read_csv(BEST_SCORES_PATH)
-                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
-                    df.to_csv(BEST_SCORES_PATH, index=False)
-                    logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
+                    with lock:
+                        df = pd.read_csv(BEST_SCORES_PATH)
+                        df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
+                        df.to_csv(BEST_SCORES_PATH, index=False)
+                        logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
                     shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
@@ -236,4 +245,5 @@ def main(benchmark_set):
 
 if __name__ == "__main__":
     benchmark_set = "drmx-crypt"
-    main(benchmark_set)
+    lock = Lock()
+    main(benchmark_set, lock)
