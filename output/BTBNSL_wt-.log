@@ -1,0 +1,32 @@
+[2025-06-19 13:54:54] [INFO   ] BTBNSL_wt- - 开始LLM对话
+[2025-06-19 13:54:54] [INFO   ] BTBNSL_wt- - LLM对话迭代完成
+[2025-06-19 13:54:54] [INFO   ] BTBNSL_wt- - 构建算法可执行文件
+[2025-06-19 13:54:55] [INFO   ] BTBNSL_wt- - 构建完成
+[2025-06-19 13:54:55] [INFO   ] BTBNSL_wt- - 开始基准测试: BTBNSL_wt-
+[2025-06-19 13:54:55] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf
+[2025-06-19 13:55:01] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_100_1_3.scores_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:55:01] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf
+[2025-06-19 13:55:19] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_alarm_100_1_3.scores_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:55:19] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf
+[2025-06-19 13:55:37] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:55:37] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf
+[2025-06-19 13:55:56] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_4.wcnf, 代价: -2
+[2025-06-19 13:55:56] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf
+[2025-06-19 13:56:15] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_2.wcnf, 代价: -2
+[2025-06-19 13:56:15] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf
+[2025-06-19 13:56:33] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Horse.BIC_TWBound_2.wcnf, 代价: -2
+[2025-06-19 13:56:33] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf
+[2025-06-19 13:56:52] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Wine_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:56:52] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf
+[2025-06-19 13:57:12] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Water_1000_1_2.scores_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:57:12] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf
+[2025-06-19 13:57:30] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Flag.BIC_TWBound_4.wcnf, 代价: -2
+[2025-06-19 13:57:30] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf
+[2025-06-19 13:57:48] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_hailfinder_1000_1_3.scores_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:57:48] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf
+[2025-06-19 13:58:05] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_4.wcnf, 代价: -2
+[2025-06-19 13:58:05] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf
+[2025-06-19 13:58:22] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_Hepatitis.BIC_TWBound4.wcnf, 代价: -2
+[2025-06-19 13:58:22] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf
+[2025-06-19 13:58:39] [INFO   ] BTBNSL_wt- - 测例文件运行完毕: BTBNSL_wt-Rounded_BTWBNSL_insurance_1000_1_3.scores_TWBound_3.wcnf, 代价: -2
+[2025-06-19 13:58:39] [INFO   ] BTBNSL_wt- - 运行测例文件: benchmark_old/BTBNSL_wt-/BTBNSL_wt-Rounded_BTWBNSL_hailfinder_10000_1_3.scores_TWBound_3.wcnf

@@ -1,0 +1,48 @@
+[2025-06-19 13:54:56] [INFO   ] railway-tr - 开始LLM对话
+[2025-06-19 13:54:56] [INFO   ] railway-tr - LLM对话迭代完成
+[2025-06-19 13:54:56] [INFO   ] railway-tr - 构建算法可执行文件
+[2025-06-19 13:54:57] [INFO   ] railway-tr - 构建完成
+[2025-06-19 13:54:57] [INFO   ] railway-tr - 开始基准测试: railway-tr
+[2025-06-19 13:54:57] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-r11.wcnf
+[2025-06-19 13:55:15] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-r11.wcnf, 代价: -2
+[2025-06-19 13:55:15] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-bf2030fvslack.wcnf
+[2025-06-19 13:55:34] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-bf2030fvslack.wcnf, 代价: -2
+[2025-06-19 13:55:34] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-bf2030fvcons.wcnf
+[2025-06-19 13:55:51] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-bf2030fvcons.wcnf, 代价: -2
+[2025-06-19 13:55:51] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-wg2.wcnf
+[2025-06-19 13:56:11] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-wg2.wcnf, 代价: -2
+[2025-06-19 13:56:11] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-f2030.wcnf
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-f2030.wcnf, 代价: -2
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 输出结果已保存到data/my_costs.csv
+[2025-06-19 13:56:30] [WARNING] railway-tr - 实例railway-transport_wt-r11.wcnf的本求解器代价没找到
+[2025-06-19 13:56:30] [WARNING] railway-tr - 实例railway-transport_wt-bf2030fvslack.wcnf的本求解器代价没找到
+[2025-06-19 13:56:30] [WARNING] railway-tr - 实例railway-transport_wt-bf2030fvcons.wcnf的本求解器代价没找到
+[2025-06-19 13:56:30] [WARNING] railway-tr - 实例railway-transport_wt-wg2.wcnf的本求解器代价没找到
+[2025-06-19 13:56:30] [WARNING] railway-tr - 实例railway-transport_wt-f2030.wcnf的本求解器代价没找到
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 当前测例集的本轮评分: 0
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 基准测试完成
+[2025-06-19 13:56:30] [WARNING] railway-tr - 对于railway-tr，第0轮问询没有找到更好的算法
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 开始LLM对话
+[2025-06-19 13:56:30] [INFO   ] railway-tr - LLM对话迭代完成
+[2025-06-19 13:56:30] [INFO   ] railway-tr - 构建算法可执行文件
+[2025-06-19 13:56:31] [INFO   ] railway-tr - 构建完成
+[2025-06-19 13:56:31] [INFO   ] railway-tr - 开始基准测试: railway-tr
+[2025-06-19 13:56:31] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-r11.wcnf
+[2025-06-19 13:56:47] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-r11.wcnf, 代价: -2
+[2025-06-19 13:56:47] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-bf2030fvslack.wcnf
+[2025-06-19 13:57:07] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-bf2030fvslack.wcnf, 代价: -2
+[2025-06-19 13:57:07] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-bf2030fvcons.wcnf
+[2025-06-19 13:57:26] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-bf2030fvcons.wcnf, 代价: -2
+[2025-06-19 13:57:26] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-wg2.wcnf
+[2025-06-19 13:57:45] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-wg2.wcnf, 代价: -2
+[2025-06-19 13:57:45] [INFO   ] railway-tr - 运行测例文件: benchmark_old/railway-tr/railway-transport_wt-f2030.wcnf
+[2025-06-19 13:58:03] [INFO   ] railway-tr - 测例文件运行完毕: railway-transport_wt-f2030.wcnf, 代价: -2
+[2025-06-19 13:58:03] [INFO   ] railway-tr - 输出结果已保存到data/my_costs.csv
+[2025-06-19 13:58:03] [WARNING] railway-tr - 实例railway-transport_wt-r11.wcnf的本求解器代价没找到
+[2025-06-19 13:58:03] [WARNING] railway-tr - 实例railway-transport_wt-bf2030fvslack.wcnf的本求解器代价没找到
+[2025-06-19 13:58:03] [WARNING] railway-tr - 实例railway-transport_wt-bf2030fvcons.wcnf的本求解器代价没找到
+[2025-06-19 13:58:03] [WARNING] railway-tr - 实例railway-transport_wt-wg2.wcnf的本求解器代价没找到
+[2025-06-19 13:58:03] [WARNING] railway-tr - 实例railway-transport_wt-f2030.wcnf的本求解器代价没找到
+[2025-06-19 13:58:03] [INFO   ] railway-tr - 当前测例集的本轮评分: 0
+[2025-06-19 13:58:03] [INFO   ] railway-tr - 基准测试完成
+[2025-06-19 13:58:03] [WARNING] railway-tr - 对于railway-tr，第1轮问询没有找到更好的算法

@@ -1,0 +1,30 @@
+[2025-06-19 13:54:55] [INFO   ] synplicate - 开始LLM对话
+[2025-06-19 13:54:55] [INFO   ] synplicate - LLM对话迭代完成
+[2025-06-19 13:54:55] [INFO   ] synplicate - 构建算法可执行文件
+[2025-06-19 13:54:56] [INFO   ] synplicate - 构建完成
+[2025-06-19 13:54:56] [INFO   ] synplicate - 开始基准测试: synplicate
+[2025-06-19 13:54:56] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run2_11_size_10_ms_26_50_0_erm.wcnf
+[2025-06-19 13:55:13] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run2_11_size_10_ms_26_50_0_erm.wcnf, 代价: -2
+[2025-06-19 13:55:13] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run1_14_size_5_ms_0_25_0_erm.wcnf
+[2025-06-19 13:55:32] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run1_14_size_5_ms_0_25_0_erm.wcnf, 代价: 128
+[2025-06-19 13:55:32] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run2_13_size_11_ms_26_50_0_erm.wcnf
+[2025-06-19 13:55:51] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run2_13_size_11_ms_26_50_0_erm.wcnf, 代价: -2
+[2025-06-19 13:55:51] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run1_16_size_4_ms_0_25_0_erm.wcnf
+[2025-06-19 13:56:11] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run1_16_size_4_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:56:11] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity2_feature_4_size_9_ms_0_25_0_erm.wcnf
+[2025-06-19 13:56:30] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity2_feature_4_size_9_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:56:30] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run2_0_size_10_ms_26_50_0_erm.wcnf
+[2025-06-19 13:56:49] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run2_0_size_10_ms_26_50_0_erm.wcnf, 代价: -2
+[2025-06-19 13:56:49] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity3_feature_4_size_10_ms_0_25_0_erm.wcnf
+[2025-06-19 13:57:07] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity3_feature_4_size_10_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:57:07] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity3_feature_3_size_8_ms_0_25_0_erm.wcnf
+[2025-06-19 13:57:26] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity3_feature_3_size_8_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:57:26] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity3_feature_3_size_11_ms_0_25_0_erm.wcnf
+[2025-06-19 13:57:43] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity3_feature_3_size_11_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:57:43] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity3_feature_3_size_5_ms_0_25_0_erm.wcnf
+[2025-06-19 13:58:02] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity3_feature_3_size_5_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:58:02] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_synthetic_dag_run2_12_size_8_ms_26_50_0_erm.wcnf
+[2025-06-19 13:58:19] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_synthetic_dag_run2_12_size_8_ms_26_50_0_erm.wcnf, 代价: -2
+[2025-06-19 13:58:19] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity2_feature_4_size_10_ms_0_25_0_erm.wcnf
+[2025-06-19 13:58:34] [INFO   ] synplicate - 测例文件运行完毕: synplicate_new-synplicate_complete_tree_arity2_feature_4_size_10_ms_0_25_0_erm.wcnf, 代价: -2
+[2025-06-19 13:58:34] [INFO   ] synplicate - 运行测例文件: benchmark_old/synplicate/synplicate_new-synplicate_complete_tree_arity2_feature_4_size_8_ms_0_25_0_erm.wcnf

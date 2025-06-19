@@ -4,7 +4,7 @@ route:
   origin_file: solver_src/backup/heuristic.h.origin
   optimized_file: solver_src/heuristic.h
   log: log
-  result: result
+  output: output
   progress: progress
   executer: auto_src/starexec_usw-ls-runsolver.sh
   benchmark_old: benchmark_old

@@ -1,0 +1,48 @@
+[2025-06-19 13:54:55] [INFO   ] switchinga - 开始LLM对话
+[2025-06-19 13:54:55] [INFO   ] switchinga - LLM对话迭代完成
+[2025-06-19 13:54:55] [INFO   ] switchinga - 构建算法可执行文件
+[2025-06-19 13:54:56] [INFO   ] switchinga - 构建完成
+[2025-06-19 13:54:56] [INFO   ] switchinga - 开始基准测试: switchinga
+[2025-06-19 13:54:56] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_100.wcnf
+[2025-06-19 13:55:13] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_100.wcnf, 代价: -2
+[2025-06-19 13:55:13] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_74.wcnf
+[2025-06-19 13:55:32] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_74.wcnf, 代价: -2
+[2025-06-19 13:55:32] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_66.wcnf
+[2025-06-19 13:55:52] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_66.wcnf, 代价: -2
+[2025-06-19 13:55:52] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_200.wcnf
+[2025-06-19 13:56:11] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_200.wcnf, 代价: -2
+[2025-06-19 13:56:11] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_80.wcnf
+[2025-06-19 13:56:30] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_80.wcnf, 代价: -2
+[2025-06-19 13:56:30] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_76.wcnf
+[2025-06-19 13:56:50] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_76.wcnf, 代价: -2
+[2025-06-19 13:56:50] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_68.wcnf
+[2025-06-19 13:57:07] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_68.wcnf, 代价: -2
+[2025-06-19 13:57:07] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_70.wcnf
+[2025-06-19 13:57:26] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_70.wcnf, 代价: -2
+[2025-06-19 13:57:26] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_150.wcnf
+[2025-06-19 13:57:45] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_150.wcnf, 代价: -2
+[2025-06-19 13:57:45] [INFO   ] switchinga - 输出结果已保存到data/my_costs.csv
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_100.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_74.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_66.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_200.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_80.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_76.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_68.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_70.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [WARNING] switchinga - 实例switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_150.wcnf的本求解器代价没找到
+[2025-06-19 13:57:45] [INFO   ] switchinga - 当前测例集的本轮评分: 0
+[2025-06-19 13:57:45] [INFO   ] switchinga - 基准测试完成
+[2025-06-19 13:57:45] [WARNING] switchinga - 对于switchinga，第0轮问询没有找到更好的算法
+[2025-06-19 13:57:45] [INFO   ] switchinga - 开始LLM对话
+[2025-06-19 13:57:45] [INFO   ] switchinga - LLM对话迭代完成
+[2025-06-19 13:57:45] [INFO   ] switchinga - 构建算法可执行文件
+[2025-06-19 13:57:46] [INFO   ] switchinga - 构建完成
+[2025-06-19 13:57:46] [INFO   ] switchinga - 开始基准测试: switchinga
+[2025-06-19 13:57:46] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_100.wcnf
+[2025-06-19 13:58:05] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_100.wcnf, 代价: -2
+[2025-06-19 13:58:05] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_74.wcnf
+[2025-06-19 13:58:22] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_74.wcnf, 代价: -2
+[2025-06-19 13:58:22] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_66.wcnf
+[2025-06-19 13:58:39] [INFO   ] switchinga - 测例文件运行完毕: switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_66.wcnf, 代价: -2
+[2025-06-19 13:58:39] [INFO   ] switchinga - 运行测例文件: benchmark_old/switchinga/switchingactivitymaximization-SwitchingActivityMaximization_OpenRISC1200_200.wcnf

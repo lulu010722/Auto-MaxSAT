@@ -1,0 +1,32 @@
+[2025-06-19 13:54:54] [INFO   ] af-synthes - 开始LLM对话
+[2025-06-19 13:54:54] [INFO   ] af-synthes - LLM对话迭代完成
+[2025-06-19 13:54:54] [INFO   ] af-synthes - 构建算法可执行文件
+[2025-06-19 13:54:55] [INFO   ] af-synthes - 构建完成
+[2025-06-19 13:54:55] [INFO   ] af-synthes - 开始基准测试: af-synthes
+[2025-06-19 13:54:55] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_0.wcnf
+[2025-06-19 13:55:01] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_40_0.wcnf, 代价: -2
+[2025-06-19 13:55:01] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_8.wcnf
+[2025-06-19 13:55:19] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_40_8.wcnf, 代价: -2
+[2025-06-19 13:55:19] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_1.wcnf
+[2025-06-19 13:55:36] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_140_1.wcnf, 代价: -2
+[2025-06-19 13:55:36] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_120_5.wcnf
+[2025-06-19 13:55:53] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_120_5.wcnf, 代价: -2
+[2025-06-19 13:55:53] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_5.wcnf
+[2025-06-19 13:56:11] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_160_5.wcnf, 代价: -2
+[2025-06-19 13:56:11] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_0.wcnf
+[2025-06-19 13:56:29] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_140_0.wcnf, 代价: 116051
+[2025-06-19 13:56:29] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_200_5.wcnf
+[2025-06-19 13:56:45] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_200_5.wcnf, 代价: -2
+[2025-06-19 13:56:45] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_1.wcnf
+[2025-06-19 13:57:04] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_160_1.wcnf, 代价: -2
+[2025-06-19 13:57:04] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_100_4.wcnf
+[2025-06-19 13:57:21] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_100_4.wcnf, 代价: -2
+[2025-06-19 13:57:21] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_160_9.wcnf
+[2025-06-19 13:57:38] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_160_9.wcnf, 代价: -2
+[2025-06-19 13:57:38] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_200_0.wcnf
+[2025-06-19 13:57:58] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_200_0.wcnf, 代价: -2
+[2025-06-19 13:57:58] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_140_7.wcnf
+[2025-06-19 13:58:16] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_140_7.wcnf, 代价: -2
+[2025-06-19 13:58:16] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_20_4.wcnf
+[2025-06-19 13:58:32] [INFO   ] af-synthes - 测例文件运行完毕: af-synthesis_wt-af-synthesis_stb_50_20_4.wcnf, 代价: -2
+[2025-06-19 13:58:32] [INFO   ] af-synthes - 运行测例文件: benchmark_old/af-synthes/af-synthesis_wt-af-synthesis_stb_50_40_6.wcnf

@@ -1,0 +1,50 @@
+[2025-06-19 13:54:55] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 13:54:55] [INFO   ] abstractio - LLM对话迭代完成
+[2025-06-19 13:54:55] [INFO   ] abstractio - 构建算法可执行文件
+[2025-06-19 13:54:57] [INFO   ] abstractio - 构建完成
+[2025-06-19 13:54:57] [INFO   ] abstractio - 开始基准测试: abstractio
+[2025-06-19 13:54:57] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+[2025-06-19 13:55:14] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
+[2025-06-19 13:55:14] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf
+[2025-06-19 13:55:34] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-hsqldb.wcnf, 代价: -2
+[2025-06-19 13:55:34] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-xalan.wcnf
+[2025-06-19 13:55:53] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-xalan.wcnf, 代价: -2
+[2025-06-19 13:55:53] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-bloat.wcnf
+[2025-06-19 13:56:11] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-bloat.wcnf, 代价: -2
+[2025-06-19 13:56:11] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-lusearch.wcnf
+[2025-06-19 13:56:30] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-lusearch.wcnf, 代价: -2
+[2025-06-19 13:56:30] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-hsqldb.wcnf
+[2025-06-19 13:56:49] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-hsqldb.wcnf, 代价: -2
+[2025-06-19 13:56:49] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-pmd.wcnf
+[2025-06-19 13:57:08] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-pmd.wcnf, 代价: -2
+[2025-06-19 13:57:08] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-avrora.wcnf
+[2025-06-19 13:57:27] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-avrora.wcnf, 代价: -2
+[2025-06-19 13:57:27] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-antlr.wcnf
+[2025-06-19 13:57:47] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-antlr.wcnf, 代价: -2
+[2025-06-19 13:57:47] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-xalan.wcnf
+[2025-06-19 13:58:05] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-xalan.wcnf, 代价: -2
+[2025-06-19 13:58:05] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-downcast-pmd.wcnf
+[2025-06-19 13:58:22] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-downcast-pmd.wcnf, 代价: -2
+[2025-06-19 13:58:22] [INFO   ] abstractio - 输出结果已保存到data/my_costs.csv
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-avrora.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-hsqldb.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-xalan.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-bloat.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-lusearch.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-hsqldb.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-polysite-pmd.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-avrora.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-antlr.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-xalan.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [WARNING] abstractio - 实例abstraction-refinement_wt-downcast-pmd.wcnf的本求解器代价没找到
+[2025-06-19 13:58:22] [INFO   ] abstractio - 当前测例集的本轮评分: 0
+[2025-06-19 13:58:22] [INFO   ] abstractio - 基准测试完成
+[2025-06-19 13:58:22] [WARNING] abstractio - 对于abstractio，第0轮问询没有找到更好的算法
+[2025-06-19 13:58:22] [INFO   ] abstractio - 开始LLM对话
+[2025-06-19 13:58:22] [INFO   ] abstractio - LLM对话迭代完成
+[2025-06-19 13:58:22] [INFO   ] abstractio - 构建算法可执行文件
+[2025-06-19 13:58:23] [INFO   ] abstractio - 构建完成
+[2025-06-19 13:58:23] [INFO   ] abstractio - 开始基准测试: abstractio
+[2025-06-19 13:58:23] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-avrora.wcnf
+[2025-06-19 13:58:39] [INFO   ] abstractio - 测例文件运行完毕: abstraction-refinement_wt-polysite-avrora.wcnf, 代价: -2
+[2025-06-19 13:58:39] [INFO   ] abstractio - 运行测例文件: benchmark_old/abstractio/abstraction-refinement_wt-polysite-hsqldb.wcnf

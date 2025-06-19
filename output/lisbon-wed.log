@@ -1,0 +1,54 @@
+[2025-06-19 13:54:54] [INFO   ] lisbon-wed - 开始LLM对话
+[2025-06-19 13:54:54] [INFO   ] lisbon-wed - LLM对话迭代完成
+[2025-06-19 13:54:54] [INFO   ] lisbon-wed - 构建算法可执行文件
+[2025-06-19 13:54:55] [INFO   ] lisbon-wed - 构建完成
+[2025-06-19 13:54:55] [INFO   ] lisbon-wed - 开始基准测试: lisbon-wed
+[2025-06-19 13:54:55] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-10-18.wcnf
+[2025-06-19 13:55:01] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-10-18.wcnf, 代价: -2
+[2025-06-19 13:55:01] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-6-19.wcnf
+[2025-06-19 13:55:19] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-6-19.wcnf, 代价: -2
+[2025-06-19 13:55:19] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-5-19.wcnf
+[2025-06-19 13:55:37] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-5-19.wcnf, 代价: -2
+[2025-06-19 13:55:37] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-9-17.wcnf
+[2025-06-19 13:55:56] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-9-17.wcnf, 代价: -2
+[2025-06-19 13:55:56] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-4-17.wcnf
+[2025-06-19 13:56:15] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-4-17.wcnf, 代价: -2
+[2025-06-19 13:56:15] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-10-17.wcnf
+[2025-06-19 13:56:33] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-10-17.wcnf, 代价: -2
+[2025-06-19 13:56:33] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-8-17.wcnf
+[2025-06-19 13:56:50] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-8-17.wcnf, 代价: -2
+[2025-06-19 13:56:50] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-3-18.wcnf
+[2025-06-19 13:57:07] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-3-18.wcnf, 代价: -2
+[2025-06-19 13:57:07] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-7-18.wcnf
+[2025-06-19 13:57:26] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-7-18.wcnf, 代价: -2
+[2025-06-19 13:57:26] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-1-18.wcnf
+[2025-06-19 13:57:45] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-1-18.wcnf, 代价: -2
+[2025-06-19 13:57:45] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-9-18.wcnf
+[2025-06-19 13:58:03] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-9-18.wcnf, 代价: -2
+[2025-06-19 13:58:03] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-1-19.wcnf
+[2025-06-19 13:58:19] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-1-19.wcnf, 代价: -2
+[2025-06-19 13:58:19] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-7-19.wcnf
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 测例文件运行完毕: lisbon-wedding_wt-lisbon-wedding-7-19.wcnf, 代价: -2
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 输出结果已保存到data/my_costs.csv
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-10-18.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-6-19.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-5-19.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-9-17.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-4-17.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-10-17.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-8-17.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-3-18.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-7-18.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-1-18.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-9-18.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-1-19.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 实例lisbon-wedding_wt-lisbon-wedding-7-19.wcnf的本求解器代价没找到
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 当前测例集的本轮评分: 0
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 基准测试完成
+[2025-06-19 13:58:34] [WARNING] lisbon-wed - 对于lisbon-wed，第0轮问询没有找到更好的算法
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 开始LLM对话
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - LLM对话迭代完成
+[2025-06-19 13:58:34] [INFO   ] lisbon-wed - 构建算法可执行文件
+[2025-06-19 13:58:35] [INFO   ] lisbon-wed - 构建完成
+[2025-06-19 13:58:35] [INFO   ] lisbon-wed - 开始基准测试: lisbon-wed
+[2025-06-19 13:58:35] [INFO   ] lisbon-wed - 运行测例文件: benchmark_old/lisbon-wed/lisbon-wedding_wt-lisbon-wedding-10-18.wcnf

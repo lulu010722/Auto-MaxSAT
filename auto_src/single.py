@@ -1,12 +1,10 @@
 from pathlib import Path
+from multiprocessing import Process, Queue, Lock
 
 import subprocess
 import pandas as pd
 import os
-import sys
 import shutil
-import multiprocessing
-import json
 import random
 import re
 import yaml
@@ -14,69 +12,37 @@ import logging
 
 import chat
 
-logger = logging.getLogger(__name__)
-
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 
 
-lock = multiprocessing.Lock()
+lock = Lock()
+
+SOLVER_SRC_PATH = config["route"]["solver_src"]
+ORIGIN_FILE_PATH = config["route"]["origin_file"]
+OPTIMIZED_FILE_PATH = config["route"]["optimized_file"]
+BENCHMARK_NEW_PATH = config["route"]["benchmark_new"]
+BENCHMARK_OLD_PATH = config["route"]["benchmark_old"]
+PROGRESS_DIR_PATH = config["route"]["progress"]
+LOG_DIR_PATH = config["route"]["log"]
+OUTPUT_DIR_PATH = config["route"]["output"]
+
+EXECUTER_SCRIPT = config["route"]["executer"]
+
+TARGET_FUNCTIONS = config["train"]["target_functions"]
+CUTOFF_TIME = config["runtime"]["cutoff_time"]
+EPOCH = config["runtime"]["epoch"]
+BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
+
+BEST_COSTS_PATH = config["data"]["best_costs"]
+BEST_SCORES_PATH = config["data"]["best_scores"]
+MY_COSTS_PATH = config["data"]["my_costs"]
+
+logger = logging.getLogger()
 
 
-SOLVER_SRC_PATH = ""
-ORIGIN_FILE_PATH = ""
-OPTIMIZED_FILE_PATH = ""
-BENCHMARK_OLD_PATH = ""
-PROGRESS_DIR_PATH = ""
-LOG_DIR_PATH = ""
-
-EXECUTER_SCRIPT = ""
-
-TARGET_FUNCTIONS = []
-CUTOFF_TIME = 0
-EPOCH = 0
-BENCHMARK_ITER_TIME = 0
-
-
-MY_COSTS = []
-BEST_COSTS = []
-BEST_SCORES = []
-
-BEST_COSTS_PATH = ""
-BEST_SCORES_PATH = ""
-MY_COSTS_PATH = ""
-
-BENCHMARK_NEW_PATH = ""
-BENCHMARK_OLD_PATH = ""
-
-SCORE = 0.0
-
-def init() -> None:
-    global SOLVER_SRC_PATH, ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH, BENCHMARK_OLD_PATH, PROGRESS_DIR_PATH, LOG_DIR_PATH
-    global EXECUTER_SCRIPT
-    global TARGET_FUNCTIONS, CUTOFF_TIME, EPOCH, BENCHMARK_ITER_TIME
-    global BENCHMARK_NEW_PATH, BENCHMARK_OLD_PATH
-    global BEST_COSTS_PATH, BEST_SCORES_PATH, MY_COSTS_PATH
-
-    SOLVER_SRC_PATH = config["route"]["solver_src"]
-    ORIGIN_FILE_PATH = config["route"]["origin_file"]
-    OPTIMIZED_FILE_PATH = config["route"]["optimized_file"]
-    BENCHMARK_NEW_PATH = config["route"]["benchmark_new"]
-    BENCHMARK_OLD_PATH = config["route"]["benchmark_old"]
-    PROGRESS_DIR_PATH = config["route"]["progress"]
-    LOG_DIR_PATH = config["route"]["log"]
-
-    EXECUTER_SCRIPT = config["route"]["executer"]
-
-    TARGET_FUNCTIONS = config["train"]["target_functions"]
-    CUTOFF_TIME = config["runtime"]["cutoff_time"]
-    EPOCH = config["runtime"]["epoch"]
-    BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
-
-    BEST_COSTS_PATH = config["data"]["best_costs"]
-    BEST_SCORES_PATH = config["data"]["best_scores"]
-    MY_COSTS_PATH = config["data"]["my_costs"]
-
+def init(benchmark_set) -> None:
+    global logger
 
     with open(BEST_SCORES_PATH, "w") as f:
         f.write("benchmark_set,best_score\n")
@@ -86,10 +52,17 @@ def init() -> None:
     shutil.rmtree(LOG_DIR_PATH, ignore_errors=True)
     shutil.rmtree(PROGRESS_DIR_PATH, ignore_errors=True)
 
-    os.mkdir(LOG_DIR_PATH)
-    os.mkdir(PROGRESS_DIR_PATH)
+    Path(LOG_DIR_PATH).mkdir(parents=True, exist_ok=True)
+    Path(PROGRESS_DIR_PATH).mkdir(parents=True, exist_ok=True)
 
     shutil.copyfile(ORIGIN_FILE_PATH, OPTIMIZED_FILE_PATH)
+
+    logger = logging.getLogger(benchmark_set)
+    logger.setLevel(logging.INFO)
+    handler = logging.FileHandler(Path(OUTPUT_DIR_PATH) / f"{benchmark_set}.log")
+    formatter = logging.Formatter('[%(asctime)s] [%(levelname)-7s] %(name)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 
 def parse_executer_output(output: str) -> int:
@@ -134,8 +107,8 @@ def get_benchmark_set_feature(benchmark_set: str) -> str:
     return feature
 
 
-def run_single(benchmark_set_path: str, lock) -> None:
-    global MY_COSTS, BEST_COSTS, SCORE
+def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
+    global MY_COSTS, BEST_COSTS
 
     instances_path = [path.joinpath() for path in Path(benchmark_set_path).iterdir()]
 
@@ -149,28 +122,19 @@ def run_single(benchmark_set_path: str, lock) -> None:
             cost = parse_executer_output(output)
             MY_COSTS.append({
                 "instance": filename,
-                "cost": cost,
-                "best_cost": -1
+                "cost": cost
             })
             logger.info(f"测例文件运行完毕: {filename}, 代价: {cost}")
         except Exception as e:
             logger.error(f"执行文件错误: {filename}: {e}")
 
     BEST_COSTS = pd.read_csv(BEST_COSTS_PATH).to_dict(orient="records")
-    compare_with_best_costs()
+
     with lock:
         write_costs_to_csv()
-    SCORE = rate()
-
-
-def compare_with_best_costs() -> None:
-    for cost_item in MY_COSTS:
-        for best_cost_item in BEST_COSTS:
-            if cost_item["instance"] == best_cost_item["instance"]:
-                cost_item["best_cost"] = best_cost_item["best_cost"]
-                break
-        else:
-            logger.warning(f"实例{cost_item['instance']}的最佳代价没找到")
+    score = rate()
+    logger.info(f"当前测例集的本轮评分: {score}")
+    queue.put(score)
 
 
 def write_costs_to_csv() -> None:
@@ -183,17 +147,20 @@ def write_costs_to_csv() -> None:
 def rate() -> float:
     tota_score = 0
     valid_instance_cnt = 0
-    for item in MY_COSTS:
-        if item["cost"] < 0:
-            logger.warning(f"实例{item['instance']}的my_cost没找到")
-            continue
-        if item["best_cost"] < 0:
-            logger.warning(f"实例{item['instance']}的best_cost没找到")
-            continue
+    for my_cost_item in MY_COSTS:
+        for best_cost_item in BEST_COSTS:
+            if my_cost_item["instance"] != best_cost_item["instance"]:
+                continue
+            if my_cost_item["cost"] < 0:
+                logger.warning(f"实例{my_cost_item['instance']}的本求解器代价没找到")
+                continue
+            if best_cost_item["cost"] < 0:
+                logger.warning(f"实例{best_cost_item['instance']}的最佳代价没找到")
+                continue
 
-        score = (1 + item['best_cost']) / (1 + item['cost'])
-        tota_score += score
-        valid_instance_cnt += 1
+            score = (1 + best_cost_item['cost']) / (1 + my_cost_item['cost'])
+            tota_score += score
+            valid_instance_cnt += 1
 
     return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
 
@@ -201,7 +168,7 @@ def rate() -> float:
 def main(benchmark_set):
     global BEST_SCORES
 
-    init()
+    init(benchmark_set)
     benchmark_set_path = f"{BENCHMARK_OLD_PATH}/{benchmark_set}"
 
     epoch = 0
@@ -228,31 +195,35 @@ def main(benchmark_set):
         logger.info("构建完成")
 
         processes = []
+        queues = []
         for _ in range(BENCHMARK_ITER_TIME):
             logger.info(f"开始基准测试: {benchmark_set}")
-            process = multiprocessing.Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock))
+            queue = Queue()
+            process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue))
             process.start()
+            queues.append(queue)
             processes.append(process)
 
         for process in processes:
             process.join()
             logger.info("基准测试完成")
 
+        scores = [queue.get() for queue in queues]
+        score = sum(scores) / len(scores) if scores else 0
         read_best_scores(benchmark_set_path)
-
 
         progress_of_benchmark_set_dir = f"{PROGRESS_DIR_PATH}/{benchmark_set}"
         Path(progress_of_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
-                if SCORE > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
+                if score > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
                     origin_file = os.path.basename(ORIGIN_FILE_PATH)
                     shutil.copyfile(OPTIMIZED_FILE_PATH, f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
                     progress_cnt += 1
 
                     df = pd.read_csv(BEST_SCORES_PATH)
-                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [SCORE]
+                    df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
                     df.to_csv(BEST_SCORES_PATH, index=False)
                     logger.info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
@@ -266,4 +237,3 @@ def main(benchmark_set):
 if __name__ == "__main__":
     benchmark_set = "drmx-crypt"
     main(benchmark_set)
-

@@ -1,4 +1,4 @@
-instance,best_cost,weighted,unweighted,any-time?
+instance,cost,weighted,unweighted,any-time?
 abstraction-refinement_wt-downcast-antlr.wcnf,76250,TRUE,FALSE,TRUE
 abstraction-refinement_wt-downcast-avrora.wcnf,46642,TRUE,FALSE,TRUE
 abstraction-refinement_wt-downcast-hsqldb.wcnf,30207,TRUE,FALSE,TRUE
