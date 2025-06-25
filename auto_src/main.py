@@ -1,5 +1,6 @@
 from pathlib import Path
 from multiprocessing import Process, Queue, Lock
+from datetime import datetime
 
 import subprocess
 import pandas as pd
@@ -21,14 +22,19 @@ CUTOFF_TIME = config["runtime"]["cutoff_time"]
 EPOCH = config["runtime"]["epoch"]
 BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
 
+THRESHOLD_RATE = config["train"]["threshold_rate"]
+
 def print_info(message):
-    print(f"\033[34m{message}\033[0m")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} INFO    \033[1;32m{message}\033[0m")
 
 def print_warning(message):
-    print(f"\033[33m{message}\033[0m")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} WARNING \033[1;33m{message}\033[0m")
 
 def print_error(message):
-    print(f"\033[31m{message}\033[0m")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} ERROR   \033[1;31m{message}\033[0m")
 
 
 def init(benchmark_set) -> None:
@@ -36,8 +42,9 @@ def init(benchmark_set) -> None:
 
     with open("data/best_scores.csv", "w") as f:
         f.write("benchmark_set,best_score\n")
-    with open("data/my_costs.csv", "w") as f:
-        f.write("instance,cost\n")
+    for index in range(BENCHMARK_ITER_TIME):
+        with open(f"data/my_costs_{index}.csv", "w") as f:
+            f.write("instance,cost\n")
 
     shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
 
@@ -84,7 +91,7 @@ def get_benchmark_set_feature(benchmark_set: str) -> str:
     return feature
 
 
-def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
+def run_single(benchmark_set_path: str, lock, queue: Queue, iter_index: int) -> None:
     global MY_COSTS, BEST_COSTS
 
     instances_path = [path.joinpath() for path in Path(benchmark_set_path).iterdir()]
@@ -94,36 +101,35 @@ def run_single(benchmark_set_path: str, lock, queue: Queue) -> None:
         filename = os.path.basename(filepath)
         seed = random.randint(0, 1000000)
         try:
-            print_info(f"运行测例文件: {filepath}")
+            print_info(f"测例开始: {filepath}")
             output = subprocess.run(f"auto_src/starexec_usw-ls-runsolver.sh {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
             cost = parse_executer_output(output)
             MY_COSTS.append({
                 "instance": filename,
                 "cost": cost
             })
-            print_info(f"测例文件运行完毕: {filename}, 代价: {cost}")
+            print_info(f"测例完毕: {filename}, 代价: {cost}")
         except Exception as e:
             print_error(f"执行文件错误: {filename}: {e}")
 
     BEST_COSTS = pd.read_csv("data/best_costs.csv").to_dict(orient="records")
 
     with lock:
-        write_costs_to_csv()
+        write_costs_to_csv(iter_index)
     score = rate()
-    print_info(f"当前测例集的本轮评分: {score}")
     queue.put(score)
 
 
-def write_costs_to_csv() -> None:
-    df = pd.read_csv("data/my_costs.csv")
+def write_costs_to_csv(iter_index) -> None:
+    df = pd.read_csv(f"data/my_costs_{iter_index}.csv")
     for my_cost_item in MY_COSTS:
         match = df["instance"] == my_cost_item["instance"]
         if match.any():
             df.loc[df["instance"] == my_cost_item["instance"], "cost"] = my_cost_item["cost"]
         else:
             df = pd.concat([df, pd.DataFrame([my_cost_item])], ignore_index=True)
-    df.to_csv("data/my_costs.csv", index=False)
-    print_info("输出结果已保存到data/my_costs.csv")
+    df.to_csv(f"data/my_costs_{iter_index}.csv", index=False)
+    print_info(f"输出结果已保存到data/my_costs_{iter_index}.csv")
 
 
 def rate() -> float:
@@ -178,20 +184,21 @@ def main(benchmark_set, lock):
 
         processes = []
         queues = []
-        for _ in range(BENCHMARK_ITER_TIME):
-            print_info(f"开始基准测试: {benchmark_set}")
+        for index in range(BENCHMARK_ITER_TIME):
+            print_info(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试开始")
             queue = Queue()
-            process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue))
+            process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue, index))
             process.start()
             queues.append(queue)
             processes.append(process)
 
-        for process in processes:
+        for index, process in enumerate(processes):
             process.join()
-            print_info("基准测试完成")
+            print_info(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试完成")
 
         scores = [queue.get() for queue in queues]
         score = sum(scores) / len(scores) if scores else 0
+        print_info(f"{benchmark_set}的第{epoch}轮的平均得分是: {score}")
         read_best_scores(benchmark_set_path)
 
         progress_of_benchmark_set_dir = f"progress/{benchmark_set}"
@@ -199,7 +206,7 @@ def main(benchmark_set, lock):
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
-                if score > item["best_score"] * 1.05:  # 加5%门槛以排除评分波动
+                if score > item["best_score"] * THRESHOLD_RATE:
                     origin_file = os.path.basename("solver_src/backup/heuristic.h.origin")
                     shutil.copyfile("solver_src/heuristic.h", f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
                     progress_cnt += 1

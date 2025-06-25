@@ -46,5 +46,6 @@ cd $work_dir
 python start.py concurrent/$timestamp
 
 # 工具命令
-# ps aux | grep single | grep -v grep
-# ps aux | grep single | grep -v grep | awk '{print $2}' | xargs kill -9
+# ps aux | grep auto_src/main.py | grep -v grep
+# ps aux | grep auto_src/main.py | grep -v grep | awk '{print $2}' | xargs kill -9
+# ps aux | grep auto_src | grep -v grep | awk '{print $2}' | xargs kill -9

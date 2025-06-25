@@ -11,14 +11,15 @@ os.chdir(dir)
 
 
 def get_benchmark_sets():
+    global benchmark_sets
     for dirname in os.listdir("template/benchmark_old"):
         if os.path.isdir(os.path.join("template/benchmark_old", dirname)):
             benchmark_sets.append(dirname)
+    # benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if "causal" in benchmark_set]
 
 
 def main():
     get_benchmark_sets()
-    processes = []
     benchmark_sets.sort(key=lambda x: x.lower())
     os.mkdir("_output")
     for benchmark_set in benchmark_sets:
@@ -26,12 +27,8 @@ def main():
         os.mkdir("log")
         command = f"nohup python3 -u auto_src/main.py {benchmark_set} > ../_output/{benchmark_set}.ans 2>&1 &"
         p = subprocess.Popen(command, shell=True)
-        processes.append(p)
         os.chdir("..")
-
-    for p in processes:
-        p.wait()
-    print("所有测例集处理完成")
+        print(f"基准集: {benchmark_set} at {datetime.datetime.now()} 启动成功")
 
 
 if __name__ == "__main__":
