@@ -4,11 +4,17 @@
 work_dir=$(cd "$(dirname "$0")"; pwd)
 timestamp=$(date "+%Y%m%d_%H%M%S")
 CONCURRENT_DIR=concurrent/$timestamp
+
+if [ -n "$1" ]; then
+    CONCURRENT_DIR="${CONCURRENT_DIR}_$1"
+fi
+
 benchmark_sets=$(find benchmark_old -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+benchmark_sets="causal-dis"
 
 rm -rf $CONCURRENT_DIR
 mkdir -p $CONCURRENT_DIR/template
-rsync -av \
+rsync -avq \
       --exclude='__pycache__' \
       --exclude='.vscode' \
       --exclude='benchmark_new' \
@@ -43,7 +49,7 @@ done
 
 cd $work_dir
 
-python start.py concurrent/$timestamp
+python start.py $CONCURRENT_DIR
 
 # 工具命令
 # ps aux | grep auto_src/main.py | grep -v grep

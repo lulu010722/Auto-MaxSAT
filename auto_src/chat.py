@@ -3,7 +3,6 @@ from pathlib import Path
 
 import json
 import time
-import datetime
 import shutil
 import numpy as np
 import random
@@ -74,28 +73,34 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
 
     with open(optimized_file_name, "r", encoding="utf-8") as file:
         lines = file.readlines()
+    response_lines = response.splitlines(keepends=True)
 
     # 找到插入位置，并确定原函数的范围，判断逻辑是，从函数名开始，直到某一行以}开头，表明这个函数结束了
-    insert_index = 0
+    insert_file_lineno = 0
+    insert_response_lineno = 0
+
     for i, line in enumerate(lines):
         if func_name_to_replace in line:
-            insert_index = i
+            insert_file_lineno = i
             break
 
-    while lines[insert_index][0] != "}":
-        del lines[insert_index]
-    del lines[insert_index]
-
-    response_lines = response.splitlines(keepends=True)
-    for i, line in enumerate(response_lines):
+    for j, line in enumerate(response_lines):
         if func_name_to_replace in line:
-            while response_lines[i][0] != "}":
-                lines.insert(insert_index, response_lines[i])
-                insert_index += 1
-                i += 1
-        break
+            insert_response_lineno = j
+            break
 
-    lines.insert(insert_index, "}\n")
+    while lines[insert_file_lineno][0] != "}":
+        del lines[insert_file_lineno]
+    del lines[insert_file_lineno]
+
+    i, j = insert_file_lineno, insert_response_lineno
+    while True:
+        if response_lines[j][0] == "}":
+            break
+        lines.insert(i, response_lines[j])
+        i += 1
+        j += 1
+    lines.insert(i, "}\n")
 
     with open(optimized_file_name, "w", encoding="utf-8") as file:
         file.writelines(lines)
@@ -103,7 +108,7 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
 
 def optimize():
     # 初始化算法骨架
-    with open("solver_src/backup/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/baseline/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
 
     func_num = len(TARGET_FUNCTIONS)
@@ -113,15 +118,15 @@ def optimize():
     # 开始问答
     chat_history = []
     set_system_prompt(chat_history)
-    log_file_path = f"log/history_{int(time.time() * 1000)}.json"
+    log_file_path = f"log/{int(time.time() * 1000)}.json"
 
-    with open("solver_src/backup/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/baseline/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
         target_funcs_str = "\n".join(func_to_be_optimize)
         rewrite_prompt = USER_PROMPT % (BENCHMARK_SET_FEATURE, target_funcs_str, code)
         res = chat(rewrite_prompt, chat_history)
 
-        shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
+        shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
         for target_func in func_to_be_optimize:
             insert_function("solver_src/heuristic.h", res, target_func)  # type: ignore
 

@@ -10,6 +10,7 @@ import random
 import re
 import yaml
 import sys
+import json
 
 import chat
 
@@ -24,20 +25,28 @@ BENCHMARK_ITER_TIME = config["runtime"]["benchmark_iter_time"]
 
 THRESHOLD_RATE = config["train"]["threshold_rate"]
 
+
+def print_debug(message):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} \033[1;34mDEBUG   \033[34m{message}\033[0m")
+
+
 def print_info(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} INFO    \033[1;32m{message}\033[0m")
+    print(f"{timestamp} \033[1;32mINFO    \033[32m{message}\033[0m")
+
 
 def print_warning(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} WARNING \033[1;33m{message}\033[0m")
+    print(f"{timestamp} \033[1;33mWARNING \033[33m{message}\033[0m")
+
 
 def print_error(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} ERROR   \033[1;31m{message}\033[0m")
+    print(f"{timestamp} \033[1;31mERROR   \033[31m{message}\033[0m")
 
 
-def init(benchmark_set) -> None:
+def init() -> None:
     global logger
 
     with open("data/best_scores.csv", "w") as f:
@@ -46,7 +55,7 @@ def init(benchmark_set) -> None:
         with open(f"data/my_costs_{index}.csv", "w") as f:
             f.write("instance,cost\n")
 
-    shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
+    shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
 
 
 def parse_executer_output(output: str) -> int:
@@ -101,14 +110,14 @@ def run_single(benchmark_set_path: str, lock, queue: Queue, iter_index: int) -> 
         filename = os.path.basename(filepath)
         seed = random.randint(0, 1000000)
         try:
-            print_info(f"测例开始: {filepath}")
+            print_debug(f"测例开始: {filename}")
             output = subprocess.run(f"auto_src/starexec_usw-ls-runsolver.sh {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
             cost = parse_executer_output(output)
             MY_COSTS.append({
                 "instance": filename,
                 "cost": cost
             })
-            print_info(f"测例完毕: {filename}, 代价: {cost}")
+            print_debug(f"测例完毕: {filename}, 代价: {cost}")
         except Exception as e:
             print_error(f"执行文件错误: {filename}: {e}")
 
@@ -129,7 +138,7 @@ def write_costs_to_csv(iter_index) -> None:
         else:
             df = pd.concat([df, pd.DataFrame([my_cost_item])], ignore_index=True)
     df.to_csv(f"data/my_costs_{iter_index}.csv", index=False)
-    print_info(f"输出结果已保存到data/my_costs_{iter_index}.csv")
+    print_debug(f"输出结果已保存到data/my_costs_{iter_index}.csv")
 
 
 def rate() -> float:
@@ -153,10 +162,19 @@ def rate() -> float:
     return tota_score / valid_instance_cnt if valid_instance_cnt > 0 else 0
 
 
+def write_progress(progress_cnt: int):
+    files = [f for f in os.listdir("log") if os.path.isfile(os.path.join("log", f))]
+    files.sort(key=lambda x: x.lower())
+    with open(f"progress/{progress_cnt}", "w") as progress_file:
+        with open(f"log/{files[-1]}", "r") as log_file:
+            response = json.load(log_file)[2]["content"]
+            progress_file.write(f"大模型的回答是:\n{response}\n")
+
+
 def main(benchmark_set, lock):
     global BEST_SCORES
 
-    init(benchmark_set)
+    init()
     benchmark_set_path = f"benchmark_old/{benchmark_set}"
 
     epoch = 0
@@ -165,27 +183,28 @@ def main(benchmark_set, lock):
     benchmark_set_feature = get_benchmark_set_feature(benchmark_set)
 
     while epoch < EPOCH:
-        print_info("开始LLM对话")
+        print_debug(f"========第{epoch}轮迭代开始！========")
+        print_debug("开始LLM对话")
         chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
-        print_info("LLM对话迭代完成")
+        print_debug("LLM对话迭代完成")
 
-        print_info("构建算法可执行文件")
+        print_debug("构建算法可执行文件")
         make_result = subprocess.run(["make", "-C", "solver_src"])
         if make_result.returncode != 0:
             print_warning("Makefile执行失败，重新询问大模型")
-            shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
+            shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
 
             if make_fail_cnt > EPOCH:
                 print_error("Makefile执行失败次数过多，退出")
                 return
             make_fail_cnt += 1
             continue
-        print_info("构建完成")
+        print_debug("构建完成")
 
         processes = []
         queues = []
         for index in range(BENCHMARK_ITER_TIME):
-            print_info(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试开始")
+            print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试开始")
             queue = Queue()
             process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue, index))
             process.start()
@@ -194,21 +213,20 @@ def main(benchmark_set, lock):
 
         for index, process in enumerate(processes):
             process.join()
-            print_info(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试完成")
+            print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试完成")
 
         scores = [queue.get() for queue in queues]
         score = sum(scores) / len(scores) if scores else 0
         print_info(f"{benchmark_set}的第{epoch}轮的平均得分是: {score}")
         read_best_scores(benchmark_set_path)
 
-        progress_of_benchmark_set_dir = f"progress/{benchmark_set}"
-        Path(progress_of_benchmark_set_dir).mkdir(parents=True, exist_ok=True)
+        Path("progress").mkdir(parents=True, exist_ok=True)
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
                 if score > item["best_score"] * THRESHOLD_RATE:
-                    origin_file = os.path.basename("solver_src/backup/heuristic.h.origin")
-                    shutil.copyfile("solver_src/heuristic.h", f"{progress_of_benchmark_set_dir}/{origin_file}.progress_{progress_cnt}")
+                    write_progress(progress_cnt)
+                    shutil.copyfile("solver_src/heuristic.h", "solver_src/baseline/heuristic.h.origin")
                     progress_cnt += 1
 
                     with lock:
@@ -218,7 +236,7 @@ def main(benchmark_set, lock):
                         print_info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
-                    shutil.copyfile("solver_src/backup/heuristic.h.origin", "solver_src/heuristic.h")
+                    shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
                     print_warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1

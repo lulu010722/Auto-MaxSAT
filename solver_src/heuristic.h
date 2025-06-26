@@ -618,6 +618,7 @@ void USW::soft_smooth_weights()
 
 void USW::update_clause_weights()
 {
+    int v;
     if (num_hclauses > 0) // partial
     {
         // update hard clause weight

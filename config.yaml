@@ -6,20 +6,20 @@ model:
 
 
 runtime:
-  cutoff_time: 3
-  epoch: 3
-  benchmark_iter_time: 3
+  cutoff_time: 60
+  epoch: 30
+  benchmark_iter_time: 10
 
 
 train:
   target_functions:
     # - "int USW::pick_var()"
-    # - "void USW::hard_increase_weights()"
-    # - "void USW::soft_increase_weights_partial()"
-    # - "void USW::soft_increase_weights_not_partial()"
-    # - "void USW::hard_smooth_weights()"
-    # - "void USW::soft_smooth_weights()"
-    - void USW::update_clause_weights()
+    - "void USW::hard_increase_weights()"
+    - "void USW::soft_increase_weights_partial()"
+    - "void USW::soft_increase_weights_not_partial()"
+    - "void USW::hard_smooth_weights()"
+    - "void USW::soft_smooth_weights()"
+    - "void USW::update_clause_weights()"
   threshold_rate: 1.05
 
 prompt:
