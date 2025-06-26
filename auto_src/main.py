@@ -28,22 +28,22 @@ THRESHOLD_RATE = config["train"]["threshold_rate"]
 
 def print_debug(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;34mDEBUG   \033[34m{message}\033[0m")
+    print(f"{timestamp} \033[1;34mDEBUG   \033[0m\033[34m{message}\033[0m")
 
 
 def print_info(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;32mINFO    \033[32m{message}\033[0m")
+    print(f"{timestamp} \033[1;32mINFO    \033[0m\033[32m{message}\033[0m")
 
 
 def print_warning(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;33mWARNING \033[33m{message}\033[0m")
+    print(f"{timestamp} \033[1;33mWARNING \033[0m\033[33m{message}\033[0m")
 
 
 def print_error(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;31mERROR   \033[31m{message}\033[0m")
+    print(f"{timestamp} \033[1;31mERROR   \033[0m\033[31m{message}\033[0m")
 
 
 def init() -> None:
@@ -108,7 +108,8 @@ def run_single(benchmark_set_path: str, lock, queue: Queue, iter_index: int) -> 
     MY_COSTS = []
     for filepath in instances_path:
         filename = os.path.basename(filepath)
-        seed = random.randint(0, 1000000)
+        # seed = random.randint(0, 1000000)
+        seed = 0
         try:
             print_debug(f"测例开始: {filename}")
             output = subprocess.run(f"auto_src/starexec_usw-ls-runsolver.sh {filepath} {seed} {CUTOFF_TIME}", shell=True, capture_output=True, text=True).stdout
