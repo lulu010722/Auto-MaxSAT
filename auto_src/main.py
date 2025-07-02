@@ -6,7 +6,6 @@ import subprocess
 import pandas as pd
 import os
 import shutil
-import random
 import re
 import yaml
 import sys
@@ -28,22 +27,26 @@ THRESHOLD_RATE = config["train"]["threshold_rate"]
 
 def print_debug(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;34mDEBUG   \033[0m\033[34m{message}\033[0m")
+    pid = os.getpid()
+    print(f"{timestamp} \033[1;36m{pid:>8} \033[1;34mDEBUG   \033[0m\033[34m{message}\033[0m")
 
 
 def print_info(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;32mINFO    \033[0m\033[32m{message}\033[0m")
+    pid = os.getpid()
+    print(f"{timestamp} \033[1;36m{pid:>8} \033[1;32mINFO    \033[0m\033[32m{message}\033[0m")
 
 
 def print_warning(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;33mWARNING \033[0m\033[33m{message}\033[0m")
+    pid = os.getpid()
+    print(f"{timestamp} \033[1;36m{pid:>8} \033[1;33mWARNING \033[0m\033[33m{message}\033[0m")
 
 
 def print_error(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} \033[1;31mERROR   \033[0m\033[31m{message}\033[0m")
+    pid = os.getpid()
+    print(f"{timestamp} \033[1;36m{pid:>8} \033[1;31mERROR   \033[0m\033[31m{message}\033[0m")
 
 
 def init() -> None:
@@ -190,7 +193,12 @@ def main(benchmark_set, lock):
         print_debug("LLM对话迭代完成")
 
         print_debug("构建算法可执行文件")
-        make_result = subprocess.run(["make", "-C", "solver_src"])
+        make_result = subprocess.run(["make", "-C", "solver_src"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        for line in make_result.stdout.splitlines():
+            print_debug(line)
+        for line in make_result.stderr.splitlines():
+            print_error(line)
+
         if make_result.returncode != 0:
             print_warning("Makefile执行失败，重新询问大模型")
             shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")

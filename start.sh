@@ -1,6 +1,11 @@
 #!/bin/bash
 
 
+# 工具命令
+# ps aux | grep auto_src/main.py | grep -v grep
+# ps aux | grep auto_src/main.py | grep -v grep | awk '{print $2}' | xargs kill -9
+# ps aux | grep auto_src | grep -v grep | awk '{print $2}' | xargs kill -9
+
 work_dir=$(cd "$(dirname "$0")"; pwd)
 timestamp=$(date "+%Y%m%d_%H%M%S")
 CONCURRENT_DIR=concurrent/$timestamp
@@ -50,8 +55,3 @@ done
 cd $work_dir
 
 python start.py $CONCURRENT_DIR
-
-# 工具命令
-# ps aux | grep auto_src/main.py | grep -v grep
-# ps aux | grep auto_src/main.py | grep -v grep | awk '{print $2}' | xargs kill -9
-# ps aux | grep auto_src | grep -v grep | awk '{print $2}' | xargs kill -9

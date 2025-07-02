@@ -5,9 +5,9 @@ model:
   temperature: 0.0
 
 runtime:
-  cutoff_time: 60
-  epoch: 30
-  benchmark_iter_time: 10
+  cutoff_time: 6
+  epoch: 1
+  benchmark_iter_time: 3
 
 
 train:
