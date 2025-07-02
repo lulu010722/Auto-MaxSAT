@@ -108,7 +108,7 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
 
 def optimize():
     # 初始化算法骨架
-    with open("solver_src/baseline/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/baseline/heuristic.h", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
 
     func_num = len(TARGET_FUNCTIONS)
@@ -120,13 +120,14 @@ def optimize():
     set_system_prompt(chat_history)
     log_file_path = f"log/{int(time.time() * 1000)}.json"
 
-    with open("solver_src/baseline/heuristic.h.origin", "r", encoding="utf-8") as baseline_file:
+    with open("solver_src/baseline/heuristic.h", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
         target_funcs_str = "\n".join(func_to_be_optimize)
-        rewrite_prompt = USER_PROMPT % (BENCHMARK_SET_FEATURE, target_funcs_str, code)
+        # rewrite_prompt = USER_PROMPT % (BENCHMARK_SET_FEATURE, target_funcs_str, code)
+        rewrite_prompt = USER_PROMPT % (target_funcs_str, code)
         res = chat(rewrite_prompt, chat_history)
 
-        shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
+        shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
         for target_func in func_to_be_optimize:
             insert_function("solver_src/heuristic.h", res, target_func)  # type: ignore
 

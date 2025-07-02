@@ -167,6 +167,7 @@ class USW
 
 	// variables that could be used by llm
 	int v;
+	double MAX_CLAUSE_WEIGHT;
 
 	//function used in algorithm
 	void build_neighbor_relation();

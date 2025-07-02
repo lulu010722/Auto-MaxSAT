@@ -604,16 +604,15 @@ void USW::soft_smooth_weights()
 
 void USW::update_clause_weights()
 {
-    if (num_hclauses > 0) // partial
+    if (num_hclauses > 0)
     {
-        // update hard clause weight
         hard_increase_weights();
         if (0 == hard_unsat_nb)
         {
             soft_increase_weights_partial();
         }
     }
-    else  // not partial
+    else
     {
         if (((rand() % MY_RAND_MAX_INT) * BASIC_SCALE) < soft_smooth_probability && soft_large_weight_clauses_count > soft_large_clause_count_threshold)
         {

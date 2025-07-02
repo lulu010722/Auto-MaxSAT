@@ -15,7 +15,7 @@ def get_benchmark_sets():
     for dirname in os.listdir("template/benchmark_old"):
         if os.path.isdir(os.path.join("template/benchmark_old", dirname)):
             benchmark_sets.append(dirname)
-    benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if "causal" in benchmark_set]
+    # benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if "causal" in benchmark_set]
 
 
 def main():

@@ -5,9 +5,9 @@ model:
   temperature: 0.0
 
 runtime:
-  cutoff_time: 6
-  epoch: 3
-  benchmark_iter_time: 3
+  cutoff_time: 60
+  epoch: 30
+  benchmark_iter_time: 10
 
 
 train:
@@ -94,7 +94,7 @@ prompt:
     1. Your rewritten function code must be different from original code, not just rewrite code synonymously.
     2. Please make sure that the response text is a pure code response, without any explanation or comments.
     3. You should not respond the code in markdown format, i.e. no leading and trailing ```, just use plain text.
-    4. You maybe required to optimized multiple functions. In this case, rewrite each function and give output in order, separated by 2 new lines.
+    4. You may be required to optimized multiple functions. In this case, rewrite each function and give outputs in order, separated by 2 new lines.
     5. If you want to use data structures or variables that are not declared within certain scope, you should name it in a well-explainable style.
 
     This time, the function(s) you need to optimize is:

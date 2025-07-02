@@ -55,7 +55,7 @@ def init() -> None:
         with open(f"data/my_costs_{index}.csv", "w") as f:
             f.write("instance,cost\n")
 
-    shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
+    shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
 
 
 def parse_executer_output(output: str) -> int:
@@ -193,7 +193,7 @@ def main(benchmark_set, lock):
         make_result = subprocess.run(["make", "-C", "solver_src"])
         if make_result.returncode != 0:
             print_warning("Makefile执行失败，重新询问大模型")
-            shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
+            shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
 
             if make_fail_cnt > EPOCH:
                 print_error("Makefile执行失败次数过多，退出")
@@ -227,7 +227,7 @@ def main(benchmark_set, lock):
             if item["benchmark_set"] == benchmark_set:
                 if score > item["best_score"] * THRESHOLD_RATE:
                     write_progress(progress_cnt)
-                    shutil.copyfile("solver_src/heuristic.h", "solver_src/baseline/heuristic.h.origin")
+                    shutil.copyfile("solver_src/heuristic.h", "solver_src/baseline/heuristic.h")
                     progress_cnt += 1
 
                     with lock:
@@ -237,7 +237,7 @@ def main(benchmark_set, lock):
                         print_info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
-                    shutil.copyfile("solver_src/baseline/heuristic.h.origin", "solver_src/heuristic.h")
+                    shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
                     print_warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1
