@@ -58,11 +58,18 @@ def init() -> None:
         with open(f"data/my_costs_{index}.csv", "w") as f:
             f.write("instance,cost\n")
 
+    shutil.copyfile("solver_src/baseline/basis_pms.h", "solver_src/basis_pms.h")
+    shutil.copyfile("solver_src/baseline/build.h", "solver_src/build.h")
+    shutil.copyfile("solver_src/baseline/deci.h", "solver_src/deci.h")
     shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
+    shutil.copyfile("solver_src/baseline/pms.cpp", "solver_src/pms.cpp")
+    shutil.copyfile("solver_src/baseline/pms.h", "solver_src/pms.h")
+    shutil.copyfile("solver_src/baseline/util.h", "solver_src/util.h")
 
 
 def parse_executer_output(output: str) -> int:
     lines = output.splitlines()
+    # print_debug(f"求解器输出为：{"\n".join(lines[-10:])}")
     current_best = -2
     verified = False
     for line in lines:
@@ -175,6 +182,27 @@ def write_progress(progress_cnt: int):
             progress_file.write(f"大模型的回答是:\n{response}\n")
 
 
+def run_single_for_multiple_times(benchmark_set, epoch):
+    processes = []
+    queues = []
+    benchmark_set_path = f"benchmark_old/{benchmark_set}"
+    for index in range(BENCHMARK_ITER_TIME):
+        print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试开始")
+        queue = Queue()
+        process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue, index))
+        process.start()
+        queues.append(queue)
+        processes.append(process)
+
+    for index, process in enumerate(processes):
+        process.join()
+        print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试完成")
+
+    scores = [queue.get() for queue in queues]
+    score = sum(scores) / len(scores) if scores else 0
+    print_info(f"{benchmark_set}的第{epoch}轮的平均得分是: {score}")
+    return score
+
 def main(benchmark_set, lock):
     global BEST_SCORES
 
@@ -193,7 +221,7 @@ def main(benchmark_set, lock):
         print_debug("LLM对话迭代完成")
 
         print_debug("构建算法可执行文件")
-        make_result = subprocess.run(["make", "-C", "solver_src"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        make_result = subprocess.run("make -C solver_src", shell=True, capture_output=True, text=True)
         for line in make_result.stdout.splitlines():
             print_debug(line)
         for line in make_result.stderr.splitlines():
@@ -210,23 +238,7 @@ def main(benchmark_set, lock):
             continue
         print_debug("构建完成")
 
-        processes = []
-        queues = []
-        for index in range(BENCHMARK_ITER_TIME):
-            print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试开始")
-            queue = Queue()
-            process = Process(target=run_single, name=benchmark_set, args=(benchmark_set_path, lock, queue, index))
-            process.start()
-            queues.append(queue)
-            processes.append(process)
-
-        for index, process in enumerate(processes):
-            process.join()
-            print_debug(f"对于{benchmark_set}的第{epoch}轮第{index}次平行基准测试完成")
-
-        scores = [queue.get() for queue in queues]
-        score = sum(scores) / len(scores) if scores else 0
-        print_info(f"{benchmark_set}的第{epoch}轮的平均得分是: {score}")
+        score = run_single_for_multiple_times(benchmark_set, epoch)
         read_best_scores(benchmark_set_path)
 
         Path("progress").mkdir(parents=True, exist_ok=True)

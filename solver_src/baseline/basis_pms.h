@@ -191,6 +191,11 @@ class USW
 	int nearestPowerOfTen(double x);
 	int pick_var();
 
+	// smaller functions that could be used in heuristic.h
+	void increase_clause_weight(int c, double delta);
+	void increase_scores_for_clause(int c, double delta);
+	void decrease_scores_for_satisfied_clause(int c, double delta);
+
   public:
 	USW();
 	void settings();

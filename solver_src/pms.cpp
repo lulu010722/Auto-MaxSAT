@@ -13,8 +13,9 @@ char * file_name = NULL;
 void interrupt(int sig)
 {
 	if (s.verify_sol() == 1)
-		cout << "c verified" << endl;
-	//s.print_best_solution();
+		cout << "c verified\n" << flush;
+	else
+		cout << "c unverified\n" << flush;
 	s.free_memory();
 	exit(10);
 }
@@ -34,9 +35,9 @@ int main(int argc, char *argv[])
 	s.parse_parameters2(argc, argv);
 	s.local_search_with_decimation(argv[1]);
 
-	//s.simple_print();
+	// s.simple_print();
 
-	//s.free_memory();
+	// s.free_memory();
 
 	return 0;
 }

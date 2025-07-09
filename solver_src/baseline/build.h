@@ -459,7 +459,6 @@ void USW::free_memory()
     delete[] goodvar_stack;
     delete[] already_in_goodvar_stack;
 
-    // delete [] fix;
     delete[] cur_soln;
     delete[] best_soln;
     delete[] local_opt_soln;
@@ -472,7 +471,6 @@ void USW::free_memory()
     delete[] temp_lit;
     delete[] soft_clause_num_index;
 
-    // delete[] soft_clause_weight_upper_bound;
 }
 
 #endif

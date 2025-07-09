@@ -163,11 +163,7 @@ class USW
 	double softclause_weight_threshold;
 	float random_prob;
 	int coe_soft_clause_weight;
-
-
-	// variables that could be used by llm
-	int v;
-	double MAX_CLAUSE_WEIGHT;
+	//long long *soft_clause_weight_upper_bound;
 
 	//function used in algorithm
 	void build_neighbor_relation();

@@ -3,13 +3,14 @@
 
 #include "basis_pms.h"
 #include "deci.h"
+#include "util.h"
 
 void USW::init(vector<int> &init_solution)
 {
     soft_large_weight_clauses_count = 0;
-    if (1 == problem_weighted) // weighted
+    if (1 == problem_weighted)
     {
-        if (0 != num_hclauses) // weighted partial
+        if (0 != num_hclauses)
         {
             for (int c = 0; c < num_clauses; c++)
             {
@@ -29,7 +30,7 @@ void USW::init(vector<int> &init_solution)
                 }
             }
         }
-        else // weighted not partial
+        else
         {
             for (int c = 0; c < num_clauses; c++)
             {
@@ -44,7 +45,7 @@ void USW::init(vector<int> &init_solution)
             }
         }
     }
-    else // unweighted
+    else
     {
         for (int c = 0; c < num_clauses; c++)
         {
@@ -93,7 +94,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
     local_soln_feasible = 0;
-    // init stacks
     hard_unsat_nb = 0;
     soft_unsat_weight = 0;
     hardunsat_stack_fill_pointer = 0;
@@ -101,7 +101,6 @@ void USW::init(vector<int> &init_solution)
     unsatvar_stack_fill_pointer = 0;
     large_weight_clauses_count = 0;
 
-    /* figure out sat_count, sat_var and init unsat_stack */
     for (int c = 0; c < num_clauses; ++c)
     {
         sat_count[c] = 0;
@@ -119,7 +118,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
 
-    /*figure out score*/
     for (int v = 1; v <= num_vars; v++)
     {
         score[v] = 0.0;
@@ -133,7 +131,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
 
-    // init goodvars stack
     goodvar_stack_fill_pointer = 0;
     for (int v = 1; v <= num_vars; v++)
     {
@@ -179,7 +176,7 @@ int USW::pick_var()
                     }
                 }
             }
-            return best_var; // best_array[rand() % best_array_count];
+            return best_var;
         }
         else
         {
@@ -200,7 +197,7 @@ int USW::pick_var()
                     }
                 }
             }
-            return best_var; // best_array[rand() % best_array_count];
+            return best_var;
         }
     }
 
@@ -237,7 +234,7 @@ void USW::local_search_with_decimation(char *inputfile)
 {
     if (1 == problem_weighted)
     {
-        if (0 != num_hclauses) // weighted partial 
+        if (0 != num_hclauses)
         {
             coe_tuned_weight = 1.0/(double)floorToPowerOfTen(double(top_clause_weight - 1) / (double)(num_sclauses));
 
@@ -249,7 +246,7 @@ void USW::local_search_with_decimation(char *inputfile)
                 }
             }
         }
-        else // weighted not partial
+        else
         {
             softclause_weight_threshold = 0;
             soft_smooth_probability = 1E-3;
@@ -269,7 +266,7 @@ void USW::local_search_with_decimation(char *inputfile)
     }
     else 
     {
-        if (0 == num_hclauses)  // unweighted not partial
+        if (0 == num_hclauses)
         {
             hd_count_threshold = 94;
             coe_soft_clause_weight = 397;
@@ -375,7 +372,7 @@ void USW::soft_increase_weights_partial()
                     }
                 }
             }
-            else if (sat_count[c] < 2)
+            else if (sat_count[c] < 2) // sat
             {
                 for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
                 {
@@ -402,7 +399,7 @@ void USW::soft_increase_weights_partial()
             c = soft_clause_num_index[i];
             clause_weight[c] += s_inc;
 
-            if (sat_count[c] <= 0) // unsat
+            if (sat_count[c] <= 0)
             {
                 for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
                 {
@@ -414,7 +411,7 @@ void USW::soft_increase_weights_partial()
                     }
                 }
             }
-            else if (sat_count[c] < 2) // sat
+            else if (sat_count[c] < 2)
             {
                 for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
                 {

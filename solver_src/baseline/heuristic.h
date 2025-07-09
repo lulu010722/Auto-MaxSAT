@@ -8,9 +8,9 @@
 void USW::init(vector<int> &init_solution)
 {
     soft_large_weight_clauses_count = 0;
-    if (1 == problem_weighted) // weighted
+    if (1 == problem_weighted)
     {
-        if (0 != num_hclauses) // weighted partial
+        if (0 != num_hclauses)
         {
             for (int c = 0; c < num_clauses; c++)
             {
@@ -30,7 +30,7 @@ void USW::init(vector<int> &init_solution)
                 }
             }
         }
-        else // weighted not partial
+        else
         {
             for (int c = 0; c < num_clauses; c++)
             {
@@ -45,7 +45,7 @@ void USW::init(vector<int> &init_solution)
             }
         }
     }
-    else // unweighted
+    else
     {
         for (int c = 0; c < num_clauses; c++)
         {
@@ -94,7 +94,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
     local_soln_feasible = 0;
-    // init stacks
     hard_unsat_nb = 0;
     soft_unsat_weight = 0;
     hardunsat_stack_fill_pointer = 0;
@@ -102,7 +101,6 @@ void USW::init(vector<int> &init_solution)
     unsatvar_stack_fill_pointer = 0;
     large_weight_clauses_count = 0;
 
-    /* figure out sat_count, sat_var and init unsat_stack */
     for (int c = 0; c < num_clauses; ++c)
     {
         sat_count[c] = 0;
@@ -120,7 +118,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
 
-    /*figure out score*/
     for (int v = 1; v <= num_vars; v++)
     {
         score[v] = 0.0;
@@ -134,7 +131,6 @@ void USW::init(vector<int> &init_solution)
         }
     }
 
-    // init goodvars stack
     goodvar_stack_fill_pointer = 0;
     for (int v = 1; v <= num_vars; v++)
     {
@@ -180,7 +176,7 @@ int USW::pick_var()
                     }
                 }
             }
-            return best_var; // best_array[rand() % best_array_count];
+            return best_var;
         }
         else
         {
@@ -201,7 +197,7 @@ int USW::pick_var()
                     }
                 }
             }
-            return best_var; // best_array[rand() % best_array_count];
+            return best_var;
         }
     }
 
@@ -238,7 +234,7 @@ void USW::local_search_with_decimation(char *inputfile)
 {
     if (1 == problem_weighted)
     {
-        if (0 != num_hclauses) // weighted partial 
+        if (0 != num_hclauses)
         {
             coe_tuned_weight = 1.0/(double)floorToPowerOfTen(double(top_clause_weight - 1) / (double)(num_sclauses));
 
@@ -250,7 +246,7 @@ void USW::local_search_with_decimation(char *inputfile)
                 }
             }
         }
-        else // weighted not partial
+        else
         {
             softclause_weight_threshold = 0;
             soft_smooth_probability = 1E-3;
@@ -270,7 +266,7 @@ void USW::local_search_with_decimation(char *inputfile)
     }
     else 
     {
-        if (0 == num_hclauses)  // unweighted not partial
+        if (0 == num_hclauses)
         {
             hd_count_threshold = 94;
             coe_soft_clause_weight = 397;
@@ -354,88 +350,61 @@ void USW::hard_increase_weights()
     return;
 }
 
-void USW::soft_increase_weights_partial()
-{
-    int i, c, v;
+void USW::increase_clause_weight(int c, double delta) {
+    clause_weight[c] += delta;
+}
 
-    if (1 == problem_weighted)
-    {
-        for (i = 0; i < num_sclauses; ++i)
-        {
-            c = soft_clause_num_index[i];
-            clause_weight[c] += tuned_org_clause_weight[c];
-            if (sat_count[c] <= 0) // unsat
-            {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    score[v] += tuned_org_clause_weight[c];
-                    if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
-                    {
-                        already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                        mypush(v, goodvar_stack);
-                    }
-                }
-            }
-            else if (sat_count[c] < 2) // sat
-            {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    if (p->sense == cur_soln[v])
-                    {
-                        score[v] -= tuned_org_clause_weight[c];
-                        if (score[v] <= 0 && -1 != already_in_goodvar_stack[v])
-                        {
-                            int index = already_in_goodvar_stack[v];
-                            int last_v = mypop(goodvar_stack);
-                            goodvar_stack[index] = last_v;
-                            already_in_goodvar_stack[last_v] = index;
-                            already_in_goodvar_stack[v] = -1;
-                        }
-                    }
-                }
+void USW::increase_scores_for_clause(int c, double delta) {
+    for (lit *p = clause_lit[c]; p->var_num != 0; p++) {
+        int v = p->var_num;
+        score[v] += delta;
+        if (score[v] > 0 && already_in_goodvar_stack[v] == -1) {
+            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
+            mypush(v, goodvar_stack);
+        }
+    }
+}
+
+void USW::decrease_scores_for_satisfied_clause(int c, double delta) {
+    for (lit *p = clause_lit[c]; p->var_num != 0; p++) {
+        int v = p->var_num;
+        if (p->sense == cur_soln[v]) {
+            score[v] -= delta;
+            if (score[v] <= 0 && already_in_goodvar_stack[v] != -1) {
+                int index = already_in_goodvar_stack[v];
+                int last_v = mypop(goodvar_stack);
+                goodvar_stack[index] = last_v;
+                already_in_goodvar_stack[last_v] = index;
+                already_in_goodvar_stack[v] = -1;
             }
         }
     }
-    else
-    {
-        for (i = 0; i < num_sclauses; ++i)
-        {
-            c = soft_clause_num_index[i];
-            clause_weight[c] += s_inc;
+}
 
-            if (sat_count[c] <= 0) // unsat
-            {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    score[v] += s_inc;
-                    if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
-                    {
-                        already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                        mypush(v, goodvar_stack);
-                    }
-                }
+void USW::soft_increase_weights_partial() {
+    if (problem_weighted == 1) {
+        for (int i = 0; i < num_sclauses; ++i) {
+            int c = soft_clause_num_index[i];
+            increase_clause_weight(c, tuned_org_clause_weight[c]);
+
+            if (sat_count[c] <= 0) {
+                increase_scores_for_clause(c, tuned_org_clause_weight[c]);
+            } else if (sat_count[c] < 2) {
+                decrease_scores_for_satisfied_clause(c, tuned_org_clause_weight[c]);
             }
-            else if (sat_count[c] < 2) // sat
-            {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    if (p->sense == cur_soln[v])
-                    {
-                        score[v] -= s_inc;
-                        if (score[v] <= 0 && -1 != already_in_goodvar_stack[v])
-                        {
-                            int index = already_in_goodvar_stack[v];
-                            int last_v = mypop(goodvar_stack);
-                            goodvar_stack[index] = last_v;
-                            already_in_goodvar_stack[last_v] = index;
-                            already_in_goodvar_stack[v] = -1;
-                        }
-                    }
-                }
+        }
+    } else {
+        for (int i = 0; i < num_sclauses; ++i) {
+            int c = soft_clause_num_index[i];
+            increase_clause_weight(c, s_inc);
+
+            if (sat_count[c] <= 0) {
+                increase_scores_for_clause(c, s_inc);
+            } else if (sat_count[c] < 2) {
+                decrease_scores_for_satisfied_clause(c, s_inc);
             }
         }
     }
-    return;
 }
 
 void USW::soft_increase_weights_not_partial()
@@ -560,7 +529,6 @@ void USW::soft_smooth_weights()
 
 void USW::update_clause_weights()
 {
-    int v;
     if (num_hclauses > 0)
     {
         hard_increase_weights();

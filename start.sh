@@ -15,7 +15,7 @@ if [ -n "$1" ]; then
 fi
 
 benchmark_sets=$(find benchmark_old -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-# benchmark_sets="causal-dis"
+# benchmark_sets="drmx-crypt"
 
 rm -rf $CONCURRENT_DIR
 mkdir -p $CONCURRENT_DIR/template

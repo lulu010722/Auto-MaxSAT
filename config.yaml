@@ -5,20 +5,23 @@ model:
   temperature: 0.0
 
 runtime:
-  cutoff_time: 6
-  epoch: 1
-  benchmark_iter_time: 3
+  cutoff_time: 60
+  epoch: 10
+  benchmark_iter_time: 10
 
 
 train:
   target_functions:
     # - "int USW::pick_var()"
-    - "void USW::hard_increase_weights()"
-    - "void USW::soft_increase_weights_partial()"
-    - "void USW::soft_increase_weights_not_partial()"
-    - "void USW::hard_smooth_weights()"
-    - "void USW::soft_smooth_weights()"
+    # - "void USW::hard_increase_weights()"
+    # - "void USW::soft_increase_weights_partial()"
+    # - "void USW::soft_increase_weights_not_partial()"
+    # - "void USW::hard_smooth_weights()"
+    # - "void USW::soft_smooth_weights()"
     - "void USW::update_clause_weights()"
+    - "void USW::increase_clause_weight(int c, double delta)"
+    - "void USW::increase_scores_for_clause(int c, double delta)"
+    - "void USW::decrease_scores_for_satisfied_clause(int c, double delta)"
   threshold_rate: 1.05
 
 
