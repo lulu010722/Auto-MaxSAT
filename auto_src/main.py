@@ -203,6 +203,7 @@ def run_single_for_multiple_times(benchmark_set, epoch):
     print_info(f"{benchmark_set}的第{epoch}轮的平均得分是: {score}")
     return score
 
+
 def main(benchmark_set, lock):
     global BEST_SCORES
 
@@ -245,20 +246,27 @@ def main(benchmark_set, lock):
 
         for item in BEST_SCORES:
             if item["benchmark_set"] == benchmark_set:
-                if score > item["best_score"] * THRESHOLD_RATE:
-                    write_progress(progress_cnt)
-                    shutil.copyfile("solver_src/heuristic.h", "solver_src/baseline/heuristic.h")
-                    progress_cnt += 1
-
+                if epoch == 0:
                     with lock:
                         df = pd.read_csv("data/best_scores.csv")
                         df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
                         df.to_csv("data/best_scores.csv", index=False)
-                        print_info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
 
                 else:
-                    shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
-                    print_warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
+                    if score > item["best_score"] * THRESHOLD_RATE:
+                        write_progress(progress_cnt)
+                        shutil.copyfile("solver_src/heuristic.h", "solver_src/baseline/heuristic.h")
+                        progress_cnt += 1
+
+                        with lock:
+                            df = pd.read_csv("data/best_scores.csv")
+                            df.loc[df["benchmark_set"] == benchmark_set, ["best_score"]] = [score]
+                            df.to_csv("data/best_scores.csv", index=False)
+                            print_info(f"对于{benchmark_set}，第{epoch}轮问询找到了更好的算法")
+
+                    else:
+                        shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
+                        print_warning(f"对于{benchmark_set}，第{epoch}轮问询没有找到更好的算法")
 
         epoch += 1
 

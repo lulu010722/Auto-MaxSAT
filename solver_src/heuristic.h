@@ -236,7 +236,7 @@ void USW::local_search_with_decimation(char *inputfile)
     {
         if (0 != num_hclauses)
         {
-            coe_tuned_weight = 1.0/(double)floorToPowerOfTen(double(top_clause_weight - 1) / (double)(num_sclauses));
+            coe_tuned_weight = 1.0 / (double)floorToPowerOfTen(double(top_clause_weight - 1) / (double)(num_sclauses));
 
             for (int c = 0; c < num_clauses; c++)
             {
@@ -254,8 +254,8 @@ void USW::local_search_with_decimation(char *inputfile)
             rdprob = 0.036;
             rwprob = 0.48;
             s_inc = 1.0;
-            
-            coe_tuned_weight = ((double)coe_soft_clause_weight)/floorToPowerOfTen((double(top_clause_weight - 1) / (double)(num_sclauses)));
+
+            coe_tuned_weight = ((double)coe_soft_clause_weight) / floorToPowerOfTen((double(top_clause_weight - 1) / (double)(num_sclauses)));
 
             cout << "c coe_tuned_weight: " << coe_tuned_weight << endl;
             for (int c = 0; c < num_clauses; c++)
@@ -264,7 +264,7 @@ void USW::local_search_with_decimation(char *inputfile)
             }
         }
     }
-    else 
+    else
     {
         if (0 == num_hclauses)
         {
@@ -350,137 +350,105 @@ void USW::hard_increase_weights()
     return;
 }
 
+void USW::increase_clause_weight(int c, double delta)
+{
+    clause_weight[c] += delta;
+}
+
+void USW::increase_scores_for_clause(int c, double delta)
+{
+    for (lit *p = clause_lit[c]; p->var_num != 0; p++)
+    {
+        int v = p->var_num;
+        score[v] += delta;
+        if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
+        {
+            already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
+            mypush(v, goodvar_stack);
+        }
+    }
+}
+
+void USW::decrease_scores_for_satisfied_clause(int c, double delta)
+{
+    for (lit *p = clause_lit[c]; p->var_num != 0; p++)
+    {
+        int v = p->var_num;
+        if (p->sense == cur_soln[v])
+        {
+            score[v] -= delta;
+            if (score[v] <= 0 && already_in_goodvar_stack[v] != -1)
+            {
+                int index = already_in_goodvar_stack[v];
+                int last_v = mypop(goodvar_stack);
+                goodvar_stack[index] = last_v;
+                already_in_goodvar_stack[last_v] = index;
+                already_in_goodvar_stack[v] = -1;
+            }
+        }
+    }
+}
+
 void USW::soft_increase_weights_partial()
 {
-    int i, c, v;
-
-    if (1 == problem_weighted)
+    if (problem_weighted == 1)
     {
-        for (i = 0; i < num_sclauses; ++i)
+        for (int i = 0; i < num_sclauses; ++i)
         {
-            c = soft_clause_num_index[i];
-            clause_weight[c] += tuned_org_clause_weight[c];
+            int c = soft_clause_num_index[i];
+            increase_clause_weight(c, tuned_org_clause_weight[c]);
+
             if (sat_count[c] <= 0)
             {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    score[v] += tuned_org_clause_weight[c];
-                    if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
-                    {
-                        already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                        mypush(v, goodvar_stack);
-                    }
-                }
+                increase_scores_for_clause(c, tuned_org_clause_weight[c]);
             }
-            else if (sat_count[c] < 2) // sat
+            else if (sat_count[c] < 2)
             {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    if (p->sense == cur_soln[v])
-                    {
-                        score[v] -= tuned_org_clause_weight[c];
-                        if (score[v] <= 0 && -1 != already_in_goodvar_stack[v])
-                        {
-                            int index = already_in_goodvar_stack[v];
-                            int last_v = mypop(goodvar_stack);
-                            goodvar_stack[index] = last_v;
-                            already_in_goodvar_stack[last_v] = index;
-                            already_in_goodvar_stack[v] = -1;
-                        }
-                    }
-                }
+                decrease_scores_for_satisfied_clause(c, tuned_org_clause_weight[c]);
             }
         }
     }
     else
     {
-        for (i = 0; i < num_sclauses; ++i)
+        for (int i = 0; i < num_sclauses; ++i)
         {
-            c = soft_clause_num_index[i];
-            clause_weight[c] += s_inc;
+            int c = soft_clause_num_index[i];
+            increase_clause_weight(c, s_inc);
 
             if (sat_count[c] <= 0)
             {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    score[v] += s_inc;
-                    if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
-                    {
-                        already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                        mypush(v, goodvar_stack);
-                    }
-                }
+                increase_scores_for_clause(c, s_inc);
             }
             else if (sat_count[c] < 2)
             {
-                for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-                {
-                    if (p->sense == cur_soln[v])
-                    {
-                        score[v] -= s_inc;
-                        if (score[v] <= 0 && -1 != already_in_goodvar_stack[v])
-                        {
-                            int index = already_in_goodvar_stack[v];
-                            int last_v = mypop(goodvar_stack);
-                            goodvar_stack[index] = last_v;
-                            already_in_goodvar_stack[last_v] = index;
-                            already_in_goodvar_stack[v] = -1;
-                        }
-                    }
-                }
+                decrease_scores_for_satisfied_clause(c, s_inc);
             }
         }
     }
-    return;
 }
 
 void USW::soft_increase_weights_not_partial()
 {
     int i, c, v;
 
-    if (1 == problem_weighted)
+    for (int i = 0; i < softunsat_stack_fill_pointer; ++i)
     {
-        for (i = 0; i < softunsat_stack_fill_pointer; ++i)
+        int c = softunsat_stack[i];
+        double weight_limit = (problem_weighted == 1) ? (tuned_org_clause_weight[c] + softclause_weight_threshold) : (coe_soft_clause_weight + softclause_weight_threshold);
+
+        if (clause_weight[c] < weight_limit)
         {
-            c = softunsat_stack[i];
-            if (clause_weight[c] >= tuned_org_clause_weight[c] + softclause_weight_threshold)
-                continue;
-            else
-                clause_weight[c] += s_inc;
+            clause_weight[c] += s_inc;
 
             if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0)
             {
                 already_in_soft_large_weight_stack[c] = 1;
                 soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
             }
-            for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-            {
-                score[v] += s_inc;
-                if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
-                {
-                    already_in_goodvar_stack[v] = goodvar_stack_fill_pointer;
-                    mypush(v, goodvar_stack);
-                }
-            }
-        }
-    }
-    else
-    {
-        for (i = 0; i < softunsat_stack_fill_pointer; ++i)
-        {
-            c = softunsat_stack[i];
-            if (clause_weight[c] >= coe_soft_clause_weight + softclause_weight_threshold)
-                continue;
-            else
-                clause_weight[c] += s_inc;
 
-            if (clause_weight[c] > s_inc && already_in_soft_large_weight_stack[c] == 0)
+            for (lit *p = clause_lit[c]; p->var_num != 0; p++)
             {
-                already_in_soft_large_weight_stack[c] = 1;
-                soft_large_weight_clauses[soft_large_weight_clauses_count++] = c;
-            }
-            for (lit *p = clause_lit[c]; (v = p->var_num) != 0; p++)
-            {
+                int v = p->var_num;
                 score[v] += s_inc;
                 if (score[v] > 0 && already_in_goodvar_stack[v] == -1)
                 {

@@ -15,7 +15,8 @@ def get_benchmark_sets():
     for dirname in os.listdir("template/benchmark_old"):
         if os.path.isdir(os.path.join("template/benchmark_old", dirname)):
             benchmark_sets.append(dirname)
-    # benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if "drmx" in benchmark_set]
+    promising_sets = ["causal-dis", "railway-tr", "decision-t", "lisbon-wed", "synplicate"]
+    benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if benchmark_set in promising_sets]
 
 
 def main():

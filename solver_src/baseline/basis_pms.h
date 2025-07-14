@@ -20,14 +20,14 @@ using namespace std;
 
 const float MY_RAND_MAX_FLOAT = 10000000.0;
 const int MY_RAND_MAX_INT = 10000000;
-const float BASIC_SCALE = 0.0000001; //1.0f/MY_RAND_MAX_FLOAT;
+const float BASIC_SCALE = 0.0000001; // 1.0f/MY_RAND_MAX_FLOAT;
 
 // Define a data structure for a literal.
 struct lit
 {
-	int clause_num; //clause num, begin with 0
-	int var_num;	//variable num, begin with 1
-	bool sense;		//is 1 for true literals, 0 for false literals.
+	int clause_num; // clause num, begin with 0
+	int var_num;	// variable num, begin with 1
+	bool sense;		// is 1 for true literals, 0 for false literals.
 };
 
 static struct tms start_time;
@@ -44,17 +44,17 @@ static void start_timing()
 
 class USW
 {
-  private:
+private:
 	/***********non-algorithmic information ****************/
 	int problem_weighted;
 
-	//size of the instance
-	int num_vars;	//var index from 1 to num_vars
-	int num_clauses; //clause index from 0 to num_clauses-1
+	// size of the instance
+	int num_vars;	 // var index from 1 to num_vars
+	int num_clauses; // clause index from 0 to num_clauses-1
 	int num_hclauses;
 	int num_sclauses;
 
-	//steps and time
+	// steps and time
 	int tries;
 	int max_tries;
 	unsigned int max_flips;
@@ -68,9 +68,9 @@ class USW
 
 	/**********end non-algorithmic information*****************/
 	/* literal arrays */
-	lit **var_lit;		   //var_lit[i][j] means the j'th literal of var i.
-	int *var_lit_count;	//amount of literals of each var
-	lit **clause_lit;	  //clause_lit[i][j] means the j'th literal of clause i.
+	lit **var_lit;		   // var_lit[i][j] means the j'th literal of var i.
+	int *var_lit_count;	   // amount of literals of each var
+	lit **clause_lit;	   // clause_lit[i][j] means the j'th literal of clause i.
 	int *clause_lit_count; // amount of literals in each clause
 
 	/* Information about the variables. */
@@ -96,44 +96,44 @@ class USW
 	int *best_soft_clause;
 	long long total_soft_length;
 	long long total_hard_length;
-	int * soft_clause_num_index;
+	int *soft_clause_num_index;
 
-	//original unit clause stack
+	// original unit clause stack
 	lit *unit_clause;
 	int unit_clause_count;
 
-	//unsat clauses stack
-	int *hardunsat_stack;		   //store the unsat clause number
-	int *index_in_hardunsat_stack; //which position is a clause in the unsat_stack
+	// unsat clauses stack
+	int *hardunsat_stack;		   // store the unsat clause number
+	int *index_in_hardunsat_stack; // which position is a clause in the unsat_stack
 	int hardunsat_stack_fill_pointer;
 
-	int *softunsat_stack;		   //store the unsat clause number
-	int *index_in_softunsat_stack; //which position is a clause in the unsat_stack
+	int *softunsat_stack;		   // store the unsat clause number
+	int *index_in_softunsat_stack; // which position is a clause in the unsat_stack
 	int softunsat_stack_fill_pointer;
 
-	//variables in unsat clauses
+	// variables in unsat clauses
 	int *unsatvar_stack;
 	int unsatvar_stack_fill_pointer;
 	int *index_in_unsatvar_stack;
-	int *unsat_app_count; //a varible appears in how many unsat clauses
+	int *unsat_app_count; // a varible appears in how many unsat clauses
 
-	//good decreasing variables (dscore>0 and confchange=1)
+	// good decreasing variables (dscore>0 and confchange=1)
 	int *goodvar_stack;
 	int goodvar_stack_fill_pointer;
 	int *already_in_goodvar_stack;
 
 	/* Information about solution */
-	int *cur_soln; //the current solution, with 1's for True variables, and 0's for False variables
+	int *cur_soln; // the current solution, with 1's for True variables, and 0's for False variables
 	int *best_soln;
 	int *local_opt_soln;
-	int best_soln_feasible; //when find a feasible solution, this is marked as 1.
+	int best_soln_feasible; // when find a feasible solution, this is marked as 1.
 	int local_soln_feasible;
 	int hard_unsat_nb;
 	long long soft_unsat_weight;
 	long long opt_unsat_weight;
 	long long local_opt_unsat_weight;
 
-	//clause weighting
+	// clause weighting
 	int *large_weight_clauses;
 	int large_weight_clauses_count;
 	int large_clause_count_threshold;
@@ -143,12 +143,12 @@ class USW
 	int soft_large_weight_clauses_count;
 	int soft_large_clause_count_threshold;
 
-	//tem data structure used in algorithm
+	// tem data structure used in algorithm
 	int *best_array;
 	int best_count;
 	int *temp_lit;
 
-	//parameters used in algorithm
+	// parameters used in algorithm
 	float rwprob;
 	float rdprob;
 	float smooth_probability;
@@ -163,12 +163,12 @@ class USW
 	double softclause_weight_threshold;
 	float random_prob;
 	int coe_soft_clause_weight;
-	//long long *soft_clause_weight_upper_bound;
+	// long long *soft_clause_weight_upper_bound;
 
-	//function used in algorithm
+	// function used in algorithm
 	void build_neighbor_relation();
 	void allocate_memory();
-	
+
 	void increase_weights();
 	void hard_increase_weights();
 
@@ -196,7 +196,11 @@ class USW
 	void increase_scores_for_clause(int c, double delta);
 	void decrease_scores_for_satisfied_clause(int c, double delta);
 
-  public:
+	// new data structures that could be used by LLM
+	double MAX_CLAUSE_WEIGHT;
+	double max_clause_weight;
+
+public:
 	USW();
 	void settings();
 	void build_instance(char *filename);

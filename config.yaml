@@ -6,8 +6,9 @@ model:
 
 runtime:
   cutoff_time: 60
-  epoch: 10
-  benchmark_iter_time: 10
+  epoch: 20
+  # benchmark_iter_time: 10
+  benchmark_iter_time: 3
 
 
 train:

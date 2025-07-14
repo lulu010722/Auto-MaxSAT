@@ -11,3 +11,5 @@ cat output_$pid.out
 rm -f output_$pid.out
 rm -f output_$pid.var
 rm -f output_$pid.wat
+
+# 检测截停时间的逻辑
