@@ -217,9 +217,10 @@ def main(benchmark_set, lock):
 
     while epoch < EPOCH:
         print_debug(f"========第{epoch}轮迭代开始！========")
-        print_debug("开始LLM对话")
-        chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
-        print_debug("LLM对话迭代完成")
+        if epoch > 0:
+            print_debug("开始LLM对话")
+            chat.main(benchmark_set_feature, TARGET_FUNCTIONS)
+            print_debug("LLM对话迭代完成")
 
         print_debug("构建算法可执行文件")
         make_result = subprocess.run("make -C solver_src", shell=True, capture_output=True, text=True)

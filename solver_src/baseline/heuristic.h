@@ -389,44 +389,6 @@ void USW::decrease_scores_for_satisfied_clause(int c, double delta)
     }
 }
 
-// void USW::soft_increase_weights_partial()
-// {
-//     if (problem_weighted == 1)
-//     {
-//         for (int i = 0; i < num_sclauses; ++i)
-//         {
-//             int c = soft_clause_num_index[i];
-//             increase_clause_weight(c, tuned_org_clause_weight[c]);
-
-//             if (sat_count[c] <= 0)
-//             {
-//                 increase_scores_for_clause(c, tuned_org_clause_weight[c]);
-//             }
-//             else if (sat_count[c] < 2)
-//             {
-//                 decrease_scores_for_satisfied_clause(c, tuned_org_clause_weight[c]);
-//             }
-//         }
-//     }
-//     else
-//     {
-//         for (int i = 0; i < num_sclauses; ++i)
-//         {
-//             int c = soft_clause_num_index[i];
-//             increase_clause_weight(c, s_inc);
-
-//             if (sat_count[c] <= 0)
-//             {
-//                 increase_scores_for_clause(c, s_inc);
-//             }
-//             else if (sat_count[c] < 2)
-//             {
-//                 decrease_scores_for_satisfied_clause(c, s_inc);
-//             }
-//         }
-//     }
-// }
-
 void USW::soft_increase_weights_partial()
 {
     for (int i = 0; i < num_sclauses; ++i)

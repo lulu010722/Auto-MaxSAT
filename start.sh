@@ -15,7 +15,6 @@ if [ -n "$1" ]; then
 fi
 
 benchmark_sets=$(find benchmark_old -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-# benchmark_sets="drmx-crypt"
 
 rm -rf $CONCURRENT_DIR
 mkdir -p $CONCURRENT_DIR/template
@@ -41,17 +40,17 @@ for benchmark_set in $benchmark_sets; do
 done
 
 cd template
-ln -s "/home/users/tylu/auto/benchmark_new" "benchmark_new"
-ln -s "/home/users/tylu/auto/benchmark_old" "benchmark_old"
+ln -s "../../../benchmark_new" "benchmark_new"
+ln -s "../../../benchmark_old" "benchmark_old"
 cd ..
 
 for benchmark_set in $benchmark_sets; do
     cd $benchmark_set
-    ln -s "/home/users/tylu/auto/benchmark_new" "benchmark_new"
-    ln -s "/home/users/tylu/auto/benchmark_old" "benchmark_old"
+    ln -s "../../../benchmark_new" "benchmark_new"
+    ln -s "../../../benchmark_old" "benchmark_old"
     cd ..
 done
 
 cd $work_dir
 
-python start.py $CONCURRENT_DIR
+python3 start.py $CONCURRENT_DIR
