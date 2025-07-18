@@ -350,9 +350,16 @@ void USW::hard_increase_weights()
     return;
 }
 
-void USW::increase_clause_weight(int c, double delta)
-{
-    clause_weight[c] += delta;
+void USW::increase_clause_weight(int c, double delta) {
+    double adaptive_delta = delta * (1.0 + (clause_weight[c] / (clause_weight[c] + delta_threshold)));
+    clause_weight[c] += adaptive_delta;
+    if (clause_weight[c] > max_clause_weight) {
+        double decay_factor = 0.9 + (0.1 * (1.0 - (clause_weight[c] / max_clause_weight)));
+        clause_weight[c] *= decay_factor;
+    }
+    if (adaptive_delta > delta * 1.5 && sat_count[c] < 0) {
+        clause_weight[c] += delta * 0.5 * (-sat_count[c]);
+    }
 }
 
 void USW::increase_scores_for_clause(int c, double delta)

@@ -178,7 +178,7 @@ def write_progress(progress_cnt: int):
     files.sort(key=lambda x: x.lower())
     with open(f"progress/{progress_cnt}", "w") as progress_file:
         with open(f"log/{files[-1]}", "r") as log_file:
-            response = json.load(log_file)[2]["content"]
+            response = json.load(log_file)[-1]["content"]
             progress_file.write(f"大模型的回答是:\n{response}\n")
 
 

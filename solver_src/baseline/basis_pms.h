@@ -199,6 +199,29 @@ private:
 	// new data structures that could be used by LLM
 	double MAX_CLAUSE_WEIGHT;
 	double max_clause_weight;
+	int conflicts;
+	int max_conflicts;
+	double smooth_ratio;
+	vector<double> var_activity;
+	double max_var_activity;
+	vector<double> clause_weight_history;
+	double weight_threshold;
+	int max_sat_count;
+	int soft_unsat_nb;
+	double avg_clause_weight;
+	vector<int> conflicts_since_last_update;
+	double clause_weight_sum;
+	vector<double> last_delta;
+	double weight_normalization_factor;
+	double delta_threshold;
+	double decay_factor;
+	double weight_decay_constant;
+	double adaptive_boost;
+	int unsat_count;
+	vector<double> prev_weight_change;
+	vector<double> prev_clause_weight;
+	vector<double> last_weight_change;
+
 
 public:
 	USW();

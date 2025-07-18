@@ -14,16 +14,20 @@ if [ -n "$1" ]; then
     CONCURRENT_DIR="${CONCURRENT_DIR}_$1"
 fi
 
-benchmark_sets=$(find benchmark_old -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+# benchmark_sets=$(find benchmark_old -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+benchmark_sets="causal-dis railway-tr decision-t lisbon-wed synplicate"
+# benchmark_sets="causal-dis"
 
 rm -rf $CONCURRENT_DIR
 mkdir -p $CONCURRENT_DIR/template
 rsync -avq \
       --exclude='__pycache__' \
       --exclude='.vscode' \
+      --exclude='.venv' \
       --exclude='benchmark_new' \
       --exclude='benchmark_old' \
       --exclude='concurrent' \
+      --exclude='response' \
       --exclude='mse24-anytime-weighted.zip' \
       --exclude='.git' \
       --exclude='util' \

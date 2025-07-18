@@ -5,6 +5,8 @@ import sys
 
 
 
+promising_sets = ["causal-dis", "railway-tr", "decision-t", "lisbon-wed", "synplicate"]
+# promising_sets = ["causal-dis"]
 benchmark_sets = []
 dir = sys.argv[1]
 os.chdir(dir)
@@ -15,7 +17,6 @@ def get_benchmark_sets():
     for dirname in os.listdir("template/benchmark_old"):
         if os.path.isdir(os.path.join("template/benchmark_old", dirname)):
             benchmark_sets.append(dirname)
-    promising_sets = ["causal-dis", "railway-tr", "decision-t", "lisbon-wed", "synplicate"]
     benchmark_sets = [benchmark_set for benchmark_set in benchmark_sets if benchmark_set in promising_sets]
 
 

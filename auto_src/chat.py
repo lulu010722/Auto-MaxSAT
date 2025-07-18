@@ -22,6 +22,7 @@ USER_PROMPT = ""
 
 BENCHMARK_SET_FEATURE = ""
 TARGET_FUNCTIONS = []
+RELATED_FUNCTIONS = []
 
 
 with open("config.yaml", "r") as config_file:
@@ -33,7 +34,7 @@ logger = logging.getLogger(__name__)
 def init(benchmark_set_feature, target_functions):
     global API_KEY, BASE_URL, MODEL, TEMPERATURE, CLIENT
     global SYSTEM_PROMPT, USER_PROMPT
-    global BENCHMARK_SET_FEATURE, TARGET_FUNCTIONS
+    global BENCHMARK_SET_FEATURE, TARGET_FUNCTIONS, RELATED_FUNCTIONS
 
     API_KEY = config["model"]["api_key"]
     BASE_URL = config["model"]["base_url"]
@@ -45,6 +46,7 @@ def init(benchmark_set_feature, target_functions):
 
     BENCHMARK_SET_FEATURE = benchmark_set_feature
     TARGET_FUNCTIONS = target_functions
+    RELATED_FUNCTIONS = config["train"]["related_functions"]
 
     CLIENT = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
@@ -106,11 +108,27 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
         file.writelines(lines)
 
 
-def optimize():
-    # 初始化算法骨架
-    with open("solver_src/baseline/heuristic.h", "r", encoding="utf-8") as baseline_file:
-        code = baseline_file.read()
+def trim_code(code: str, target_functions: list[str]) -> str:
+    lines = code.splitlines(keepends=True)
+    trimmed_lines = []
+    
+    index = 0
+    while True:
+        if index >= len(lines):
+            break
+        line = lines[index].strip()
+        
+        if any(func in line for func in target_functions):
+            while index < len(lines) and not lines[index].strip().startswith("}"):
+                trimmed_lines.append(lines[index])
+                index += 1
+            trimmed_lines.append("}\n")
+        else:
+            index += 1
 
+    return "".join(trimmed_lines)
+
+def optimize():
     func_num = len(TARGET_FUNCTIONS)
     func_to_be_optimize_num = max(1, np.random.binomial(func_num, 1 / func_num))
     func_to_be_optimize = random.sample(TARGET_FUNCTIONS, func_to_be_optimize_num)
@@ -122,9 +140,9 @@ def optimize():
 
     with open("solver_src/baseline/heuristic.h", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
+        trimmed_code = trim_code(code,RELATED_FUNCTIONS)
         target_funcs_str = "\n".join(func_to_be_optimize)
-        # rewrite_prompt = USER_PROMPT % (BENCHMARK_SET_FEATURE, target_funcs_str, code)
-        rewrite_prompt = USER_PROMPT % (target_funcs_str, code)
+        rewrite_prompt = USER_PROMPT % (target_funcs_str, trimmed_code)
         res = chat(rewrite_prompt, chat_history)
 
         shutil.copyfile("solver_src/baseline/heuristic.h", "solver_src/heuristic.h")
