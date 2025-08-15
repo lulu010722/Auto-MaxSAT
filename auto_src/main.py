@@ -87,7 +87,7 @@ def read_best_scores(benchmark_set: str) -> None:
     BEST_SCORES = pd.read_csv("data/best_scores.csv").to_dict(orient="records")
 
     best_scores_benchmark_set = [item["benchmark_set"] for item in BEST_SCORES]
-    benchmark_set = os.path.basename(f"{"benchmark_old"}/{benchmark_set}")
+    benchmark_set = os.path.basename(f"benchmark_old/{benchmark_set}")
     if benchmark_set not in best_scores_benchmark_set:
         BEST_SCORES.append({"benchmark_set": benchmark_set, "best_score": 0.0})
         new_row = pd.DataFrame([{"benchmark_set": benchmark_set, "best_score": 0.0}])

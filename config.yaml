@@ -4,7 +4,6 @@ model:
   name: deepseek-chat
   temperature: 0.7
 
-
 train:
   target_functions:
     # - "int USW::pick_var()"
@@ -29,7 +28,6 @@ train:
     - "void USW::increase_scores_for_clause(int c, double delta)"
     - "void USW::decrease_scores_for_satisfied_clause(int c, double delta)"
   threshold_rate: 1.05
-
 
 prompt:
   system: |
@@ -65,9 +63,67 @@ prompt:
     %s
     ---
 
+  # system: |
+  #   You are a MaxSAT-RL hybrid system expert.
+  #   Rewrite the function using reinforcement learning concepts
+  #   with these SPECIFIC techniques:
+
+  #   1. **Reward Shaping**: Design immediate rewards based on:
+  #      - Clause satisfaction state changes
+  #      - Local search progress metrics
+  #      - Conflict frequency reduction
+
+  #   2. **Update Rules**: Implement either:
+  #      - Q-learning style weight updates
+  #      - Policy gradient-based adjustments
+  #      - Eligibility traces for long-term credit assignment
+
+  #   3. **Constraints**:
+  #      - Keep update computational complexity O(1)
+  #      - Maintain thread-safety
+  #      - Use existing solver state variables only
+
+  #   Produce 3 variants with different reward functions.
+
+  # system: |
+  #   You are designing a bandit-based clause weighting system.
+  #   Apply these MAB techniques:
+
+  #   1. **Arm Selection**:
+  #      - Treat each clause as an arm
+  #      - Use UCB1 or Thompson sampling for selection
+
+  #   2. **Reward Definition**:
+  #      - Clause participation in deriving conflicts
+  #      - LBD reduction contribution
+  #      - Propagation activity
+
+  #   3. **Implementation Requirements**:
+  #      - Maintain clause weight normalization
+  #      - Add no more than 2 lines of statistics tracking
+  #      - Keep memory overhead < 8 bytes/clause
+
+  # system: |
+  #   You are building a policy network for clause weighting.
+  #   Apply these DRL techniques:
+
+  #   1. **State Representation**:
+  #      - Use clause activity history (last 10 steps)
+  #      - Normalized LBD and size
+  #      - Restart cycle phase
+
+  #   2. **Policy Update**:
+  #      - REINFORCE algorithm with baseline
+  #      - Natural policy gradient variants
+  #      - Advantage Actor-Critic style updates
+
+  #   3. **Efficiency Constraints**:
+  #      - Maximum 3 additional floating-point operations
+  #      - No dynamic memory allocation
+  #      - Thread-local storage only
+
 
 runtime:
-  cutoff_time: 6
-  epoch: 1
-  benchmark_iter_time: 10
-
+  cutoff_time: 60
+  epoch: 10
+  benchmark_iter_time: 5

@@ -108,7 +108,7 @@ def insert_function(optimized_file_name: str, response: str, func_name_to_replac
         file.writelines(lines)
 
 
-def trim_code(code: str, target_functions: list[str]) -> str:
+def trim_code(code: str, target_functions: "list[str]") -> str:
     lines = code.splitlines(keepends=True)
     trimmed_lines = []
     
@@ -140,7 +140,7 @@ def optimize():
 
     with open("solver_src/baseline/heuristic.h", "r", encoding="utf-8") as baseline_file:
         code = baseline_file.read()
-        trimmed_code = trim_code(code,RELATED_FUNCTIONS)
+        trimmed_code = trim_code(code, RELATED_FUNCTIONS)
         target_funcs_str = "\n".join(func_to_be_optimize)
         rewrite_prompt = USER_PROMPT % (target_funcs_str, trimmed_code)
         res = chat(rewrite_prompt, chat_history)

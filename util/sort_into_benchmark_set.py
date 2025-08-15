@@ -1,7 +1,7 @@
 import os
 import shutil
 
-benchmark_dir = "benchmark_old"
+benchmark_dir = "../benchmark_new"
 
 
 def has_benchmark_set(benchmark_set_name):
